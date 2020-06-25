@@ -2,6 +2,7 @@ pipeline {
     
     agent {
         dockerfile true
+        args '-v kstars_workspace:/home/jenkins/workspace'
     }
 
     environment {
