@@ -57,8 +57,8 @@ pipeline {
                 sh '''
                     mkdir -p kstars-build
                     cd kstars-build
-                    make install
-                    file `which kstars` | grep '32-bit'
+                    file kstars | grep '32-bit'
+                    make test
                 '''
             }
         }
