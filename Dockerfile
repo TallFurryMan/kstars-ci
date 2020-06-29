@@ -26,6 +26,7 @@ RUN useradd -m jenkins
 RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
+RUN echo "export PATH=/usr/lib/ccache:$PATH" >> /home/jenkins/.bashrc
 RUN date | tee /home/jenkins/built_on
 RUN mkdir /home/jenkins/workspace /home/jenkins/.ccache
 WORKDIR /home/jenkins
