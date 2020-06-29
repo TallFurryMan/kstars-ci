@@ -89,7 +89,8 @@ pipeline {
                         -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
                         -D CPACK_CMAKE_GENERATOR=\"Unix Makefiles\" \
                         -D CPACK_INSTALL_COMMANDS=\"make install\" \
-                        -D CPACK_PACKAGE_CONTACT=\"https://github.com/TallFurryMan/kstars-ci\"
+                        -D CPACK_PACKAGE_CONTACT=\"https://github.com/TallFurryMan/kstars-ci\" \
+                        -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"KStars i386\"
                 '''
             }
         }
