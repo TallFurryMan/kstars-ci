@@ -64,7 +64,7 @@ pipeline {
                 sh '''
                     mkdir -p kstars-build
                     cd kstars-build
-                    file kstars | grep '32-bit'
+                    ldd kstars || true
                     make test
                 '''
             }
