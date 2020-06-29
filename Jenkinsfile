@@ -97,8 +97,8 @@ pipeline {
                         -D CPACK_PACKAGE_CONTACT=\"https://github.com/TallFurryMan/kstars-ci\" \
                         -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"KStars i386\"
                 '''
-                archiveArtifacts artifacts '_CPack_Packages/DEB/*.deb',
-                                 fingerprint true
+                archiveArtifacts artifacts: '_CPack_Packages/DEB/*.deb',
+                                 fingerprint: true
             }
         }
     }
