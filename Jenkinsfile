@@ -61,12 +61,14 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh '''
-                    mkdir -p kstars-build
-                    cd kstars-build
-                    ldd kstars || true
-                    make test
-                '''
+                warnError ('Test Failure') {
+                    sh '''
+                        mkdir -p kstars-build
+                        cd kstars-build
+                        ldd kstars || true
+                        make test
+                    '''
+                }
             }
         }
     }
