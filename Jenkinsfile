@@ -85,6 +85,7 @@ pipeline {
                         -P kstars \
                         -R $version \
                         -D CPACK_INSTALL_CMAKE_PROJECTS=\".;kstars;ALL;/\" \
+                        -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
                         -D CPACK_PACKAGE_FILE_NAME=\"kstars-$version-Linux-i386\" \
                         -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
                         -D CPACK_CMAKE_GENERATOR=\"Unix Makefiles\" \
