@@ -46,7 +46,7 @@ pipeline {
                         "SET(CMAKE_C_FLAGS -m32)" \
                         "SET(CMAKE_CXX_COMPILER g++)" \
                         "SET(CMAKE_CXX_FLAGS -m32)" \
-                        > i386.make
+                        > i386.cmake
                     cat i386.cmake
                     cmake \
                         -DCMAKE_TOOLCHAIN_FILE=i386.cmake \
