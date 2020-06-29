@@ -76,7 +76,7 @@ pipeline {
             steps {
                 sh '''
                     cd kstars-build
-                    cpack
+                    cpack -G DEB
                 '''
             }
         }
