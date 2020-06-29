@@ -18,7 +18,7 @@ pipeline {
         stage('Preparation') {
             steps {
                 sh '''
-                    cat ~/built_on'
+                    cat ~/built_on
                     [ -f ~/.ccache/ccache.conf ] || touch ~/.ccache/ccache.conf
                     ccache --max-size 20G
                     ccache -s
