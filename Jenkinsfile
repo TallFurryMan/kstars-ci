@@ -71,5 +71,14 @@ pipeline {
                 }
             }
         }
+        
+        stage('Package') {
+            steps {
+                sh '''
+                    cd kstars-build
+                    cpack
+                '''
+            }
+        }
     }
 }
