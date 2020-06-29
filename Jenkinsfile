@@ -76,7 +76,18 @@ pipeline {
             steps {
                 sh '''
                     cd kstars-build
-                    cpack -G DEB
+                    version_major=`grep MAJOR_VERSION CMakeCache.txt | cut -d'=' -f2`
+                    version_minor=`grep MINOR_VERSION CMakeCache.txt | cut -d'=' -f2`
+                    version_patch=`cd ../kstars && git show HEAD | head -1 | cut -d' ' -f2 | cut -b-8`
+                    version=\"$version_major.$version_minor.$version_patch\"
+                    cpack --debug --verbose \
+                        -G DEB \
+                        -P kstars \
+                        -R $version \
+                        -D CPACK_INSTALL_CMAKE_PROJECTS=\".;kstars;ALL;/\" \
+                        -D CPACK_PACKAGE_FILE_NAME=\"kstars-$version-Linux-i386\" \
+                        -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
+                        -D CPACK_INSTALL_COMMANDS=\"make install\"
                 '''
             }
         }
