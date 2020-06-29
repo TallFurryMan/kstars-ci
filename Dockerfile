@@ -23,6 +23,7 @@ RUN apt-get -y --no-install-recommends install \
         libkf5config-bin:i386
 
 RUN useradd -m jenkins
+RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
