@@ -26,6 +26,6 @@ RUN useradd -m jenkins
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
-RUN mkdir /home/jenkins/workspace
+RUN mkdir /home/jenkins/workspace /home/jenkins/.ccache
 WORKDIR /home/jenkins
 CMD id
