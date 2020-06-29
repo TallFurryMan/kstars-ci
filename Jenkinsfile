@@ -3,13 +3,14 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile'
-            args '-v kstars_workspace:/home/jenkins/workspace'
+            args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
         }
     }
 
     environment {
         CFLAGS = '-m32'
         CXXFLAGS = '-m32'
+        CCACHE_COMPRESS = '1'
     }
 
     stages {
@@ -17,6 +18,7 @@ pipeline {
         stage('Preparation') {
             steps {
                 sh 'cat ~/built_on'
+                sh 'ccache --max-size 20G'
                 sh 'ccache -s'
             }
         }
@@ -34,12 +36,14 @@ pipeline {
                     rm -rf kstars-build
                     mkdir -p kstars-build
                     cd kstars-build
-                    echo "SET(CMAKE_SYSTEM_NAME Linux)" > i386.cmake
-                    echo "SET(CMAKE_SYSTEM_PROCESSOR i386)" >> i386.cmake
-                    echo "SET(CMAKE_C_COMPILER gcc)" >> i386.cmake
-                    echo "SET(CMAKE_C_FLAGS -m32)" >> i386.cmake
-                    echo "SET(CMAKE_CXX_COMPILER g++)" >> i386.cmake
-                    echo "SET(CMAKE_CXX_FLAGS -m32)" >> i386.cmake
+                    printf "%s\n" \
+                        "SET(CMAKE_SYSTEM_NAME Linux)" \
+                        "SET(CMAKE_SYSTEM_PROCESSOR i386)" \
+                        "SET(CMAKE_C_COMPILER gcc)" \
+                        "SET(CMAKE_C_FLAGS -m32)" \
+                        "SET(CMAKE_CXX_COMPILER g++)" \
+                        "SET(CMAKE_CXX_FLAGS -m32)" \
+                        > i386.make
                     cat i386.cmake
                     cmake \
                         -DCMAKE_TOOLCHAIN_FILE=i386.cmake \
