@@ -39,7 +39,7 @@ pipeline {
                     rm -rf kstars-build
                     mkdir -p kstars-build
                     cd kstars-build
-                    printf "%s\n" \
+                    printf \"%s\\n\" \
                         "SET(CMAKE_SYSTEM_NAME Linux)" \
                         "SET(CMAKE_SYSTEM_PROCESSOR i386)" \
                         "SET(CMAKE_C_COMPILER gcc)" \
