@@ -95,7 +95,7 @@ pipeline {
                         -D CPACK_CMAKE_GENERATOR=\"Unix Makefiles\" \
                         -D CPACK_INSTALL_COMMANDS=\"make install\" \
                         -D CPACK_PACKAGE_CONTACT=\"https://github.com/TallFurryMan/kstars-ci\" \
-                        -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"KStars i386\"
+                        -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"KStars i386\" \
                         -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
                 '''
                 archiveArtifacts artifacts: 'kstars-build/*.deb',
