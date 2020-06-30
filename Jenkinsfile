@@ -97,7 +97,7 @@ pipeline {
                         -D CPACK_PACKAGE_CONTACT=\"https://github.com/TallFurryMan/kstars-ci\" \
                         -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"KStars i386\" \
                         -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
-                    dpkg --info `find . -name *.deb`
+                    dpkg --info `find . -name *.deb` || true
                 '''
                 archiveArtifacts artifacts: 'kstars-build/*.deb',
                                  fingerprint: true
