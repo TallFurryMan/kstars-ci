@@ -11,7 +11,7 @@ RUN apt-get -y --no-install-recommends install \
 RUN apt-get -y --no-install-recommends install \
         zlib1g-dev:i386 libsecret-1-dev:i386
 RUN apt-get -y install \
-        qtdeclarative5-dev:i386 libqt5svg5-dev:i386 libqt5websockets5-dev:i386 qt5keychain-dev:i386
+        qtdeclarative5-dev:i386 libqt5svg5-dev:i386 libqt5websockets5-dev:i386
 RUN apt-get -y install \
         libkf5plotting-dev:i386 libkf5xmlgui-dev:i386 libkf5newstuff-dev:i386 \
         libkf5notifications-dev:i386 libkf5crash-dev:i386 libkf5notifyconfig-dev:i386 \
