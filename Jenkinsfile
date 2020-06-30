@@ -10,6 +10,11 @@ pipeline {
             args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
         }
     }
+    
+    parameters {
+        string(name: 'REPO',   defaultValue: 'https://invent.kde.org/edejouhanet/kstars.git', description: 'The repository to clone from.')
+        string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
+    }
 
     environment {
         CFLAGS = '-m32'
@@ -32,8 +37,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: 'https://invent.kde.org/edejouhanet/kstars.git',
-                    branch: 'improve__phd2_fault_tolerance'
+                git url: ${REPO},
+                    branch: ${BRANCH}
             }
         }
 
