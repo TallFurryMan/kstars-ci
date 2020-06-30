@@ -37,8 +37,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: ${REPO},
-                    branch: ${BRANCH}
+                git url: "${REPO}",
+                    branch: "${BRANCH}"
             }
         }
 
