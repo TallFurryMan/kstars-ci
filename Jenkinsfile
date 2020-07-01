@@ -41,7 +41,7 @@ pipeline {
                 git url: "${params.REPO}",
                     branch: "${params.BRANCH}"
                 sh '''
-                    [ -z ${params.TAG} ] || git checkout ${params.TAG}'
+                    [ -z ${params.TAG} ] || git checkout ${params.TAG}
                 '''
             }
         }
