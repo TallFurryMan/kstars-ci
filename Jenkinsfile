@@ -7,7 +7,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile'
-            args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
+            args '-v phd2_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
         }
     }
     
@@ -85,11 +85,9 @@ pipeline {
             steps {
                 sh '''
                     cd phd2-build
-                    version_major=`grep MAJOR_VERSION CMakeCache.txt | cut -d'=' -f2`
-                    version_minor=`grep MINOR_VERSION CMakeCache.txt | cut -d'=' -f2`
+                    version=`grep PHDVERSION ../phd.h | grep -o "[0-9\.]*"`
                     version_patch=`cd ../phd2 && git show HEAD | head -1 | cut -d' ' -f2 | cut -b-8`
-                    version=\"$version_major.$version_minor.$version_patch\"
-                    package_file_name=\"phd2-$version-Linux-i386\"
+                    package_file_name=\"phd2-$version.$version_patch-Linux-i386\"
                     cpack --debug --verbose \
                         -G DEB \
                         -P kstars \
