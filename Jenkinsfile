@@ -17,8 +17,8 @@ pipeline {
     }
 
     environment {
-        CFLAGS = '-m32'
-        CXXFLAGS = '-m32'
+        CFLAGS = '-march=armv6 -mfpu=vfp -mfloat-abi=hard'
+        CXXFLAGS = '-march=armv6 -mfpu=vfp -mfloat-abi=hard'
         CCACHE_COMPRESS = '1'
     }
 
