@@ -85,7 +85,7 @@ pipeline {
             steps {
                 sh '''
                     cd phd2-build
-                    version=`grep PHDVERSION ../phd.h | grep -o "[0-9\.]*"`
+                    version=`grep PHDVERSION ../phd.h | grep -o \"[0-9\\.]*\"`
                     version_patch=`cd ../phd2 && git show HEAD | head -1 | cut -d' ' -f2 | cut -b-8`
                     package_file_name=\"phd2-$version.$version_patch-Linux-i386\"
                     cpack --debug --verbose \
