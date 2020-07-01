@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 RUN dpkg --add-architecture armhf
 RUN arch=$(dpkg --print-architecture) && \
-    sed \
+    sed -i \
         -e "s|^deb http://archive\(.*\)/ubuntu/\(.*\)$|deb [arch=$arch] http://archive\1/ubuntu/\2\ndeb [arch=armhf] http://ports\1/ubuntu-ports/\2|" \
         -e "s|^deb http://security\(.*\)/ubuntu/\(.*\)$|deb [arch=$arch] http://security\1/ubuntu/\2|" \
         /etc/apt/sources.list
