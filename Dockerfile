@@ -20,7 +20,7 @@ RUN apt-get -y install \
 RUN apt-get -y install \
         libkf5plotting-dev:armhf libkf5xmlgui-dev:armhf libkf5newstuff-dev:armhf \
         libkf5notifications-dev:armhf libkf5crash-dev:armhf libkf5notifyconfig-dev:armhf \
-        kio-dev:i386 kinit-dev:armhf kdoctools-dev:armhf
+        kio-dev:armhf kinit-dev:armhf kdoctools-dev:armhf
 RUN apt-get -y --no-install-recommends install \
         libeigen3-dev:armhf libcfitsio-dev:armhf libnova-dev:armhf libgsl-dev:armhf libraw-dev:armhf wcslib-dev:armhf \
         libindi-dev:armhf xplanet xplanet-images
