@@ -13,7 +13,8 @@ pipeline {
     
     parameters {
         string(name: 'REPO',   defaultValue: 'https://github.com/TallFurryMan/phd2.git', description: 'The repository to clone from.')
-        string(name: 'BRANCH', defaultValue: 'refs/tags/v2.6.8', description: 'The repository branch to build.')
+        string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
+        string(name: 'TAG',    defaultValue: 'v2.6.8', description: 'The repository tag to build.')
     }
 
     environment {
@@ -39,6 +40,7 @@ pipeline {
             steps {
                 git url: "${params.REPO}",
                     branch: "${params.BRANCH}"
+                sh '[ -z ${params.TAG} ] || git checkout ${params.TAG}'
             }
         }
 
