@@ -1,6 +1,12 @@
 FROM ubuntu:18.04
 
-RUN dpkg --add-architecture armhf && apt-get -y update || true ; apt-get -y upgrade
+RUN dpkg --add-architecture armhf
+RUN arch=$(dpkg --print-architecture) && \
+    sed \
+        -e "s|^deb http://archive\(.*\)/ubuntu/\(.*\)$|deb [arch=$arch] http://archive\1/ubuntu/\2\ndeb [arch=armhf] http://ports\1/ubuntu-ports/\2|" \
+        -e "s|^deb http://security\(.*\)/ubuntu/\(.*\)$|deb [arch=$arch] http://security\1/ubuntu/\2|" \
+        /etc/apt/sources.list
+RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get -y --no-install-recommends install \
         gcc-multilib g++-multilib
 RUN apt-get -y --no-install-recommends install \
