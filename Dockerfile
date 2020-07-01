@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
-RUN dpkg --add-architecture armhf
 RUN apt-get -y update && apt-get -y upgrade
+RUN dpkg --add-architecture armhf && apt-get -y update
 RUN apt-get -y --no-install-recommends install \
         gcc-multilib g++-multilib
 RUN apt-get -y --no-install-recommends install \
