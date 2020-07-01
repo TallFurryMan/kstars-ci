@@ -86,7 +86,7 @@ pipeline {
                 sh '''
                     cd kstars-build
                     version=`grep 'KSTARS_VERSION .*$' kstars/version.h | head -1 | grep -o '[0-9\.]*'`
-                    version_patch=`cd ../kstars && git show HEAD | head -1 | cut -d' ' -f2 | cut -b-8`
+                    version_patch=`git show HEAD | head -1 | cut -d' ' -f2 | cut -b-8`
                     package_file_name=\"kstars-$version.$version_patch-Linux-i386\"
                     cpack --debug --verbose \
                         -G DEB \
