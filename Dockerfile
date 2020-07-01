@@ -17,12 +17,12 @@ RUN apt-get -y --no-install-recommends install \
         zlib1g-dev:armhf libsecret-1-dev:armhf
 RUN apt-get -y install \
         qtdeclarative5-dev:armhf libqt5svg5-dev:armhf libqt5websockets5-dev:armhf
-RUN apt-get -y install --no-install-recommends libkf5plotting-dev:armhf
-RUN apt-get -y install --no-install-recommends libkf5xmlgui-dev:armhf
-RUN apt-get -y install --no-install-recommends libkf5newstuff-dev:armhf
-RUN apt-get -y install --no-install-recommends libkf5notifications-dev:armhf
-RUN apt-get -y install --no-install-recommends libkf5crash-dev:armhf
-RUN apt-get -y install --no-install-recommends libkf5notifyconfig-dev:armhf
+RUN apt-get -y install --no-install-recommends libkf5plotting-dev
+RUN apt-get -y install --no-install-recommends libkf5xmlgui-dev
+RUN apt-get -y install --no-install-recommends libkf5newstuff-dev
+RUN apt-get -y install --no-install-recommends libkf5notifications-dev
+RUN apt-get -y install --no-install-recommends libkf5crash-dev
+RUN apt-get -y install --no-install-recommends libkf5notifyconfig-dev
 RUN apt-get -y install kio-dev:armhf
 RUN apt-get -y install kinit-dev:armhf
 RUN apt-get -y install kdoctools-dev
