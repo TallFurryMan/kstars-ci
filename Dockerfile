@@ -18,7 +18,7 @@ RUN apt-get -y --no-install-recommends install \
 RUN apt-get -y install \
         qtdeclarative5-dev:armhf libqt5svg5-dev:armhf libqt5websockets5-dev:armhf
 RUN apt-get -y install libkf5plotting-dev:armhf
-RUN apt-get -y install libkf5xmlgui-dev:armhf
+RUN apt-get -y install libkf5xmlgui-dev
 RUN apt-get -y install libkf5newstuff-dev:armhf
 RUN apt-get -y install libkf5notifications-dev:armhf
 RUN apt-get -y install libkf5crash-dev:armhf
