@@ -20,7 +20,7 @@ pipeline {
         stage('Build') {
             steps {
                 build job: 'i386',
-                      parameters: [string(name: 'BRANCH', value: "${parms.KSTARS_TAG}")]
+                      parameters: [string(name: 'BRANCH', value: string.valueOf(KSTARS_TAG))]
             }
         }
         
