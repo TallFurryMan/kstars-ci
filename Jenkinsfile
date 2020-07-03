@@ -14,6 +14,7 @@ pipeline {
     parameters {
         string(name: 'REPO',   defaultValue: 'https://invent.kde.org/edejouhanet/kstars.git', description: 'The repository to clone from.')
         string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
+        string(name: 'TAG',    defaultValue: 'master', description: 'The repository tag to build.')
     }
 
     environment {
