@@ -19,7 +19,7 @@ pipeline {
     
         stage('Build') {
             steps {
-                parallel {
+                parallel(
                     'kstars': {
                         build job: 'i386',
                               parameters: [string(name: 'BRANCH', value: '${params.KSTARS_TAG}')]
@@ -36,7 +36,7 @@ pipeline {
                         build job: 'i386-phd2',
                               parameters: [string(name: 'BRANCH', value: '${params.PHD2_TAG}')]
                     }
-                }
+                )
             }
         }
         
