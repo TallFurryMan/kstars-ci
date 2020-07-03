@@ -19,8 +19,24 @@ pipeline {
     
         stage('Build') {
             steps {
-                build job: 'i386',
-                    parameters: [string(name: 'BRANCH', value: '${parms.KSTARS_TAG}')]
+                parallel {
+                    'kstars': {
+                        build job: 'i386',
+                              parameters: [string(name: 'BRANCH', value: '${params.KSTARS_TAG}')]
+                    },
+                    //'indi': {
+                    //    build job: 'i386-indi',
+                    //          parameters: [string(name: 'BRANCH', value: '${params.INDI_TAG}')]
+                    //},
+                    //'indi-3rd-party': {
+                    //    build job: 'i386-indi3p',
+                    //          parameters: [string(name: 'BRANCH', value: '${params.INDI3P_TAG}')]
+                    //},
+                    'phd2': {
+                        build job: 'i386-phd2',
+                              parameters: [string(name: 'BRANCH', value: '${params.PHD2_TAG}')]
+                    }
+                }
             }
         }
         
