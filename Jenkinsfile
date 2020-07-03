@@ -39,6 +39,7 @@ pipeline {
             steps {
                 git url: "${params.REPO}",
                     branch: "${params.BRANCH}"
+                sh "git checkout ${params.TAG}"
             }
         }
 
