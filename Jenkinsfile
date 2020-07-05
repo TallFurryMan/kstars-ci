@@ -44,7 +44,7 @@ pipeline {
               "SET(CMAKE_C_COMPILER gcc)" \
               "SET(CMAKE_C_FLAGS -m32)" \
               "SET(CMAKE_CXX_COMPILER g++)" \
-              "SET(CMAKE_CXX_FLAGS -m32)" > i386.cmake'
+              "SET(CMAKE_CXX_FLAGS -m32)" > i386.cmake
             cmake \
               -DCMAKE_TOOLCHAIN_FILE=i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
