@@ -27,7 +27,7 @@ pipeline {
                           selector: lastSuccessful(),
                           fingerprintArtifacts: true
             sh 'ls -alR'
-            sh 'sudo apt install `find . -name \'*.deb\'`'
+            sh 'sudo apt install -y --no-install-recommends `find . -name \'*.deb\'`'
           }
         }
 
