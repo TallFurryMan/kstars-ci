@@ -111,7 +111,7 @@ pipeline {
         }
       }
     }
-    stage('Build 3rd-party') {
+    stage('Build 3rd-party libraries') {
       steps {
         dir('indi3p-libs-build') {
           deleteDir()
@@ -154,6 +154,42 @@ pipeline {
             sudo make install
           '''
         }
+      }
+    }
+    stage('Package libraries') {
+      steps {
+        dir('indi3p-libs-build') {
+          sh '''
+            version_major=`grep \'INDI_VERSION_MAJOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_minor=`grep \'INDI_VERSION_MINOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
+            version="$version_major.$version_minor.$version_revision.$version_patch"
+            package_file_name="indi-3rdparty-libs-$version-Linux-i386"
+            cpack -G DEB -P indi-3rdparty-libs -R $version \
+              -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi-3rdparty-libs;ALL;/" \
+              -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
+              -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
+              -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
+              -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
+              -D CPACK_INSTALL_COMMANDS="make install" \
+              -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries i386" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
+            dpkg --info "$package_file_name.deb" || true
+          '''
+          archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
+          deleteDir()
+        }
+      }
+      post {
+        failure {
+          sh 'cat `find . -name InstallOutput.log`'
+        }
+      }
+    }
+    stage('Build 3rd-party drivers') {
+      steps {
         dir('indi3p-build') {
           deleteDir()
           sh '''
@@ -231,7 +267,7 @@ pipeline {
         }
       }
     }
-    stage('Test') {
+    stage('Test 3rd-party drivers') {
       steps {
         warnError(message: 'Test Failure') {
           dir('indi3p-build') {
