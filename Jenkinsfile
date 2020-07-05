@@ -24,20 +24,20 @@ pipeline {
         stage('Preparation') {
           steps {
             sh '''
-                    cat ~/built_on
-                    [ -f ~/.ccache/ccache.conf ] || touch ~/.ccache/ccache.conf
-                    ccache --max-size 20G
-                    ccache -s
-                '''
+              cat ~/built_on
+              [ -f ~/.ccache/ccache.conf ] || touch ~/.ccache/ccache.conf
+              ccache --max-size 20G
+              ccache -s
+            '''
           }
         }
         stage('Indi Core') {
           steps {
             copyArtifacts projectName: 'kstars-ci/i386-indi',
-                          filter: '**/*.deb',
+                          filter: 'indi-*.deb',
                           selector: lastSuccessful(),
                           fingerprintArtifacts: true
-            sh 'sudo apt install -y --no-install-recommends `find . -name \'indi-*-Linux-i386.deb\'`'
+            sh 'sudo apt install -y --no-install-recommends indi-*.deb'
           }
         }
       }
