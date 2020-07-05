@@ -24,6 +24,7 @@ pipeline {
           steps {
             copyArtifacts projectName: 'kstars-ci/i386-indi',
                           filter: '**/*.deb',
+                          selector: lastSuccessful()
                           fingerprintArtifacts: true
             sh 'ls -alR'
             sh 'sudo apt install `find . -name \'*.deb\'`'
