@@ -15,7 +15,7 @@ RUN apt-get -y --no-install-recommends install \
         libusb-1.0.0-dev:i386 libgsl-dev:i386 libjpeg-dev:i386 libtiff-dev:i386 libfftw3-dev:i386
 
 RUN apt-get -y --no-install-recommends install wget apt sudo
-RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/apt|' /etc/sudoers
+RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/make|' /etc/sudoers
 RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
