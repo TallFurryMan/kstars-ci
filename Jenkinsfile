@@ -174,6 +174,11 @@ pipeline {
           deleteDir()
         }
       }
+      post {
+        failure {
+          sh 'cat `find . -name InstallOutput.log`'
+        }
+      }
     }
   }
 }
