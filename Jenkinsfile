@@ -113,7 +113,7 @@ pipeline {
     }
     stage('Build 3rd-party') {
       steps {
-        dir('indi3p-build') {
+        dir('indi3p-libs-build') {
           deleteDir()
           sh '''
             cmake \
@@ -150,8 +150,13 @@ pipeline {
               -DWITH_BEEFOCUS=OFF \
               -DWITH_WEBCAM=OFF \
               $WORKSPACE/3rdparty
-            sudo make all install clean
             make -j4 all
+            sudo make install
+          '''
+        }
+        dir('indi3p-build') {
+          deleteDir()
+          sh '''
             cmake \
               -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
