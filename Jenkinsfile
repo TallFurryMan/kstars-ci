@@ -8,25 +8,13 @@ pipeline {
   }
   stages {
     stage('Preparation') {
-      parallel {
-        stage('Preparation') {
-          steps {
-            sh '''
+      steps {
+        sh '''
                     cat ~/built_on
                     [ -f ~/.ccache/ccache.conf ] || touch ~/.ccache/ccache.conf
                     ccache --max-size 20G
                     ccache -s
                 '''
-          }
-        }
-
-        stage('Dependencies') {
-          steps {
-            copyArtifacts 'i386-indi'
-            sh 'sudo apt install `$(find . -name \'*.deb\')`'
-          }
-        }
-
       }
     }
 
