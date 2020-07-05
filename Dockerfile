@@ -9,7 +9,7 @@ RUN apt-get -y --no-install-recommends install \
 RUN apt-get -y --no-install-recommends install \
         git dpkg-dev default-jre ccache gettext
 RUN apt-get -y --no-install-recommends install \
-        zlib1g-dev:i386 libsecret-1-dev:i386
+        zlib1g-dev:i386 libsecret-1-dev:i386 linux-libc-dev-i386-cross libcurl4-openssl-dev:i386
 RUN apt-get -y --no-install-recommends install \
         libeigen3-dev:i386 libcfitsio-dev:i386 libnova-dev:i386 libgsl-dev:i386 libraw-dev:i386 wcslib-dev:i386 \
         libusb-1.0.0-dev:i386 libgsl-dev:i386 libjpeg-dev:i386 libtiff-dev:i386 libfftw3-dev:i386
