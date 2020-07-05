@@ -89,7 +89,7 @@ pipeline {
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
-              -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
+              -D CPACK_PACKAGE_DESCRIPTION_FILE=$WORKSPACE/.git/HEAD \
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
@@ -169,7 +169,7 @@ pipeline {
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi-3rdparty-libs;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
-              -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
+              -D CPACK_PACKAGE_DESCRIPTION_FILE=$WORKSPACE/3rdparty/.git/HEAD \
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
@@ -290,7 +290,7 @@ pipeline {
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi-3rdparty;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
-              -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
+              -D CPACK_PACKAGE_DESCRIPTION_FILE=$WORKSPACE/3rdparty/.git/HEAD \
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
