@@ -22,7 +22,10 @@ pipeline {
 
         stage('Indi Core') {
           steps {
-            copyArtifacts(projectName: 'kstars-ci/i386-indi', filter: '**/*.deb', selector: buildSelector { latestSuccessful(true) } )
+            copyArtifacts projectName: 'kstars-ci/i386-indi',
+                          filter: '**/*.deb',
+                          selector: lastSuccessful(),
+                          fingerprintArtifacts: true
             sh 'sudo apt install `find . -name \'indi-*-Linux-i386.deb\'`'
           }
         }
