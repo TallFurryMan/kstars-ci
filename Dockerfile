@@ -20,10 +20,10 @@ RUN apt-get -y --no-install-recommends install \
         libeigen3-dev:i386 libcfitsio-dev:i386 libnova-dev:i386 libgsl-dev:i386 libraw-dev:i386 wcslib-dev:i386 \
         xplanet xplanet-images
 
-RUN useradd -m jenkins --groups sudo
-RUN /usr/sbin/update-ccache-symlinks
 RUN apt-get -y --no-install-recommends install wget apt sudo
 RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/apt|' /etc/sudoers
+RUN useradd -m jenkins --groups sudo
+RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
