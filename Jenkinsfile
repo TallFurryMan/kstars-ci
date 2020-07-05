@@ -26,8 +26,7 @@ pipeline {
                           filter: '**/*.deb',
                           selector: lastSuccessful(),
                           fingerprintArtifacts: true
-            sh 'ls -alR'
-            sh 'sudo apt install -y --no-install-recommends `find . -name \'*.deb\'`'
+            sh 'sudo apt install -y --no-install-recommends `find . -name \'indi-*-Linux-i386.deb\'`'
           }
         }
 
