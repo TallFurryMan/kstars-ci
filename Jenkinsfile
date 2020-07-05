@@ -33,11 +33,16 @@ pipeline {
         }
         stage('Indi Core') {
           steps {
-            copyArtifacts projectName: 'kstars-ci/i386-indi',
-                          filter: 'indi-*.deb',
-                          selector: lastSuccessful(),
-                          fingerprintArtifacts: true
-            sh 'sudo apt install -y --no-install-recommends indi-*.deb'
+            dir('kstars-deps') {
+              copyArtifacts projectName: 'kstars-ci/i386-indi',
+                            filter: 'indi-*.deb',
+                            selector: lastSuccessful(),
+                            target: '.',
+                            fingerprintArtifacts: true
+              sh "find . -name '*.deb'"
+              sh "sudo apt install -y --no-install-recommends ./indi-*.deb"
+              deleteDir()
+            }
           }
         }
       }
