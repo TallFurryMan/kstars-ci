@@ -168,7 +168,7 @@ pipeline {
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
               -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
-              -D CPACK_INSTALL_COMMANDS="for d in `find . -maxdepth 1 -type d -name 'indi-*'` ; do ( cd $d && make install || true ) ; done" \
+              -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
