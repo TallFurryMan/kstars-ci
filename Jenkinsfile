@@ -162,6 +162,41 @@ pipeline {
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DCCACHE_SUPPORT=ON \
+              -DBUILD_LIBS=ON \
+              -DWITH_MI=OFF \
+              -DWITH_FLI=OFF \
+              -DWITH_SBIG=OFF \
+              -DWITH_INOVAPLX=OFF \
+              -DWITH_APOGEE=OFF \
+              -DWITH_FFMV=OFF \
+              -DWITH_QHY=OFF \
+              -DWITH_SSAG=OFF \
+              -DWITH_QSI=OFF \
+              -DWITH_FISHCAMP=OFF \
+              -DWITH_GPSD=OFF \
+              -DWITH_DSI=OFF \
+              -DWITH_ASICAM=ON \
+              -DWITH_ASTROMECHFOC=OFF \
+              -DWITH_LIMESDR=OFF \
+              -DWITH_RTLSDR=OFF \
+              -DWITH_RADIOSIM=OFF \
+              -DWITH_GPSNMEA=OFF \
+              -DWITH_ARMADILLO=OFF \
+              -DWITH_NIGHTSCAPE=OFF \
+              -DWITH_ATIK=ON \
+              -DWITH_TOUPBASE=OFF \
+              -DWITH_ALTAIRCAM=OFF \
+              -DWITH_DREAMFOCUSER=OFF \
+              -DWITH_AVALON=OFF \
+              -DWITH_BEEFOCUS=OFF \
+              -DWITH_WEBCAM=OFF \
+              $WORKSPACE/3rdparty
+            make -j4 all
+            cmake \
+              -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake \
+              -DCMAKE_INSTALL_PREFIX=/usr/local \
+              -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DCCACHE_SUPPORT=ON \
               -DBUILD_LIBS=OFF \
               -DWITH_MI=OFF \
               -DWITH_FLI=OFF \
