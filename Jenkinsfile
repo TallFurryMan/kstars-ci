@@ -21,7 +21,6 @@ pipeline {
   stages {
     stage('Preparation') {
       steps {
-        cleanWs()
         sh 'cat ~/built_on'
         sh '[ -f ~/.ccache/ccache.conf ] || touch ~/.ccache/ccache.conf'
         sh 'ccache --max-size 20G'
@@ -37,6 +36,7 @@ pipeline {
     stage('Build') {
       steps {
         dir('indi-build') {
+          deleteDir()
           sh '''
             printf "%s\\n" \
               "SET(CMAKE_SYSTEM_NAME Linux)" \
@@ -88,8 +88,8 @@ pipeline {
             dpkg --info "$package_file_name.deb" || true
           '''
           archiveArtifacts(artifacts: 'indi-*.deb', fingerprint: true)
+          deleteDir()
         }
-        cleanWs()
       }
     }
   }
