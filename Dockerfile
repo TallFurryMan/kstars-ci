@@ -23,6 +23,7 @@ RUN apt-get -y --no-install-recommends install \
 RUN useradd -m jenkins
 RUN /usr/sbin/update-ccache-symlinks
 RUN apt-get -y --no-install-recommends install wget apt
+RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/apt|' /etc/sudoers
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
