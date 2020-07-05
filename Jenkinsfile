@@ -39,8 +39,7 @@ pipeline {
                             selector: lastSuccessful(),
                             target: '.',
                             fingerprintArtifacts: true
-              sh "find . -name '*.deb'"
-              sh "sudo apt install -y --no-install-recommends ./indi-*.deb"
+              sh "sudo apt install -y --no-install-recommends ./*.deb"
               deleteDir()
             }
           }
