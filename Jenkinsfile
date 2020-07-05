@@ -151,7 +151,6 @@ pipeline {
               -DWITH_WEBCAM=OFF \
               $WORKSPACE/3rdparty
             make -j4 all
-            sudo make install
           '''
         }
       }
@@ -179,6 +178,7 @@ pipeline {
             dpkg --info "$package_file_name.deb" || true
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
+          sh 'sudo make install'
           deleteDir()
         }
       }
