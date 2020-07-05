@@ -34,7 +34,7 @@ pipeline {
               "SET(CMAKE_C_FLAGS -m32)" \
               "SET(CMAKE_CXX_COMPILER g++)" \
               "SET(CMAKE_CXX_FLAGS -m32)" > i386.cmake'
-        sh 'cat i386.cmake
+        sh 'cat i386.cmake'
         sh '''
           cd indi-build
           cmake \
