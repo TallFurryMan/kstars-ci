@@ -150,8 +150,8 @@ pipeline {
               -DWITH_BEEFOCUS=OFF \
               -DWITH_WEBCAM=OFF \
               $WORKSPACE/3rdparty
+            sudo make all install clean
             make -j4 all
-            sudo make install
             cmake \
               -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
@@ -216,7 +216,7 @@ pipeline {
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
               -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
-              -D CPACK_INSTALL_COMMANDS="sudo make install" \
+              -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
