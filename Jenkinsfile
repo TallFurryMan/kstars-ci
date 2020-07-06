@@ -3,6 +3,55 @@ pipeline {
     CFLAGS = '-m32'
     CXXFLAGS = '-m32'
     CCACHE_COMPRESS = '1'
+    INDI_WITH_FLAGS = '''
+              -DWITH_EQMOD=ON \
+              -DWITH_STARBOOK=OFF \
+              -DWITH_NSE=OFF \
+              -DWITH_CAUX=OFF \
+              -DWITH_SX=OFF \
+              -DWITH_MAXDOME=OFF \
+              -DWITH_NEXDOME=OFF \
+              -DWITH_SPECTRACYBER=OFF \
+              -DWITH_MI=OFF \
+              -DWITH_FLI=OFF \
+              -DWITH_SBIG=OFF \
+              -DWITH_INOVAPLX=OFF \
+              -DWITH_APOGEE=OFF \
+              -DWITH_FFMV=OFF \
+              -DWITH_QHY=OFF \
+              -DWITH_GPHOTO=ON \
+              -DWITH_QSI=OFF \
+              -DWITH_DUINO=ON \
+              -DWITH_FISHCAMP=OFF \
+              -DWITH_GPSD=OFF \
+              -DWITH_GIGE=OFF \
+              -DWITH_DSI=OFF \
+              -DWITH_ASICAM=ON \
+              -DWITH_MGEN=ON \
+              -DWITH_ASTROMECHFOC=OFF \
+              -DWITH_LIMESDR=OFF \
+              -DWITH_RTLSDR=OFF \
+              -DWITH_RADIOSIM=OFF \
+              -DWITH_GPSNMEA=OFF \
+              -DWITH_RTKLIB=OFF \
+              -DWITH_ARMADILLO=OFF \
+              -DWITH_FXLOAD=OFF \
+              -DWITH_NIGHTSCAPE=OFF \
+              -DWITH_ATIK=ON \
+              -DWITH_TOUPBASE=OFF \
+              -DWITH_ALTAIRCAM=OFF \
+              -DWITH_DREAMFOCUSER=OFF \
+              -DWITH_AVALON=OFF \
+              -DWITH_BEEFOCUS=OFF \
+              -DWITH_SHELYAK=OFF \
+              -DWITH_SKYWALKER=OFF \
+              -DWITH_TALON6=OFF \
+              -DWITH_PENTAX=OFF \
+              -DWITH_ASTROLINK4=OFF \
+              -DWITH_AHP_INTERFEROMETER=OFF \
+              -DWITH_SV305=OFF \
+              -DWITH_WEBCAM=OFF
+    '''
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -59,33 +108,7 @@ pipeline {
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DCCACHE_SUPPORT=ON \
-              -DWITH_MI=OFF \
-              -DWITH_FLI=OFF \
-              -DWITH_SBIG=OFF \
-              -DWITH_INOVAPLX=OFF \
-              -DWITH_APOGEE=OFF \
-              -DWITH_FFMV=OFF \
-              -DWITH_QHY=OFF \
-              -DWITH_SSAG=OFF \
-              -DWITH_QSI=OFF \
-              -DWITH_FISHCAMP=OFF \
-              -DWITH_GPSD=OFF \
-              -DWITH_DSI=OFF \
-              -DWITH_ASICAM=ON \
-              -DWITH_ASTROMECHFOC=OFF \
-              -DWITH_LIMESDR=OFF \
-              -DWITH_RTLSDR=OFF \
-              -DWITH_RADIOSIM=OFF \
-              -DWITH_GPSNMEA=OFF \
-              -DWITH_ARMADILLO=OFF \
-              -DWITH_NIGHTSCAPE=OFF \
-              -DWITH_ATIK=ON \
-              -DWITH_TOUPBASE=OFF \
-              -DWITH_ALTAIRCAM=OFF \
-              -DWITH_DREAMFOCUSER=OFF \
-              -DWITH_AVALON=OFF \
-              -DWITH_BEEFOCUS=OFF \
-              -DWITH_WEBCAM=OFF \
+              ${env.INDI_WITH_FLAGS} \
               $WORKSPACE
             make -j4 all
           '''
@@ -147,34 +170,7 @@ pipeline {
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DCCACHE_SUPPORT=ON \
-              -DBUILD_LIBS=ON \
-              -DWITH_MI=OFF \
-              -DWITH_FLI=OFF \
-              -DWITH_SBIG=OFF \
-              -DWITH_INOVAPLX=OFF \
-              -DWITH_APOGEE=OFF \
-              -DWITH_FFMV=OFF \
-              -DWITH_QHY=OFF \
-              -DWITH_SSAG=OFF \
-              -DWITH_QSI=OFF \
-              -DWITH_FISHCAMP=OFF \
-              -DWITH_GPSD=OFF \
-              -DWITH_DSI=OFF \
-              -DWITH_ASICAM=ON \
-              -DWITH_ASTROMECHFOC=OFF \
-              -DWITH_LIMESDR=OFF \
-              -DWITH_RTLSDR=OFF \
-              -DWITH_RADIOSIM=OFF \
-              -DWITH_GPSNMEA=OFF \
-              -DWITH_ARMADILLO=OFF \
-              -DWITH_NIGHTSCAPE=OFF \
-              -DWITH_ATIK=ON \
-              -DWITH_TOUPBASE=OFF \
-              -DWITH_ALTAIRCAM=OFF \
-              -DWITH_DREAMFOCUSER=OFF \
-              -DWITH_AVALON=OFF \
-              -DWITH_BEEFOCUS=OFF \
-              -DWITH_WEBCAM=OFF \
+              ${env.INDI_WITH_FLAGS} \
               $WORKSPACE/3rdparty
             make -j4 all
           '''
@@ -225,33 +221,7 @@ pipeline {
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DCCACHE_SUPPORT=ON \
               -DBUILD_LIBS=ON \
-              -DWITH_MI=OFF \
-              -DWITH_FLI=OFF \
-              -DWITH_SBIG=OFF \
-              -DWITH_INOVAPLX=OFF \
-              -DWITH_APOGEE=OFF \
-              -DWITH_FFMV=OFF \
-              -DWITH_QHY=OFF \
-              -DWITH_SSAG=OFF \
-              -DWITH_QSI=OFF \
-              -DWITH_FISHCAMP=OFF \
-              -DWITH_GPSD=OFF \
-              -DWITH_DSI=OFF \
-              -DWITH_ASICAM=ON \
-              -DWITH_ASTROMECHFOC=OFF \
-              -DWITH_LIMESDR=OFF \
-              -DWITH_RTLSDR=OFF \
-              -DWITH_RADIOSIM=OFF \
-              -DWITH_GPSNMEA=OFF \
-              -DWITH_ARMADILLO=OFF \
-              -DWITH_NIGHTSCAPE=OFF \
-              -DWITH_ATIK=ON \
-              -DWITH_TOUPBASE=OFF \
-              -DWITH_ALTAIRCAM=OFF \
-              -DWITH_DREAMFOCUSER=OFF \
-              -DWITH_AVALON=OFF \
-              -DWITH_BEEFOCUS=OFF \
-              -DWITH_WEBCAM=OFF \
+              ${env.INDI_WITH_FLAGS} \
               $WORKSPACE/3rdparty
             make -j4 all
             cmake \
@@ -260,33 +230,7 @@ pipeline {
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DCCACHE_SUPPORT=ON \
               -DBUILD_LIBS=OFF \
-              -DWITH_MI=OFF \
-              -DWITH_FLI=OFF \
-              -DWITH_SBIG=OFF \
-              -DWITH_INOVAPLX=OFF \
-              -DWITH_APOGEE=OFF \
-              -DWITH_FFMV=OFF \
-              -DWITH_QHY=OFF \
-              -DWITH_SSAG=OFF \
-              -DWITH_QSI=OFF \
-              -DWITH_FISHCAMP=OFF \
-              -DWITH_GPSD=OFF \
-              -DWITH_DSI=OFF \
-              -DWITH_ASICAM=ON \
-              -DWITH_ASTROMECHFOC=OFF \
-              -DWITH_LIMESDR=OFF \
-              -DWITH_RTLSDR=OFF \
-              -DWITH_RADIOSIM=OFF \
-              -DWITH_GPSNMEA=OFF \
-              -DWITH_ARMADILLO=OFF \
-              -DWITH_NIGHTSCAPE=OFF \
-              -DWITH_ATIK=ON \
-              -DWITH_TOUPBASE=OFF \
-              -DWITH_ALTAIRCAM=OFF \
-              -DWITH_DREAMFOCUSER=OFF \
-              -DWITH_AVALON=OFF \
-              -DWITH_BEEFOCUS=OFF \
-              -DWITH_WEBCAM=OFF \
+              ${env.INDI_WITH_FLAGS} \
               $WORKSPACE/3rdparty
             make -j4 all
           '''
