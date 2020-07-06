@@ -39,22 +39,26 @@ pipeline {
         
     stage('Dependencies') {
       steps {
-        dir('kstars-deps') {
-          try {
+        try {
+          dir('kstars-deps') {
             copyArtifacts projectName: 'kstars-ci/i386-indi',
               filter: 'indi-*.deb',
               selector: specific("${env.INDI_CORE_BUILD}"),
               target: '.',
               fingerprintArtifacts: true
           }
-          catch (err)
-          {
+        }
+        catch (err)
+        {
+          dir('kstars-deps') {
             copyArtifacts projectName: 'kstars-ci/i386-indi',
               filter: 'indi-*.deb',
               selector: lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
-          }            
+          }
+        }
+        dir('kstars-deps') {
           sh "sudo dpkg --install --force-overwrite ./*.deb"
           deleteDir()
         }
