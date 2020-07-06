@@ -63,7 +63,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                warnError ('Test Failure', buildResult: 'SUCCESS') {
+                catchError ('Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     dir('phd2-build') {
                         sh 'make test'
                     }
