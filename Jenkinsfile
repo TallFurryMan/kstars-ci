@@ -39,11 +39,15 @@ pipeline {
         }
         stage('Indi Core') {
           steps {
+            agent { label 'master' }
             script {
               def indi_build = build job: 'i386-indi',
                 parameters: [string(name: 'TAG', value: "${params.INDI_TAG}"), string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
               env['INDI_BUILD_NUMBER'] = indi_build.number
             }
+          }
+        }
+        stage('Dependencies') {
             dir('kstars-deps') {
               copyArtifacts projectName: 'kstars-ci/i386-indi',
                 filter: 'indi-*.deb',
