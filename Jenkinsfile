@@ -103,7 +103,7 @@ pipeline {
         dir('indi-build') {
           deleteDir()
           sh """
-            cmake
+            cmake \
               -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
