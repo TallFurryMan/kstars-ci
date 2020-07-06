@@ -12,11 +12,14 @@ pipeline {
         string(name: 'PHD2_TAG',   defaultValue: 'master', description: 'PHD2 tag to build.')
     }
     stages {
-        stage('Build') {
+        stage('Build Deps') {
             steps {
                 build job: 'i386-indi',
                       parameters: [string(name: 'TAG', value: "${params.INDI_TAG}")]
-
+            }
+        }
+        stage('Build') {
+            steps {
                 parallel(
                     'kstars': {
                         build job: 'i386',
