@@ -95,7 +95,8 @@ pipeline {
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
-            dpkg --info "$package_file_name.deb" || true
+            dpkg --info "$package_file_name.deb"
+            dpkg --field "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
           sh 'sudo make install'
