@@ -1,3 +1,4 @@
+def INDI_BUILD
 pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
