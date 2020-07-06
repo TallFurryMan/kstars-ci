@@ -21,7 +21,7 @@ RUN apt-get -y --no-install-recommends install \
         xplanet xplanet-images
 
 RUN apt-get -y --no-install-recommends install wget apt sudo
-RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/apt|' /etc/sudoers
+RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg|' /etc/sudoers
 RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
