@@ -312,7 +312,7 @@ pipeline {
             version_patch=`cd ../3rdparty && git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
             version="$version_major.$version_minor.$version_revision.$version_patch"
             package_file_name="indi-3rdparty-drivers-$version-Linux-i386"
-            cpack -G DEB -P indi-3rdparty-drivers -R $version \
+            cpack --debug --verbose -G DEB -P indi-3rdparty-drivers -R $version \
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi-3rdparty;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
