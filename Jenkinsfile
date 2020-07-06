@@ -86,7 +86,7 @@ pipeline {
     
     stage('Test') {
       steps {
-        catchError ('Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+        catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('kstars-build') {
             sh 'make test'
           }
