@@ -45,7 +45,7 @@ pipeline {
                             selector: lastSuccessful(),
                             target: '.',
                             fingerprintArtifacts: true
-              sh "sudo apt install -y --no-install-recommends ./*.deb"
+              sh "sudo apt install -y --no-install-recommends --force=yes ./*.deb"
               deleteDir()
             }
           }
