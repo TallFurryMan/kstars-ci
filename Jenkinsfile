@@ -14,7 +14,7 @@ pipeline {
     string(name: 'REPO', defaultValue: 'https://invent.kde.org/edejouhanet/kstars.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
-    string(name: 'INDI_CORE_BUILD', defaultValue: lastSuccessful(), description: 'The build to use for INDI Core.')
+    string(name: 'INDI_CORE_BUILD', defaultValue: 'lastSuccessful', description: 'The build to use for INDI Core.')
   }
   
   agent {
