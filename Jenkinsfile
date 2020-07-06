@@ -39,16 +39,18 @@ pipeline {
         }
         stage('Indi Core') {
           steps {
-            def indi_build = build job: 'i386-indi',
-              parameters: [string(name: 'TAG', value: "${params.INDI_TAG}"), string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
-            dir('kstars-deps') {
-              copyArtifacts projectName: 'kstars-ci/i386-indi',
-                filter: 'indi-*.deb',
-                selector: specific("${indi_build.number}"),
-                target: '.',
-                fingerprintArtifacts: true
-              sh "sudo dpkg --install --force-overwrite ./*.deb"
-              deleteDir()
+            script {
+              def indi_build = build job: 'i386-indi',
+                parameters: [string(name: 'TAG', value: "${params.INDI_TAG}"), string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
+              dir('kstars-deps') {
+                copyArtifacts projectName: 'kstars-ci/i386-indi',
+                  filter: 'indi-*.deb',
+                  selector: specific("${indi_build.number}"),
+                  target: '.',
+                  fingerprintArtifacts: true
+                sh "sudo dpkg --install --force-overwrite ./*.deb"
+                deleteDir()
+              }
             }
           }
         }
