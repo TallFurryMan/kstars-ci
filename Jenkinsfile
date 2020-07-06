@@ -3,7 +3,8 @@ pipeline {
     CFLAGS = '-m32'
     CXXFLAGS = '-m32'
     CCACHE_COMPRESS = '1'
-    INDI_WITH_FLAGS = '''
+    CMAKE_OPTIONS = '-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON'
+    INDI_WITH_FLAGS = """
               -DWITH_EQMOD=ON \
               -DWITH_STARBOOK=OFF \
               -DWITH_NSE=OFF \
@@ -51,7 +52,7 @@ pipeline {
               -DWITH_AHP_INTERFEROMETER=OFF \
               -DWITH_SV305=OFF \
               -DWITH_WEBCAM=OFF
-    '''
+    """
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -103,7 +104,7 @@ pipeline {
         dir('indi-build') {
           deleteDir()
           sh """
-            cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}
+            cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}
             make -j4 all
           """
         }
