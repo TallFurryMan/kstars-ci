@@ -38,7 +38,7 @@ pipeline {
     }
         
     stage('Dependencies') {
-      steps {
+      steps { script {
         try {
           dir('kstars-deps') {
             copyArtifacts projectName: 'kstars-ci/i386-indi',
@@ -57,7 +57,7 @@ pipeline {
               target: '.',
               fingerprintArtifacts: true
           }
-        }
+        } }
         dir('kstars-deps') {
           sh "sudo dpkg --install --force-overwrite ./*.deb"
           deleteDir()
