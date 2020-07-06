@@ -32,8 +32,13 @@ pipeline {
         stage('Install') {
             steps {
                 parallel(
-                    'Controller': { build job: 'observatory-update' },
-                    'Guider': { build job: 'observatory-guider-update' }
+                    'Controller': {
+                        build job: 'observatory-update'
+                    },
+                    'Guider': {
+                        build job: 'observatory-guider-update'
+                    }
+                )
             }
         }
     }
