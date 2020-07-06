@@ -14,6 +14,7 @@ pipeline {
     string(name: 'REPO', defaultValue: 'https://invent.kde.org/edejouhanet/kstars.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
+    string(name: 'INDI_CORE_BUILD', defaultValue: 'lastSuccessful', description: 'The build to use for INDI Core.'
   }
   
   agent {
@@ -35,24 +36,13 @@ pipeline {
           '''
         }
     }
-    
+        
     stage('Dependencies') {
-      agent { label 'master' }
-      steps {
-        script {
-          def indi_build = build job: 'i386-indi',
-            parameters: [string(name: 'TAG', value: "${params.INDI_TAG}"), string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
-          env['INDI_BUILD_NUMBER'] = indi_build.number
-        }
-      }
-    }
-    
-    stage('Installs') {
       steps {
         dir('kstars-deps') {
           copyArtifacts projectName: 'kstars-ci/i386-indi',
             filter: 'indi-*.deb',
-            selector: specific("${env.INDI_BUILD_NUMBER}"),
+            selector: specific("${env.INDI_CORE_BUILD}"),
             target: '.',
             fingerprintArtifacts: true
           sh "sudo dpkg --install --force-overwrite ./*.deb"
