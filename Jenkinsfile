@@ -111,7 +111,7 @@ pipeline {
               ${env.INDI_WITH_FLAGS} \
               $WORKSPACE
             make -j4 all
-          '''
+          """
         }
       }
     }
