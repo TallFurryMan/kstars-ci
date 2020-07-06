@@ -59,7 +59,33 @@ pipeline {
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DCCACHE_SUPPORT=ON \
-              -DWITH_MI=OFF        -DWITH_FLI=OFF          -DWITH_SBIG=OFF         -DWITH_INOVAPLX=OFF                         -DWITH_APOGEE=OFF    -DWITH_FFMV=OFF         -DWITH_QHY=OFF          -DWITH_SSAG=OFF                         -DWITH_QSI=OFF       -DWITH_FISHCAMP=OFF     -DWITH_GPSD=OFF         -DWITH_DSI=OFF                         -DWITH_ASICAM=ON     -DWITH_ASTROMECHFOC=OFF -DWITH_LIMESDR=OFF                         -DWITH_RTLSDR=OFF    -DWITH_RADIOSIM=OFF     -DWITH_GPSNMEA=OFF                         -DWITH_ARMADILLO=OFF -DWITH_NIGHTSCAPE=OFF   -DWITH_ATIK=ON                         -DWITH_TOUPBASE=OFF  -DWITH_ALTAIRCAM=OFF    -DWITH_DREAMFOCUSER=OFF                         -DWITH_AVALON=OFF    -DWITH_BEEFOCUS=OFF     -DWITH_WEBCAM=OFF \
+              -DWITH_MI=OFF \
+              -DWITH_FLI=OFF \
+              -DWITH_SBIG=OFF \
+              -DWITH_INOVAPLX=OFF \
+              -DWITH_APOGEE=OFF \
+              -DWITH_FFMV=OFF \
+              -DWITH_QHY=OFF \
+              -DWITH_SSAG=OFF \
+              -DWITH_QSI=OFF \
+              -DWITH_FISHCAMP=OFF \
+              -DWITH_GPSD=OFF \
+              -DWITH_DSI=OFF \
+              -DWITH_ASICAM=ON \
+              -DWITH_ASTROMECHFOC=OFF \
+              -DWITH_LIMESDR=OFF \
+              -DWITH_RTLSDR=OFF \
+              -DWITH_RADIOSIM=OFF \
+              -DWITH_GPSNMEA=OFF \
+              -DWITH_ARMADILLO=OFF \
+              -DWITH_NIGHTSCAPE=OFF \
+              -DWITH_ATIK=ON \
+              -DWITH_TOUPBASE=OFF \
+              -DWITH_ALTAIRCAM=OFF \
+              -DWITH_DREAMFOCUSER=OFF \
+              -DWITH_AVALON=OFF \
+              -DWITH_BEEFOCUS=OFF \
+              -DWITH_WEBCAM=OFF \
               $WORKSPACE
             make -j4 all
           '''
@@ -96,7 +122,6 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
             dpkg --info "$package_file_name.deb"
-            dpkg --field "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
           sh 'sudo make install'
@@ -176,7 +201,7 @@ pipeline {
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
-            dpkg --info "$package_file_name.deb" || true
+            dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
           sh 'sudo make install'
@@ -297,7 +322,7 @@ pipeline {
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
-            dpkg --info "$package_file_name.deb" || true
+            dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-drivers-*.deb', fingerprint: true)
           deleteDir()
