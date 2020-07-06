@@ -26,38 +26,36 @@ pipeline {
   stages {
     
     stage('Preparation') {
-      parallel {
-        stage('Preparation') {
-          steps {
-            sh '''
-              cat ~/built_on
-              [ -f ~/.ccache/ccache.conf ] || touch ~/.ccache/ccache.conf
-              ccache --max-size 20G
-              ccache -s
-            '''
-          }
+        steps {
+          sh '''
+            cat ~/built_on
+            [ -f ~/.ccache/ccache.conf ] || touch ~/.ccache/ccache.conf
+            ccache --max-size 20G
+            ccache -s
+          '''
         }
-        stage('Indi Core') {
-          steps {
-            agent { label 'master' }
-            script {
-              def indi_build = build job: 'i386-indi',
-                parameters: [string(name: 'TAG', value: "${params.INDI_TAG}"), string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
-              env['INDI_BUILD_NUMBER'] = indi_build.number
-            }
-          }
+    }
+    
+    stage('Dependencies') {
+      agent { label 'master' }
+      steps {
+        script {
+          def indi_build = build job: 'i386-indi',
+            parameters: [string(name: 'TAG', value: "${params.INDI_TAG}"), string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
+          env['INDI_BUILD_NUMBER'] = indi_build.number
         }
-        stage('Dependencies') {
-            dir('kstars-deps') {
-              copyArtifacts projectName: 'kstars-ci/i386-indi',
-                filter: 'indi-*.deb',
-                selector: specific("${env.INDI_BUILD_NUMBER}"),
-                target: '.',
-                fingerprintArtifacts: true
-              sh "sudo dpkg --install --force-overwrite ./*.deb"
-              deleteDir()
-            }
-          }
+      }
+    }
+    
+    stage('Installs') {
+        dir('kstars-deps') {
+          copyArtifacts projectName: 'kstars-ci/i386-indi',
+            filter: 'indi-*.deb',
+            selector: specific("${env.INDI_BUILD_NUMBER}"),
+            target: '.',
+            fingerprintArtifacts: true
+          sh "sudo dpkg --install --force-overwrite ./*.deb"
+          deleteDir()
         }
       }
     }
