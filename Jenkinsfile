@@ -12,13 +12,17 @@ pipeline {
         string(name: 'PHD2_TAG',   defaultValue: 'master', description: 'PHD2 tag to build.')
     }
     stages {
-        stage('Build') {
+        stage('Dependencies') {
             steps {
                 script {
                     def build = build job: 'i386-indi',
                         parameters: [string(name: 'TAG', value: "${params.INDI_TAG}"), string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
                     env['INDI_BUILD'] = build.getNumber()
                 }
+            }
+        }
+        stage('Build') {
+            steps {
                 parallel(
                     'kstars': {
                         build job: 'i386',
