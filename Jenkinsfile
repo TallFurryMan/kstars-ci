@@ -102,8 +102,8 @@ pipeline {
       steps {
         dir('indi-build') {
           deleteDir()
-          sh '''
-            cmake \
+          sh """
+            cmake
               -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -164,7 +164,7 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           deleteDir()
-          sh '''
+          sh """
             cmake \
               -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
@@ -173,7 +173,7 @@ pipeline {
               ${env.INDI_WITH_FLAGS} \
               $WORKSPACE/3rdparty
             make -j4 all
-          '''
+          """
         }
       }
     }
@@ -214,7 +214,7 @@ pipeline {
       steps {
         dir('indi3p-build') {
           deleteDir()
-          sh '''
+          sh """
             cmake \
               -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
@@ -233,7 +233,7 @@ pipeline {
               ${env.INDI_WITH_FLAGS} \
               $WORKSPACE/3rdparty
             make -j4 all
-          '''
+          """
         }
       }
     }
