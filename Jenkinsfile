@@ -48,6 +48,7 @@ pipeline {
     }
     
     stage('Installs') {
+      steps {
         dir('kstars-deps') {
           copyArtifacts projectName: 'kstars-ci/i386-indi',
             filter: 'indi-*.deb',
