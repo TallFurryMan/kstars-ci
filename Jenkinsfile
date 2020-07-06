@@ -109,7 +109,7 @@ pipeline {
     }
     stage('Test Core') {
       steps {
-        warnError(message: 'Test Failure') {
+        warnError(message: 'Test Failure', buildResult: 'SUCCESS') {
           dir('indi-build') {
             sh 'make test'
           }
@@ -207,7 +207,7 @@ pipeline {
     }
     stage('Test 3rd-party drivers') {
       steps {
-        warnError(message: 'Test Failure') {
+        warnError(message: 'Test Failure', buildResult: 'SUCCESS') {
           dir('indi3p-build') {
             sh 'make test'
           }
