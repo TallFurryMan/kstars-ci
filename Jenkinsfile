@@ -43,7 +43,7 @@ pipeline {
           dir('kstars-deps') {
             copyArtifacts projectName: 'kstars-ci/i386-indi',
               filter: 'indi-*.deb',
-              selector: ${params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful()},
+              selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
             sh "sudo dpkg --install --force-overwrite ./*.deb"
