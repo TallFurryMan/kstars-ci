@@ -1,24 +1,30 @@
 pipeline {
+  
   environment {
     CFLAGS = '-m32'
     CXXFLAGS = '-m32'
     CCACHE_COMPRESS = '1'
   }
+  
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
+  
   parameters {
     string(name: 'REPO', defaultValue: 'https://invent.kde.org/edejouhanet/kstars.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
   }
+  
   agent {
     dockerfile {
       filename 'Dockerfile'
       args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
     }
   }
+  
   stages {
+    
     stage('Preparation') {
       parallel {
         stage('Preparation') {
@@ -46,12 +52,14 @@ pipeline {
         }
       }
     }
+    
     stage('Checkout') {
       steps {
         git(url: "${params.REPO}", branch: "${params.BRANCH}")
         sh "git checkout ${params.TAG}"
       }
     }
+    
     stage('Build') {
       steps {
         dir('kstars-build') {
@@ -75,15 +83,17 @@ pipeline {
         }
       }
     }
+    
     stage('Test') {
       steps {
-        warnError(message: 'Test Failure') {
+        catchError ('Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('kstars-build') {
             sh 'make test'
           }
         }
       }
     }
+    
     stage('Package') {
       steps {
         dir('kstars-build') {
