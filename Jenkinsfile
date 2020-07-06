@@ -27,7 +27,7 @@ pipeline {
                 parallel(
                     'kstars': {
                         build job: 'i386',
-                              parameters: [string(name: 'TAG', value: "${params.KSTARS_TAG}"), string(name: 'INDI_BUILD_NUMBER', value: "${INDI_BUILD}")]
+                              parameters: [string(name: 'TAG', value: "${params.KSTARS_TAG}"), string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD}")]
                     },
                     'phd2': {
                         build job: 'i386-phd2',
