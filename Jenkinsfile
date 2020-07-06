@@ -1,4 +1,5 @@
 pipeline {
+  
   environment {
     CFLAGS = '-m32'
     CXXFLAGS = '-m32'
@@ -53,9 +54,11 @@ pipeline {
       '-DWITH_SV305=OFF ' +
       '-DWITH_WEBCAM=OFF'
   }
+  
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
+  
   parameters {
     string(name: 'REPO', defaultValue: 'https://github.com/indilib/indi.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
@@ -64,13 +67,16 @@ pipeline {
     string(name: 'BRANCH3P', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG3P', defaultValue: 'master', description: 'The repository tag to build.')
   }
+  
   agent {
     dockerfile {
       filename 'Dockerfile'
       args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
     }
   }
+  
   stages {
+    
     stage('Preparation') {
       steps {
         sh 'cat ~/built_on'
@@ -88,6 +94,7 @@ pipeline {
         '''
       }
     }
+    
     stage('Checkout Core') {
       steps {
         git(url: "${params.REPO}", branch: "${params.BRANCH}")
@@ -98,6 +105,7 @@ pipeline {
         }
       }
     }
+    
     stage('Build Core') {
       steps {
         dir('indi-build') {
@@ -107,15 +115,17 @@ pipeline {
         }
       }
     }
+    
     stage('Test Core') {
       steps {
-        catchError ('Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+        catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('indi-build') {
             sh 'make test'
           }
         }
       }
     }
+    
     stage('Package Core') {
       steps {
         dir('indi-build') {
@@ -144,6 +154,7 @@ pipeline {
         }
       }
     }
+    
     stage('Checkout 3rd-party') {
       steps {
         dir('3rdparty') {
@@ -152,6 +163,7 @@ pipeline {
         }
       }
     }
+    
     stage('Build 3rd-party libraries') {
       steps {
         dir('indi3p-libs-build') {
@@ -161,6 +173,7 @@ pipeline {
         }
       }
     }
+    
     stage('Package libraries') {
       steps {
         dir('indi3p-libs-build') {
@@ -194,6 +207,7 @@ pipeline {
         }
       }
     }
+    
     stage('Build 3rd-party drivers') {
       steps {
         dir('indi3p-build') {
@@ -205,15 +219,17 @@ pipeline {
         }
       }
     }
+    
     stage('Test 3rd-party drivers') {
       steps {
-        catchError ('Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+        catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('indi3p-build') {
             sh 'make test'
           }
         }
       }
     }
+    
     stage('Package') {
       steps {
         dir('indi3p-build') {
