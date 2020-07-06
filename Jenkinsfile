@@ -103,13 +103,7 @@ pipeline {
         dir('indi-build') {
           deleteDir()
           sh """
-            cmake \
-              -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake \
-              -DCMAKE_INSTALL_PREFIX=/usr/local \
-              -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-              -DCCACHE_SUPPORT=ON \
-              ${env.INDI_WITH_FLAGS} \
-              $WORKSPACE
+            cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}
             make -j4 all
           """
         }
