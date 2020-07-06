@@ -56,7 +56,7 @@ pipeline {
     stage('Checkout') {
       steps {
         git(url: "${params.REPO}", branch: "${params.BRANCH}")
-        sh "git checkout ${params.TAG}"
+        sh "git checkout ${params.TAG} && git pull"
         sh "git log --oneline --decorate -10"
       }
     }
