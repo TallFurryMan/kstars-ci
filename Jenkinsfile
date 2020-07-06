@@ -14,10 +14,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                script {
+                    def build = build job: 'i386-indi',
+                        parameters: [string(name: 'TAG', value: "${params.INDI_TAG}"), string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
+                    env['INDI_BUILD'] = build.getNumber()
+                }
                 parallel(
                     'kstars': {
                         build job: 'i386',
-                              parameters: [string(name: 'TAG', value: "${params.KSTARS_TAG}")]
+                              parameters: [string(name: 'TAG', value: "${params.KSTARS_TAG}"), string(name: 'INDI_BUILD_NUMBER', value: "${env.INDI_BUILD}")]
                     },
                     'phd2': {
                         build job: 'i386-phd2',
