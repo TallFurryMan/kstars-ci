@@ -84,8 +84,8 @@ pipeline {
             version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
             version="$version_major.$version_minor.$version_revision.$version_patch"
-            package_file_name="indi-$version-Linux-i386"
-            cpack -G DEB -P indi -R $version \
+            package_file_name="indi-core-$version-Linux-i386"
+            cpack -G DEB -P indi-core -R $version \
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
@@ -97,7 +97,7 @@ pipeline {
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
             dpkg --info "$package_file_name.deb" || true
           '''
-          archiveArtifacts(artifacts: 'indi-*.deb', fingerprint: true)
+          archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
           sh 'sudo make install'
           deleteDir()
         }
@@ -285,8 +285,8 @@ pipeline {
             version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`cd ../3rdparty && git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
             version="$version_major.$version_minor.$version_revision.$version_patch"
-            package_file_name="indi-3rdparty-$version-Linux-i386"
-            cpack -G DEB -P indi-3rdparty -R $version \
+            package_file_name="indi-3rdparty-drivers-$version-Linux-i386"
+            cpack -G DEB -P indi-3rdparty-drivers -R $version \
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi-3rdparty;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
@@ -298,7 +298,7 @@ pipeline {
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
             dpkg --info "$package_file_name.deb" || true
           '''
-          archiveArtifacts(artifacts: 'indi-3rdparty-*.deb', fingerprint: true)
+          archiveArtifacts(artifacts: 'indi-3rdparty-drivers-*.deb', fingerprint: true)
           deleteDir()
         }
       }
