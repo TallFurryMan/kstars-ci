@@ -11,16 +11,15 @@ pipeline {
   }
   
   parameters {
-    string(name: 'REPO', defaultValue: 'https://invent.kde.org/edejouhanet/kstars.git', description: 'The repository to clone from.')
+    string(name: 'REPO', defaultValue: 'https://github.com/rlancaste/stellarsolver.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
-    string(name: 'INDI_CORE_BUILD', defaultValue: '', description: 'The build to use for INDI Core, empty for last succesful build.')
   }
   
   agent {
     dockerfile {
       filename 'Dockerfile'
-      args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
+      args '-v stellarsolver_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
     }
   }
   
@@ -40,13 +39,8 @@ pipeline {
     stage('Dependencies') {
       steps {
         script {
-          dir('kstars-deps') {
-            copyArtifacts projectName: 'kstars-ci/i386-indi',
-              filter: 'indi-*.deb',
-              selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
-              target: '.',
-              fingerprintArtifacts: true
-            sh "sudo dpkg --install --force-overwrite ./*.deb"
+          dir('stellarsolver-deps') {
+            echo 'No dependency'
             deleteDir()
           }
         }
@@ -63,7 +57,7 @@ pipeline {
     
     stage('Build') {
       steps {
-        dir('kstars-build') {
+        dir('stellarsolver-build') {
           deleteDir()
           sh '''
             printf "%s\\n" \
@@ -77,6 +71,7 @@ pipeline {
               -DCMAKE_TOOLCHAIN_FILE=i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DBUILD_TESTER=ON \
               -DCCACHE_SUPPORT=ON \
               $WORKSPACE
             make -j4 clean all
@@ -88,7 +83,7 @@ pipeline {
     stage('Test') {
       steps {
         catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-          dir('kstars-build') {
+          dir('stellarsolver-build') {
             sh 'make test'
           }
         }
@@ -97,24 +92,25 @@ pipeline {
     
     stage('Package') {
       steps {
-        dir('kstars-build') {
+        dir('stellarsolver-build') {
           sh '''
-            version=`grep \'KSTARS_VERSION .*$\' kstars/version.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version=`grep \'(StellarSolver_VERSION_MAJOR .*)$\' CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
+            version="$version."`grep \'(StellarSolver_VERSION_MINOR .*)$\' CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
-            package_file_name="kstars-$version.$version_patch-Linux-i386"
-            cpack -G DEB -P kstars -R $version \
-              -D CPACK_INSTALL_CMAKE_PROJECTS=".;kstars;ALL;/" \
+            package_file_name="stellarsolver-$version.$version_patch-Linux-i386"
+            cpack -G DEB -P stellarsolver -R $version \
+              -D CPACK_INSTALL_CMAKE_PROJECTS=".;stellarsolver;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
               -D CPACK_PACKAGE_FILE_NAME="$package_file_name" \
               -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="KStars i386" \
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="StellarSolver i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
             dpkg --info "$package_file_name.deb" || true
           '''
-          archiveArtifacts(artifacts: 'kstars-*.deb', fingerprint: true)
+          archiveArtifacts(artifacts: 'stellarsolver-*.deb', fingerprint: true)
           deleteDir()
         }
       }
