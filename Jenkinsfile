@@ -71,7 +71,7 @@ pipeline {
               -DCMAKE_TOOLCHAIN_FILE=i386.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-              -DBUILD_TESTER=ON \
+              -DBUILD_TESTER=OFF \
               -DCCACHE_SUPPORT=ON \
               -DRUN_RESULT_2=0 -DRUN_RESULT_3=0 -DRUN_RESULT_4=0 \
               $WORKSPACE
