@@ -73,6 +73,7 @@ pipeline {
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DBUILD_TESTER=ON \
               -DCCACHE_SUPPORT=ON \
+              -DRUN_TEST_2=0 -DRUN_TEST_3=0 -DRUN_TEST_4=0 \
               $WORKSPACE
             make -j4 clean all
           '''
