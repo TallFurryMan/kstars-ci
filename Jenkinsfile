@@ -14,7 +14,7 @@ pipeline {
     parameters {
         string(name: 'REPO',   defaultValue: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from.')
         string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-        string(name: 'TAG',    defaultValue: 'v2.6.8', description: 'The repository tag to build.')
+        string(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
     }
 
     environment {
