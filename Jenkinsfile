@@ -11,7 +11,7 @@ pipeline {
   }
   
   parameters {
-    string(name: 'REPO', defaultValue: 'https://invent.kde.org/edejouhanet/kstars.git', description: 'The repository to clone from.')
+    string(name: 'REPO', defaultValue: 'https://invent.kde.org/education/kstars.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
     string(name: 'INDI_CORE_BUILD', defaultValue: '', description: 'The build to use for INDI Core, empty for last succesful build.')
