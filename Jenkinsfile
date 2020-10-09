@@ -15,6 +15,7 @@ pipeline {
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
     string(name: 'INDI_CORE_BUILD', defaultValue: '', description: 'The build to use for INDI Core, empty for last succesful build.')
+    string(name: 'STELLARSOLVER_BUILD', defaultValue: '', description: 'The build to use for StellarSolver, empty for last succesful build.')
   }
   
   agent {
@@ -44,6 +45,11 @@ pipeline {
             copyArtifacts projectName: 'kstars-ci/i386-indi',
               filter: 'indi-*.deb',
               selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
+              target: '.',
+              fingerprintArtifacts: true
+            copyArtifacts projectName: 'kstars-ci/i386-stellarsolver',
+              filter: 'stellarsolver-*.deb',
+              selector: params.STELLARSOLVER_BUILD ? specific(params.STELLARSOLVER_BUILD) : lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
             sh "sudo dpkg --install --force-overwrite ./*.deb"
