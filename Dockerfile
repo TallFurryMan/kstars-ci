@@ -6,7 +6,7 @@ RUN apt-get -y --no-install-recommends install \
         gcc-multilib g++-multilib
 RUN apt-get -y --no-install-recommends install \
         cmake extra-cmake-modules
-RUN apt-get -y --no-install-recommends install \
+RUN apt update && apt-get -y --no-install-recommends install \
         git dpkg-dev default-jre ccache qt5-default:i386 libcfitsio-dev:i386 libgsl-dev:i386
 
 RUN apt-get -y --no-install-recommends install wget apt sudo
