@@ -84,6 +84,7 @@ pipeline {
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DCCACHE_SUPPORT=ON \
+              -DBUILD_TESTING=OFF \
               $WORKSPACE
             make -j4 clean all
           '''
@@ -91,15 +92,15 @@ pipeline {
       }
     }
     
-    stage('Test') {
-      steps {
-        catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-          dir('kstars-build') {
-            sh 'make test'
-          }
-        }
-      }
-    }
+    //stage('Test') {
+    //  steps {
+    //    catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+    //      dir('kstars-build') {
+    //        sh 'make test'
+    //      }
+    //    }
+    //  }
+    //}
     
     stage('Package') {
       steps {
