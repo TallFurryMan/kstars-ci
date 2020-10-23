@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Dependencies') {
             steps {
-                parallel {
+                parallel(
                     'indi': {
                         script {
                             def build = build job: 'i386-indi', parameters: [
@@ -34,7 +34,7 @@ pipeline {
                             STSLV_BUILD = build.getNumber()
                         }
                     }
-                }
+                )
             }
         }
         stage('Build') {
