@@ -50,7 +50,7 @@ pipeline {
       '-DWITH_TALON6=OFF ' +
       '-DWITH_PENTAX=OFF ' +
       '-DWITH_ASTROLINK4=OFF ' +
-      '-DWITH_AHP_INTERFEROMETER=OFF ' +
+      '-DWITH_AHP_CORRELATOR=OFF ' +
       '-DWITH_SV305=OFF ' +
       '-DWITH_WEBCAM=OFF'
   }
