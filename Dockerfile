@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
 
-RUN dpkg --add-architecture i386
 RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get -y --no-install-recommends install \
         gcc-multilib g++-multilib
@@ -9,15 +8,15 @@ RUN apt-get -y --no-install-recommends install \
 RUN apt-get -y --no-install-recommends install \
         git dpkg-dev default-jre ccache gettext breeze-icon-theme
 RUN apt-get -y --no-install-recommends install \
-        zlib1g-dev:i386 libsecret-1-dev:i386
+        zlib1g-dev libsecret-1-dev
 RUN apt-get -y install \
-        qtdeclarative5-dev:i386 libqt5svg5-dev:i386 libqt5websockets5-dev:i386
+        qtdeclarative5-dev libqt5svg5-dev libqt5websockets5-dev
 RUN apt-get -y install \
-        libkf5plotting-dev:i386 libkf5xmlgui-dev:i386 libkf5newstuff-dev:i386 \
-        libkf5notifications-dev:i386 libkf5crash-dev:i386 libkf5notifyconfig-dev:i386 \
-        kio-dev:i386 kinit-dev:i386 kdoctools-dev:i386 libkf5config-bin:i386
+        libkf5plotting-dev libkf5xmlgui-dev libkf5newstuff-dev \
+        libkf5notifications-dev libkf5crash-dev libkf5notifyconfig-dev \
+        kio-dev:i386 kinit-dev kdoctools-dev libkf5config-bin
 RUN apt-get -y --no-install-recommends install \
-        libeigen3-dev:i386 libcfitsio-dev:i386 libnova-dev:i386 libgsl-dev:i386 libraw-dev:i386 wcslib-dev:i386 \
+        libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
         xplanet xplanet-images
 
 RUN apt-get -y --no-install-recommends install wget apt sudo
