@@ -40,6 +40,7 @@ pipeline {
       steps {
         script {
           dir('kstars-deps') {
+            sh "rm *.deb"
             copyArtifacts projectName: 'kstars-ci/atom-indi',
               filter: 'indi-*x86_64.deb',
               selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
