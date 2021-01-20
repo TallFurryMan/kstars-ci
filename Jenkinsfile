@@ -86,7 +86,7 @@ pipeline {
                     },
                     'Guider': {
                         build job: 'observatory-guider-update'
-                    }
+                    },
                     'Panda': {
                         build job: 'observatory-panda-update'
                     }
