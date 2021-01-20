@@ -1,8 +1,6 @@
 pipeline {
   
   environment {
-    CFLAGS = '-m32'
-    CXXFLAGS = '-m32'
     CCACHE_COMPRESS = '1'
   }
   
@@ -62,13 +60,13 @@ pipeline {
           sh '''
             printf "%s\\n" \
               "SET(CMAKE_SYSTEM_NAME Linux)" \
-              "SET(CMAKE_SYSTEM_PROCESSOR i386)" \
+              "SET(CMAKE_SYSTEM_PROCESSOR x86_64)" \
               "SET(CMAKE_C_COMPILER gcc)" \
-              "SET(CMAKE_C_FLAGS -m32)" \
+              "SET(CMAKE_C_FLAGS -march=silvermont)" \
               "SET(CMAKE_CXX_COMPILER g++)" \
-              "SET(CMAKE_CXX_FLAGS -m32)" > i386.cmake
+              "SET(CMAKE_CXX_FLAGS -march=silvermont)" > z8350.cmake
             cmake \
-              -DCMAKE_TOOLCHAIN_FILE=i386.cmake \
+              -DCMAKE_TOOLCHAIN_FILE=z8350.cmake \
               -DCMAKE_INSTALL_PREFIX=/usr/local \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DBUILD_TESTER=OFF \
@@ -107,8 +105,8 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="StellarSolver i386" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="StellarSolver x86_64" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=x86_64
             dpkg --info "$package_file_name.deb" || true
           '''
           archiveArtifacts(artifacts: 'stellarsolver-*.deb', fingerprint: true)
