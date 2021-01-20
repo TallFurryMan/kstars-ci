@@ -133,7 +133,7 @@ pipeline {
             version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
             version="$version_major.$version_minor.$version_revision-$version_patch"
-            package_file_name="indi-core-$version-Linux-i386"
+            package_file_name="indi-core-$version-Linux-x86_64"
             cpack --debug --verbose -G DEB -P indi-core -R $version \
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
