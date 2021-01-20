@@ -42,6 +42,7 @@ pipeline {
       steps {
         script {
           dir('kstars-deps') {
+            sh "rm -rf *.deb"
             copyArtifacts projectName: 'kstars-ci/i386-indi',
               filter: 'indi-*i386.deb',
               selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
