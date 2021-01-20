@@ -27,9 +27,24 @@ pipeline {
                             INDI_BUILD = build.getNumber()
                         }
                     },
+                    'indi-atom': {
+                        script {
+                            def build = build job: 'atom-indi', parameters: [
+                                string(name: 'TAG', value: "${params.INDI_TAG}"),
+                                string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
+                            INDI_BUILD = build.getNumber()
+                        }
+                    },
                     'stellarsolver': {
                         script {
                             def build = build job: 'i386-stellarsolver', parameters: [
+                                string(name: 'TAG', value: "${params.STSLV_TAG}")]
+                            STSLV_BUILD = build.getNumber()
+                        }
+                    },
+                    'stellarsolver-atom': {
+                        script {
+                            def build = build job: 'atom-stellarsolver', parameters: [
                                 string(name: 'TAG', value: "${params.STSLV_TAG}")]
                             STSLV_BUILD = build.getNumber()
                         }
@@ -42,6 +57,14 @@ pipeline {
                 parallel(
                     'kstars': {
                         build job: 'i386',
+                              parameters: [
+                                  string(name: 'TAG', value: "${params.KSTARS_TAG}"),
+                                  string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD}"),
+                                  string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD}")
+                              ]
+                    },
+                    'kstars-atom': {
+                        build job: 'atom',
                               parameters: [
                                   string(name: 'TAG', value: "${params.KSTARS_TAG}"),
                                   string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD}"),
@@ -63,6 +86,9 @@ pipeline {
                     },
                     'Guider': {
                         build job: 'observatory-guider-update'
+                    }
+                    'Panda': {
+                        build job: 'observatory-panda-update'
                     }
                 )
             }
