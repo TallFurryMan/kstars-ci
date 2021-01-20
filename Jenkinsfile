@@ -105,8 +105,8 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="StellarSolver x86_64" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=x86_64
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="StellarSolver Z8350" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb" || true
           '''
           archiveArtifacts(artifacts: 'stellarsolver-*.deb', fingerprint: true)
