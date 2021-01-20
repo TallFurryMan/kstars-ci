@@ -42,18 +42,18 @@ pipeline {
       steps {
         script {
           dir('kstars-deps') {
-            sh "rm -rf *.deb"
+            sh "rm -f ./indi-*-i386.deb ./stellarsolver-*-i386.deb"
             copyArtifacts projectName: 'kstars-ci/i386-indi',
-              filter: 'indi-*i386.deb',
+              filter: '*.deb',
               selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
             copyArtifacts projectName: 'kstars-ci/i386-stellarsolver',
-              filter: 'stellarsolver-*i386.deb',
+              filter: '*.deb',
               selector: params.STELLARSOLVER_BUILD ? specific(params.STELLARSOLVER_BUILD) : lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
-            sh "sudo dpkg --install --force-overwrite ./*.deb"
+            sh "sudo dpkg --install --force-overwrite ./indi-*-i386.deb ./stellarsolver-*-i386.deb"
             deleteDir()
           }
         }
