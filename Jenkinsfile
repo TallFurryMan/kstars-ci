@@ -142,8 +142,8 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core x86_64" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=x86_64
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core Z8350" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
@@ -190,8 +190,8 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries x86_64" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=x86_64
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries Z8350" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=adm64
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
@@ -246,8 +246,8 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party x86_64" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=x86_64
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Z8350" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-drivers-*.deb', fingerprint: true)
