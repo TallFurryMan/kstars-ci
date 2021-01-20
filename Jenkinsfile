@@ -106,7 +106,7 @@ pipeline {
           sh '''
             version=`grep \'KSTARS_VERSION .*$\' kstars/version.h | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
-            package_file_name="kstars-$version-$version_patch-Linux-i386"
+            package_file_name="kstars-$version-$version_patch-Linux-x86_64"
             cpack -G DEB -P kstars -R $version \
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;kstars;ALL;/" \
               -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
