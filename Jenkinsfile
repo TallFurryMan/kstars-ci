@@ -40,12 +40,12 @@ pipeline {
       steps {
         script {
           dir('kstars-deps') {
-            copyArtifacts projectName: 'kstars-ci/i386-indi',
+            copyArtifacts projectName: 'kstars-ci/atom-indi',
               filter: 'indi-*.deb',
               selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
-            copyArtifacts projectName: 'kstars-ci/i386-stellarsolver',
+            copyArtifacts projectName: 'kstars-ci/atom-stellarsolver',
               filter: 'stellarsolver-*.deb',
               selector: params.STELLARSOLVER_BUILD ? specific(params.STELLARSOLVER_BUILD) : lastSuccessful(),
               target: '.',
