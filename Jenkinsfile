@@ -1,8 +1,6 @@
 pipeline {
   
   environment {
-    CFLAGS = '-m32'
-    CXXFLAGS = '-m32'
     CCACHE_COMPRESS = '1'
     CMAKE_OPTIONS = '-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON'
     INDI_WITH_FLAGS = 
@@ -86,11 +84,11 @@ pipeline {
         sh '''
             printf "%s\\n" \
               "SET(CMAKE_SYSTEM_NAME Linux)" \
-              "SET(CMAKE_SYSTEM_PROCESSOR i386)" \
+              "SET(CMAKE_SYSTEM_PROCESSOR x86_64)" \
               "SET(CMAKE_C_COMPILER gcc)" \
-              "SET(CMAKE_C_FLAGS -m32)" \
+              "SET(CMAKE_C_FLAGS -march=silvermont)" \
               "SET(CMAKE_CXX_COMPILER g++)" \
-              "SET(CMAKE_CXX_FLAGS -m32)" > ~/i386.cmake
+              "SET(CMAKE_CXX_FLAGS -march=silvermont)" > ~/z8350.cmake
         '''
       }
     }
@@ -110,7 +108,7 @@ pipeline {
       steps {
         dir('indi-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}"
           sh "make -j4 all"
         }
       }
@@ -144,8 +142,8 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core i386" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core x86_64" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=x86_64
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
@@ -168,7 +166,7 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
         }
       }
@@ -192,8 +190,8 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries i386" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries x86_64" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=x86_64
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
@@ -212,9 +210,9 @@ pipeline {
       steps {
         dir('indi3p-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DBUILD_LIBS=ON ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake -DBUILD_LIBS=ON ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DBUILD_LIBS=OFF ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake -DBUILD_LIBS=OFF ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
         }
       }
@@ -248,8 +246,8 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party i386" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party x86_64" \
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=x86_64
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-drivers-*.deb', fingerprint: true)
