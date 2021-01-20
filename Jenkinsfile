@@ -85,7 +85,7 @@ pipeline {
               -DCCACHE_SUPPORT=ON \
               -DBUILD_TESTING=OFF \
               $WORKSPACE
-            make -j3 clean all
+            make -j2 clean all
           '''
         }
       }
