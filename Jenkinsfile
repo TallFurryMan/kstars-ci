@@ -191,7 +191,7 @@ pipeline {
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries Z8350" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=adm64
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
