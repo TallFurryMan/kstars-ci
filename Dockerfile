@@ -14,7 +14,7 @@ RUN apt-get -y install \
 RUN apt-get -y install \
         libkf5plotting-dev libkf5xmlgui-dev libkf5newstuff-dev \
         libkf5notifications-dev libkf5crash-dev libkf5notifyconfig-dev \
-        kio-dev kinit-dev kdoctools-dev libkf5config-bin
+        libkf5kio-dev kinit-dev kdoctools-dev libkf5config-bin
 RUN apt-get -y --no-install-recommends install \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
         xplanet xplanet-images
