@@ -42,6 +42,7 @@ pipeline {
       steps {
         script {
           dir('kstars-deps') {
+            sh "sleep 30"
             sh "rm -f ./indi-*-i386.deb ./stellarsolver-*-i386.deb"
             copyArtifacts projectName: 'kstars-ci/i386-indi',
               filter: '*.deb',
