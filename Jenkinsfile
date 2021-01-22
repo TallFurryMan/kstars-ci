@@ -40,6 +40,7 @@ pipeline {
       steps {
         script {
           dir('kstars-deps') {
+            sh "sleep 30"
             sh "rm -f ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb"
             copyArtifacts projectName: 'kstars-ci/atom-indi',
               filter: '*.deb',
