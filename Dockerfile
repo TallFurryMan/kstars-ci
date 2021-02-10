@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
 
-RUN dpkg --add-architecture i386
 RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get -y --no-install-recommends install \
         gcc-multilib g++-multilib
@@ -9,11 +8,11 @@ RUN apt-get -y --no-install-recommends install \
 RUN apt-get -y --no-install-recommends install \
         git dpkg-dev default-jre ccache gettext breeze-icon-theme
 RUN apt-get -y --no-install-recommends install \
-        zlib1g-dev:i386 libsecret-1-dev:i386 linux-libc-dev-i386-cross \
-        libcurl4-openssl-dev:i386 libwxgtk3.0-dev:i386 wx-common:i386 wx3.0-i18n:i386
+        zlib1g-dev libsecret-1-dev \
+        libcurl4-openssl-dev libwxgtk3.0-dev wx-common wx3.0-i18n
 RUN apt-get -y --no-install-recommends install \
-        libeigen3-dev:i386 libcfitsio-dev:i386 libnova-dev:i386 libgsl-dev:i386 libraw-dev:i386 wcslib-dev:i386 \
-        libindi-dev:i386 xplanet xplanet-images
+        libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
+        libindi-dev xplanet xplanet-images
 
 RUN useradd -m jenkins
 RUN /usr/sbin/update-ccache-symlinks
