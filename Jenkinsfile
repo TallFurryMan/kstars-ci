@@ -118,7 +118,8 @@ pipeline {
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="KStars Z8350" \
-              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
+              -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64 \
+              -D CPACK_DEBIAN_PACKAGE_EPOCH=5
             dpkg --info "$package_file_name.deb" || true
           '''
           archiveArtifacts(artifacts: 'kstars-*.deb', fingerprint: true)
