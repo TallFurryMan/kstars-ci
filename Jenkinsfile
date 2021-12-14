@@ -34,9 +34,9 @@ pipeline {
                       "SET(CMAKE_SYSTEM_NAME Linux)" \
                       "SET(CMAKE_SYSTEM_PROCESSOR x86_64)" \
                       "SET(CMAKE_C_COMPILER gcc)" \
-                      "SET(CMAKE_C_FLAGS -march=silvermont)" \
+                      "SET(CMAKE_C_FLAGS -march=x86-64)" \
                       "SET(CMAKE_CXX_COMPILER g++)" \
-                      "SET(CMAKE_CXX_FLAGS -march=silvermont)" > ~/z8350.cmake
+                      "SET(CMAKE_CXX_FLAGS -march=x86-64)" > ~/amd64.cmake
                 '''
             }
         }
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 dir('phd2-build') {
                     deleteDir()
-                    sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON ${env.WORKSPACE}"
+                    sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON ${env.WORKSPACE}"
                     sh "make -j4 clean all"
                 }
             }
@@ -87,7 +87,7 @@ pipeline {
                             -D CPACK_CMAKE_GENERATOR=\"Unix Makefiles\" \
                             -D CPACK_INSTALL_COMMANDS=\"make install\" \
                             -D CPACK_PACKAGE_CONTACT=\"https://github.com/TallFurryMan/kstars-ci\" \
-                            -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"PHD2 Z8350\" \
+                            -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"PHD2 amd64\" \
                             -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
                         dpkg --info \"$package_file_name.deb\"
                     '''
