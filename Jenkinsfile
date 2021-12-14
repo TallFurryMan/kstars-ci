@@ -86,9 +86,9 @@ pipeline {
               "SET(CMAKE_SYSTEM_NAME Linux)" \
               "SET(CMAKE_SYSTEM_PROCESSOR x86_64)" \
               "SET(CMAKE_C_COMPILER gcc)" \
-              "SET(CMAKE_C_FLAGS -march=silvermont)" \
+              "SET(CMAKE_C_FLAGS -march=x86-64)" \
               "SET(CMAKE_CXX_COMPILER g++)" \
-              "SET(CMAKE_CXX_FLAGS -march=silvermont)" > ~/z8350.cmake
+              "SET(CMAKE_CXX_FLAGS -march=x86-64)" > ~/amd64.cmake
         '''
       }
     }
@@ -108,7 +108,7 @@ pipeline {
       steps {
         dir('indi-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}"
           sh "make -j4 all"
         }
       }
@@ -142,7 +142,7 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core Z8350" \
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core amd64" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
           '''
@@ -166,7 +166,7 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
         }
       }
@@ -190,7 +190,7 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries Z8350" \
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries amd64" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
           '''
@@ -210,9 +210,9 @@ pipeline {
       steps {
         dir('indi3p-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake -DBUILD_LIBS=ON ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake -DBUILD_LIBS=ON ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake -DBUILD_LIBS=OFF ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake -DBUILD_LIBS=OFF ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
         }
       }
@@ -246,7 +246,7 @@ pipeline {
               -D CPACK_CMAKE_GENERATOR="Unix Makefiles" \
               -D CPACK_INSTALL_COMMANDS="make install" \
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
-              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Z8350" \
+              -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party amd64" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
           '''
