@@ -42,12 +42,12 @@ pipeline {
           dir('kstars-deps') {
             sh "sleep 30"
             sh "rm ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb || true"
-            copyArtifacts projectName: 'kstars-ci/atom-indi',
+            copyArtifacts projectName: 'kstars-ci/amd64-indi',
               filter: '*.deb',
               selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
-            copyArtifacts projectName: 'kstars-ci/atom-stellarsolver',
+            copyArtifacts projectName: 'kstars-ci/amd64-stellarsolver',
               filter: '*.deb',
               selector: params.STELLARSOLVER_BUILD ? specific(params.STELLARSOLVER_BUILD) : lastSuccessful(),
               target: '.',
