@@ -35,6 +35,8 @@ pipeline {
             ccache --max-size 20G
             ccache -s
           '''
+          buildName "${BRANCH}"
+          buildDescription "${BRANCH}"
         }
     }
         
