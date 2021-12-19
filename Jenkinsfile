@@ -90,6 +90,8 @@ pipeline {
               "SET(CMAKE_CXX_COMPILER g++)" \
               "SET(CMAKE_CXX_FLAGS -march=x86-64)" > ~/amd64.cmake
         '''
+        buildName "${BRANCH}"
+        buildDescription "${BRANCH}"
       }
     }
     
