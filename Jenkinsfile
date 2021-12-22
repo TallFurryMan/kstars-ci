@@ -12,8 +12,8 @@ pipeline {
     string(name: 'REPO', defaultValue: 'https://invent.kde.org/education/kstars.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
-    string(name: 'INDI_CORE_BUILD', defaultValue: '', description: 'The build to use for INDI Core, empty for last succesful build.')
-    string(name: 'STELLARSOLVER_BUILD', defaultValue: '', description: 'The build to use for StellarSolver, empty for last succesful build.')
+    buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSavedBuild()), description: 'The build to use for INDI Core, empty for last saved build.')
+    buildSelector(name: 'STELLARSOLVER_BUILD', defaultSelector: lastSavedBuild(), description: 'The build to use for StellarSolver, empty for last saved build.')
   }
   
   agent {
@@ -46,12 +46,12 @@ pipeline {
             sh "rm ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb || true"
             copyArtifacts projectName: 'kstars-ci/amd64-indi',
               filter: '*.deb',
-              selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
+              selector: buildParameter('INDI_CORE_BUILD'),
               target: '.',
               fingerprintArtifacts: true
             copyArtifacts projectName: 'kstars-ci/amd64-stellarsolver',
               filter: '*.deb',
-              selector: params.STELLARSOLVER_BUILD ? specific(params.STELLARSOLVER_BUILD) : lastSuccessful(),
+              selector: buildParameter('STELLARSOLVER_BUILD'),
               target: '.',
               fingerprintArtifacts: true
             sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb"
