@@ -13,7 +13,7 @@ RUN apt-get -y update && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
-        git dpkg-dev default-jre ccache gettext breeze-icon-theme && \
+        git dpkg-dev default-jre-headless ccache gettext breeze-icon-theme && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
