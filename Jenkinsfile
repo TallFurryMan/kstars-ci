@@ -12,7 +12,7 @@ pipeline {
     string(name: 'REPO', defaultValue: 'https://invent.kde.org/education/kstars.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
-    buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSavedBuild()), description: 'The build to use for INDI Core, empty for last saved build.')
+    buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSavedBuild(), description: 'The build to use for INDI Core, empty for last saved build.')
     buildSelector(name: 'STELLARSOLVER_BUILD', defaultSelector: lastSavedBuild(), description: 'The build to use for StellarSolver, empty for last saved build.')
   }
   
