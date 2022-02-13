@@ -101,11 +101,8 @@ pipeline {
           branches: [[ name: "${params.BRANCH}" ]],
           extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
         ])
-        sh "git checkout ${params.TAG}"
-        dir('3rdparty') {
-          git(url: "${params.REPO3P}", branch: "${params.BRANCH3P}")
-          sh "git checkout ${params.TAG3P}"
-        }
+        sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
+        sh "git log --oneline --decorate -10"
       }
     }
     
@@ -167,7 +164,8 @@ pipeline {
             branches: [[ name: "${params.BRANCH3P}" ]],
             extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
           ])
-          sh "git checkout ${params.TAG3P}"
+          sh "if [ -n '${params.TAG3P}' ] ; then git checkout ${params.TAG3P} ; fi"
+          sh "git log --oneline --decorate -10"
         }
       }
     }
