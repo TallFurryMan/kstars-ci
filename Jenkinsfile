@@ -95,7 +95,12 @@ pipeline {
     
     stage('Checkout Core') {
       steps {
-        git(url: "${params.REPO}", branch: "${params.BRANCH}")
+        checkout([
+          $class: 'GitSCM',
+          userRemoteConfigs: [[ url: "${params.REPO}" ]],
+          branches: [[ name: "${params.BRANCH}" ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
+        ])
         sh "git checkout ${params.TAG}"
         dir('3rdparty') {
           git(url: "${params.REPO3P}", branch: "${params.BRANCH3P}")
@@ -156,7 +161,12 @@ pipeline {
     stage('Checkout 3rd-party') {
       steps {
         dir('3rdparty') {
-          git(url: "${params.REPO3P}", branch: "${params.BRANCH3P}")
+          checkout([
+            $class: 'GitSCM',
+            userRemoteConfigs: [[ url: "${params.REPO3P}" ]],
+            branches: [[ name: "${params.BRANCH3P}" ]],
+            extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
+          ])
           sh "git checkout ${params.TAG3P}"
         }
       }
