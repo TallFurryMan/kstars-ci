@@ -63,7 +63,12 @@ pipeline {
     
     stage('Checkout') {
       steps {
-        git(url: "${params.REPO}", branch: "${params.BRANCH}")
+        checkout([
+          $class: 'GitSCM',
+          userRemoteConfigs: [[ url: "${params.REPO}" ]],
+          branches: [[ name: "${params.BRANCH}" ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
+        ])
         sh "git checkout ${params.TAG}"
         sh "git log --oneline --decorate -10"
       }
