@@ -11,7 +11,7 @@ pipeline {
   parameters {
     string(name: 'REPO', defaultValue: 'https://invent.kde.org/education/kstars.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-    string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
+    string(name: 'TAG', defaultValue: '', description: 'The repository tag to build.')
     buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: latestSavedBuild(), description: 'The build to use for INDI Core, empty for last saved build.')
     buildSelector(name: 'STELLARSOLVER_BUILD', defaultSelector: latestSavedBuild(), description: 'The build to use for StellarSolver, empty for last saved build.')
   }
@@ -69,7 +69,7 @@ pipeline {
           branches: [[ name: "${params.BRANCH}" ]],
           extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
         ])
-        sh "git checkout ${params.TAG}"
+        sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
         sh "git log --oneline --decorate -10"
       }
     }
