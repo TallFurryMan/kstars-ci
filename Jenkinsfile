@@ -60,10 +60,10 @@ pipeline {
   parameters {
     string(name: 'REPO', defaultValue: 'https://github.com/indilib/indi.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-    string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
+    //string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
     string(name: 'REPO3P', defaultValue: 'https://github.com/indilib/indi-3rdparty.git', description: 'The 3rdparty repository to clone from.')
     string(name: 'BRANCH3P', defaultValue: 'master', description: 'The repository branch to build.')
-    string(name: 'TAG3P', defaultValue: 'master', description: 'The repository tag to build.')
+    //string(name: 'TAG3P', defaultValue: 'master', description: 'The repository tag to build.')
   }
   
   agent {
@@ -101,7 +101,7 @@ pipeline {
           branches: [[ name: "${params.BRANCH}" ]],
           extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
         ])
-        sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
+        //sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
         sh "git log --oneline --decorate -10"
       }
     }
@@ -164,7 +164,7 @@ pipeline {
             branches: [[ name: "${params.BRANCH3P}" ]],
             extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
           ])
-          sh "if [ -n '${params.TAG3P}' ] ; then git checkout ${params.TAG3P} ; fi"
+          //sh "if [ -n '${params.TAG3P}' ] ; then git checkout ${params.TAG3P} ; fi"
           sh "git log --oneline --decorate -10"
         }
       }
