@@ -60,10 +60,10 @@ pipeline {
   parameters {
     string(name: 'REPO', defaultValue: 'https://github.com/indilib/indi.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-    string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
+    //string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
     string(name: 'REPO3P', defaultValue: 'https://github.com/indilib/indi-3rdparty.git', description: 'The 3rdparty repository to clone from.')
     string(name: 'BRANCH3P', defaultValue: 'master', description: 'The repository branch to build.')
-    string(name: 'TAG3P', defaultValue: 'master', description: 'The repository tag to build.')
+    //string(name: 'TAG3P', defaultValue: 'master', description: 'The repository tag to build.')
   }
   
   agent {
@@ -97,12 +97,14 @@ pipeline {
     
     stage('Checkout Core') {
       steps {
-        git(url: "${params.REPO}", branch: "${params.BRANCH}")
-        sh "git checkout ${params.TAG}"
-        dir('3rdparty') {
-          git(url: "${params.REPO3P}", branch: "${params.BRANCH3P}")
-          sh "git checkout ${params.TAG3P}"
-        }
+        checkout([
+          $class: 'GitSCM',
+          userRemoteConfigs: [[ url: "${params.REPO}" ]],
+          branches: [[ name: "${params.BRANCH}" ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
+        ])
+        //sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
+        sh "git log --oneline --decorate -10"
       }
     }
     
@@ -158,8 +160,14 @@ pipeline {
     stage('Checkout 3rd-party') {
       steps {
         dir('3rdparty') {
-          git(url: "${params.REPO3P}", branch: "${params.BRANCH3P}")
-          sh "git checkout ${params.TAG3P}"
+          checkout([
+            $class: 'GitSCM',
+            userRemoteConfigs: [[ url: "${params.REPO3P}" ]],
+            branches: [[ name: "${params.BRANCH3P}" ]],
+            extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
+          ])
+          //sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
+          sh "git log --oneline --decorate -10"
         }
       }
     }
