@@ -43,15 +43,15 @@ pipeline {
         script {
           dir('kstars-deps') {
             sh "sleep 30"
-            sh "rm ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb || true"
+            sh "rm -f ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb"
             copyArtifacts projectName: 'kstars-ci/atom-indi',
               filter: '*.deb',
-              selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
+              selector: params.INDI_CORE_BUILD ? params.INDI_CORE_BUILD : lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
             copyArtifacts projectName: 'kstars-ci/atom-stellarsolver',
               filter: '*.deb',
-              selector: params.STELLARSOLVER_BUILD ? specific(params.STELLARSOLVER_BUILD) : lastSuccessful(),
+              selector: params.STELLARSOLVER_BUILD ? params.STELLARSOLVER_BUILD : lastSuccessful(),
               target: '.',
               fingerprintArtifacts: true
             sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb"
