@@ -19,7 +19,8 @@ RUN apt-get -y update && \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
         xplanet xplanet-images
 
-RUN useradd -m jenkins
+RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo
+RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
