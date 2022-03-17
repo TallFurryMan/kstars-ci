@@ -45,16 +45,17 @@ pipeline {
         stage('Dependencies') {
             steps {
                 script {
-                  dir('kstars-deps') {
-                    sh "sleep 30"
-                    sh "rm -f ./indi-*-x86_64.deb"
-                    copyArtifacts projectName: 'kstars-ci/atom-indi',
-                      filter: '*.deb',
-                      selector: params.INDI_CORE_BUILD ? buildParameter('INDI_CORE_BUILD') : lastSuccessful(),
-                      target: '.',
-                      fingerprintArtifacts: true
-                    sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb"
-                    deleteDir()
+                    dir('kstars-deps') {
+                       sh "sleep 30"
+                       sh "rm -f ./indi-*-x86_64.deb"
+                       copyArtifacts projectName: 'kstars-ci/atom-indi',
+                         filter: '*.deb',
+                         selector: params.INDI_CORE_BUILD ? buildParameter('INDI_CORE_BUILD') : lastSuccessful(),
+                         target: '.',
+                         fingerprintArtifacts: true
+                       sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb"
+                       deleteDir()
+                    }
                 }
             }
         }
