@@ -17,7 +17,7 @@ RUN apt-get -y update && \
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
-        libindi-dev xplanet xplanet-images
+        xplanet xplanet-images
 
 RUN useradd -m jenkins
 RUN /usr/sbin/update-ccache-symlinks
