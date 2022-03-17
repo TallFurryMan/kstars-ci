@@ -15,6 +15,7 @@ pipeline {
         string(name: 'REPO',   defaultValue: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from.')
         string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
         string(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
+        buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: latestSavedBuild(), description: 'The build to use for INDI Core, empty for last saved build.')
     }
 
     environment {
@@ -41,6 +42,23 @@ pipeline {
             }
         }
 
+        stage('Dependencies') {
+            steps {
+                script {
+                  dir('kstars-deps') {
+                    sh "sleep 30"
+                    sh "rm -f ./indi-*-x86_64.deb"
+                    copyArtifacts projectName: 'kstars-ci/atom-indi',
+                      filter: '*.deb',
+                      selector: params.INDI_CORE_BUILD ? buildParameter('INDI_CORE_BUILD') : lastSuccessful(),
+                      target: '.',
+                      fingerprintArtifacts: true
+                    sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb"
+                    deleteDir()
+                }
+            }
+        }
+  
         stage('Checkout') {
             steps {
                 git url: "${params.REPO}",
