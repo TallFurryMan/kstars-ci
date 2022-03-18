@@ -71,8 +71,7 @@ pipeline {
         stage('Build') {
             steps {
                 // https://github.com/OpenPHDGuiding/phd2/pull/975/files
-                sh "sed -i 's/libwxgtk3.0-dev, libgtk2.0-dev/libwxgtk3.0-dev | libwxgtk3.0-gtk3-dev/' debian/control"
-                sh "cat 'debian/control'"
+                sh "sed -i 's/libwxgtk3.0-0v5/libwxgtk3.0-0v5 | libwxgtk3.0-gtk3-0v5/' cmake_modules/PHD2Packaging.cmake"
                 dir('phd2-build') {
                     deleteDir()
                     sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON ${env.WORKSPACE}"
