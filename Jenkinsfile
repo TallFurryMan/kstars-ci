@@ -72,6 +72,7 @@ pipeline {
             steps {
                 dir('phd2-build') {
                     deleteDir()
+                    sh "sed -i 's/libwxgtk3.0-dev/libwxgtk3.0-gtk3-dev/' debian/control"
                     sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON ${env.WORKSPACE}"
                     sh "make -j4 clean all"
                 }
