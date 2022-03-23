@@ -7,6 +7,8 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
         cmake extra-cmake-modules
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
         git dpkg-dev default-jre ccache gettext
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
         zlib1g-dev libsecret-1-dev libcurl4-openssl-dev
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
