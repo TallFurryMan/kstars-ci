@@ -10,6 +10,8 @@ RUN apt-get -y update && \
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
         git dpkg-dev default-jre ccache gettext breeze-icon-theme
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
         zlib1g-dev libsecret-1-dev \
