@@ -98,6 +98,20 @@ pipeline {
           dir('coverity-build') {
             sh 'cmake -B. -H.. -DCCACHE_SUPPORT=OFF -DUNITY_BUILD=OFF -DCMAKE_BUILD_TYPE=Debug'
             sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
+            sh 'tar czvf ../stellarsolver-cov-build.tgz ./'
+            withCredentials([string(credentialsId: 'coverity-stellarsolver-token', variable: 'TOKEN')]) {
+              httpRequest consoleLogResponseBody: true,
+                formData: [
+                  [body: '$TOKEN', contentType: '', fileName: '', name: 'token', uploadFile: ''],
+                  [body: 'eric.dejouhanet@gmail.com', contentType: '', fileName: '', name: 'email', uploadFile: ''],
+                  [body: 'std', contentType: '', fileName: '', name: 'version', uploadFile: ''],
+                  [body: 'Jenkins CI Upload', contentType: '', fileName: '', name: 'description', uploadFile: ''],
+                  [body: '', contentType: '', fileName: 'stellarsolver-cov-build.tgz', name: 'file', uploadFile: '']],
+                httpMode: 'POST',
+                responseHandle: 'NONE',
+                url: 'https://scan.coverity.com/builds?project=tallfurryman-stellarsolver',
+                wrapAsMultipart: false
+            }
           }
         }
       }
