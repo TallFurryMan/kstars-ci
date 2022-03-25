@@ -2,7 +2,6 @@ pipeline {
   
   environment {
     CCACHE_COMPRESS = '1'
-    PATH='/mnt/cov-analysis/bin:${env.PATH}'
   }
   
   options {
@@ -91,9 +90,15 @@ pipeline {
     }
     
     stage('Coverity') {
+      environment {
+        PATH='/mnt/cov-analysis/bin:${env.PATH}'
+      }
       steps {
         catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('coverity-build') {
+            sh 'echo $PATH'
+            sh 'ls -al /mnt/cov-analysis/bin'
+            sh 'which cov-build'
             sh 'cmake -B. -H.. -DCCACHE_SUPPORT=OFF -DUNITY_BUILD=OFF -DCMAKE_BUILD_TYPE=Debug'
             sh 'cov-build --dir . make -j2 -C .'
           }
