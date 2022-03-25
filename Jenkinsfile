@@ -17,7 +17,7 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
-      args '-v stellarsolver_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
+      args '-v stellarsolver_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache -v coverity_workspace:/mnt'
     }
   }
   
@@ -84,6 +84,20 @@ pipeline {
         catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('stellarsolver-build') {
             sh 'make test'
+          }
+        }
+      }
+    }
+    
+    stage('Coverity') {
+      environment {
+        PATH='/mnt/cov-analysis/bin:${env.PATH}'
+      }
+      steps {
+        catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+          dir('coverity-build') {
+            sh 'cmake -B. -H.. -DCCACHE_SUPPORT=OFF -DUNITY_BUILD=OFF -DCMAKE_BUILD_TYPE=Debug'
+            sh 'cov-build --dir . make -j2 -C .'
           }
         }
       }
