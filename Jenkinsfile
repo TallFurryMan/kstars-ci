@@ -58,7 +58,7 @@ pipeline {
               version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
               echo "$version-$version_patch"
               ''',
-              returnStdOut: true).trim()
+              returnStdout: true).trim()
         }
       }
     }
