@@ -108,7 +108,6 @@ pipeline {
             sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
             sh 'tar czvf ../stellarsolver-cov-build.tgz ./'
           }
-          VERSION = sh (
           httpRequest consoleLogResponseBody: true,
             formData: [
               [body: '$TOKEN', contentType: '', fileName: '', name: 'token', uploadFile: ''],
