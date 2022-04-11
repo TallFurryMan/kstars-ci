@@ -2,6 +2,7 @@ pipeline {
   
   environment {
     CCACHE_COMPRESS = '1'
+    VERSION = 'dev'
   }
   
   options {
@@ -50,14 +51,15 @@ pipeline {
         git(url: "${params.REPO}", branch: "${params.BRANCH}")
         sh "git checkout ${params.TAG}"
         sh "git log --oneline --decorate -10"
-        env.VERSION = sh(
-            script: '''
-            version=`grep \'(StellarSolver_VERSION_MAJOR .*)$\' ../CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
-            version="$version."`grep \'(StellarSolver_VERSION_MINOR .*)$\' ../CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
-            version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
-            echo "$version-$version_patch"
-            ''',
-            returnStdOut: true).trim()
+        script {
+          env.VERSION = sh( script: '''
+              version=`grep \'(StellarSolver_VERSION_MAJOR .*)$\' ../CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
+              version="$version."`grep \'(StellarSolver_VERSION_MINOR .*)$\' ../CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
+              version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
+              echo "$version-$version_patch"
+              ''',
+              returnStdOut: true).trim()
+        }
       }
     }
     
