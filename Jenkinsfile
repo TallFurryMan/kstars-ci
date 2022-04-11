@@ -109,7 +109,7 @@ pipeline {
               [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'stellarsolver-cov-build.tgz']],
             httpMode: 'POST',
             authentication: 'coverity-stellarsolver-token',
-            url: 'https://scan.coverity.com/builds?project=tallfurryman-stellarsolver',
+            url: 'https://scan.coverity.com/builds?project=tallfurryman-stellarsolver'
         }
       }
     }
