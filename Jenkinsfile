@@ -110,16 +110,30 @@ pipeline {
             sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
             sh 'tar czvf ../stellarsolver-cov-build.tgz ./'
           }
-          withCredentials([usernamePassword(credentialsId: 'coverity-stellarsolver-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
-            httpRequest consoleLogResponseBody: true,
-              formData: [
-                [body: '$TOKEN', contentType: '', fileName: '', name: 'token', uploadFile: ''],
-                [body: '$EMAIL', contentType: '', fileName: '', name: 'email', uploadFile: ''],
-                [body: '${env.VERSION}', contentType: '', fileName: '', name: 'version', uploadFile: ''],
-                [body: 'Jenkins CI Upload', contentType: '', fileName: '', name: 'description', uploadFile: ''],
-                [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'stellarsolver-cov-build.tgz']],
-              httpMode: 'POST',
-              url: 'https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver'
+          try {
+            withCredentials([usernamePassword(credentialsId: 'coverity-stellarsolver-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
+              httpRequest consoleLogResponseBody: true,
+                formData: [
+                  [body: '$TOKEN', contentType: '', fileName: '', name: 'token', uploadFile: ''],
+                  [body: '$EMAIL', contentType: '', fileName: '', name: 'email', uploadFile: ''],
+                  [body: '${env.VERSION}', contentType: '', fileName: '', name: 'version', uploadFile: ''],
+                  [body: 'Jenkins CI Upload', contentType: '', fileName: '', name: 'description', uploadFile: ''],
+                  [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'stellarsolver-cov-build.tgz']],
+                httpMode: 'POST',
+                url: 'https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver'
+            } catch(e) {
+              withCredentials([usernamePassword(credentialsId: 'coverity-stellarsolver-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
+                sh '''
+                curl \
+                  --form token=$TOKEN \
+                  --form email=$EMAIL \
+                  --form file=@stellarsolver-cov-build.tgz \
+                  --form version="${env.VERSION}" \
+                  --form description="Jenkins CI Upload" \
+                  https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver
+                '''
+              }
+            }
           }
         }
       }
