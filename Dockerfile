@@ -17,7 +17,7 @@ RUN apt-get -y update && \
         libgsl-dev pkg-config wcslib-dev && \
     apt-get clean
 RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install wget apt sudo && \
+    apt-get -y --no-install-recommends install wget apt sudo curl && \
     apt-get clean
 
 RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg|' /etc/sudoers
