@@ -100,11 +100,14 @@ pipeline {
     }
     
     stage('Coverity') {
+      when {
+        expression { params.COVERITY }
+      }
       environment {
         PATH='/mnt/cov-analysis/bin:${env.PATH}'
       }
       steps {
-        if (params.COVERITY) catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+        catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('coverity-build') {
             sh 'cmake -B. -H.. -DCCACHE_SUPPORT=OFF -DUNITY_BUILD=OFF -DCMAKE_BUILD_TYPE=Debug'
             sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
