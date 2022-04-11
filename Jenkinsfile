@@ -123,17 +123,16 @@ pipeline {
                 url: 'https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver'
             }
           } catch(e) {
-              withCredentials([usernamePassword(credentialsId: 'coverity-stellarsolver-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
-                sh '''
-                curl \
-                  --form token=$TOKEN \
-                  --form email=$EMAIL \
-                  --form file=@stellarsolver-cov-build.tgz \
-                  --form version="${env.VERSION}" \
-                  --form description="Jenkins CI Upload" \
-                  https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver
-                '''
-              }
+            withCredentials([usernamePassword(credentialsId: 'coverity-stellarsolver-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
+              sh '''
+              curl \
+                --form token=$TOKEN \
+                --form email=$EMAIL \
+                --form file=@stellarsolver-cov-build.tgz \
+                --form version="${env.VERSION}" \
+                --form description="Jenkins CI Upload" \
+                https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver
+              '''
             }
           }
         }
