@@ -12,6 +12,7 @@ pipeline {
     string(name: 'REPO', defaultValue: 'https://github.com/rlancaste/stellarsolver.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
+    booleanParam(name: 'COVERITY', defaultValue: false, description: 'Whether to run and push a static analysis to Coverity Scan.')
   }
   
   agent {
@@ -103,11 +104,12 @@ pipeline {
         PATH='/mnt/cov-analysis/bin:${env.PATH}'
       }
       steps {
-        catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+        if (params.COVERITY) catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('coverity-build') {
             sh 'cmake -B. -H.. -DCCACHE_SUPPORT=OFF -DUNITY_BUILD=OFF -DCMAKE_BUILD_TYPE=Debug'
             sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
             sh 'tar czvf ../stellarsolver-cov-build.tgz ./'
+            deleteDir()
           }
           script {
             try {
