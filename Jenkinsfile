@@ -50,6 +50,15 @@ pipeline {
         git(url: "${params.REPO}", branch: "${params.BRANCH}")
         sh "git checkout ${params.TAG}"
         sh "git log --oneline --decorate -10"
+        env.VERSION = sh(
+            script: '''
+            version=`grep \'(StellarSolver_VERSION_MAJOR .*)$\' ../CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
+            version="$version."`grep \'(StellarSolver_VERSION_MINOR .*)$\' ../CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
+            version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
+            echo "$version-$version_patch"
+            ''',
+            returnStdOut: true).trim()
+        )
       }
     }
     
@@ -100,16 +109,17 @@ pipeline {
             sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
             sh 'tar czvf ../stellarsolver-cov-build.tgz ./'
           }
+          VERSION = sh (
           httpRequest consoleLogResponseBody: true,
             formData: [
               [body: '$TOKEN', contentType: '', fileName: '', name: 'token', uploadFile: ''],
               [body: 'eric.dejouhanet@gmail.com', contentType: '', fileName: '', name: 'email', uploadFile: ''],
-              [body: 'std', contentType: '', fileName: '', name: 'version', uploadFile: ''],
+              [body: '${env.VERSION}', contentType: '', fileName: '', name: 'version', uploadFile: ''],
               [body: 'Jenkins CI Upload', contentType: '', fileName: '', name: 'description', uploadFile: ''],
               [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'stellarsolver-cov-build.tgz']],
             httpMode: 'POST',
             authentication: 'coverity-stellarsolver-token',
-            url: 'https://scan.coverity.com/builds?project=tallfurryman-stellarsolver'
+            url: 'https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver'
         }
       }
     }
