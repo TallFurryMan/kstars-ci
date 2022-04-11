@@ -100,19 +100,16 @@ pipeline {
             sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
             sh 'tar czvf ../stellarsolver-cov-build.tgz ./'
           }
-          withCredentials([string(credentialsId: 'coverity-stellarsolver-token', variable: 'TOKEN')]) {
-            httpRequest consoleLogResponseBody: true,
-              formData: [
-                [body: '$TOKEN', contentType: '', fileName: '', name: 'token', uploadFile: ''],
-                [body: 'eric.dejouhanet@gmail.com', contentType: '', fileName: '', name: 'email', uploadFile: ''],
-                [body: 'std', contentType: '', fileName: '', name: 'version', uploadFile: ''],
-                [body: 'Jenkins CI Upload', contentType: '', fileName: '', name: 'description', uploadFile: ''],
-                [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'stellarsolver-cov-build.tgz']],
-              httpMode: 'POST',
-              responseHandle: 'NONE',
-              url: 'https://scan.coverity.com/builds?project=tallfurryman-stellarsolver',
-              wrapAsMultipart: false
-          }
+          httpRequest consoleLogResponseBody: true,
+            formData: [
+              [body: '$TOKEN', contentType: '', fileName: '', name: 'token', uploadFile: ''],
+              [body: 'eric.dejouhanet@gmail.com', contentType: '', fileName: '', name: 'email', uploadFile: ''],
+              [body: 'std', contentType: '', fileName: '', name: 'version', uploadFile: ''],
+              [body: 'Jenkins CI Upload', contentType: '', fileName: '', name: 'description', uploadFile: ''],
+              [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'stellarsolver-cov-build.tgz']],
+            httpMode: 'POST',
+            authentication: 'coverity-stellarsolver-token',
+            url: 'https://scan.coverity.com/builds?project=tallfurryman-stellarsolver',
         }
       }
     }
