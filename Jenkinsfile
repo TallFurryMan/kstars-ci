@@ -2,7 +2,6 @@ pipeline {
   
   environment {
     CCACHE_COMPRESS = '1'
-    VERSION = 'dev'
   }
   
   options {
@@ -52,7 +51,7 @@ pipeline {
         sh "git checkout ${params.TAG}"
         sh "git log --oneline --decorate -10"
         script {
-          env.VERSION = sh( script: '''
+          VERSION = sh( script: '''
               version=`grep \'(StellarSolver_VERSION_MAJOR .*)$\' ./CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
               version="$version."`grep \'(StellarSolver_VERSION_MINOR .*)$\' ./CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
               version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
@@ -127,10 +126,10 @@ pipeline {
               withCredentials([usernamePassword(credentialsId: 'coverity-stellarsolver-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
                 sh '''
                 curl \
-                  --form token=$TOKEN \
-                  --form email=$EMAIL \
+                  --form token="$TOKEN" \
+                  --form email="$EMAIL" \
                   --form file=@stellarsolver-cov-build.tgz \
-                  --form version="${env.VERSION}" \
+                  --form version="$VERSION" \
                   --form description="Jenkins CI Upload" \
                   https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver
                 '''
