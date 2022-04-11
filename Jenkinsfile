@@ -99,7 +99,7 @@ pipeline {
             sh 'cmake -B. -H.. -DCCACHE_SUPPORT=OFF -DUNITY_BUILD=OFF -DCMAKE_BUILD_TYPE=Debug'
             sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
             sh 'tar czvf ../stellarsolver-cov-build.tgz ./'
-          )
+          }
           withCredentials([string(credentialsId: 'coverity-stellarsolver-token', variable: 'TOKEN')]) {
             httpRequest consoleLogResponseBody: true,
               formData: [
