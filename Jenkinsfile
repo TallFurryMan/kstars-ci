@@ -106,7 +106,7 @@ pipeline {
                   [body: 'eric.dejouhanet@gmail.com', contentType: '', fileName: '', name: 'email', uploadFile: ''],
                   [body: 'std', contentType: '', fileName: '', name: 'version', uploadFile: ''],
                   [body: 'Jenkins CI Upload', contentType: '', fileName: '', name: 'description', uploadFile: ''],
-                  [body: '', contentType: '', fileName: 'stellarsolver-cov-build.tgz', name: 'file', uploadFile: '']],
+                  [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'stellarsolver-cov-build.tgz']],
                 httpMode: 'POST',
                 responseHandle: 'NONE',
                 url: 'https://scan.coverity.com/builds?project=tallfurryman-stellarsolver',
