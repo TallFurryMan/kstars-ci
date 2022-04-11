@@ -121,7 +121,8 @@ pipeline {
                   [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'stellarsolver-cov-build.tgz']],
                 httpMode: 'POST',
                 url: 'https://scan.coverity.com/builds?project=TallFurryMan%2Fstellarsolver'
-            } catch(e) {
+            }
+          } catch(e) {
               withCredentials([usernamePassword(credentialsId: 'coverity-stellarsolver-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
                 sh '''
                 curl \
