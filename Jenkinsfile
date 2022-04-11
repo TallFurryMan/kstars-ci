@@ -58,7 +58,6 @@ pipeline {
             echo "$version-$version_patch"
             ''',
             returnStdOut: true).trim()
-        )
       }
     }
     
