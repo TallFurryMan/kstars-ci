@@ -109,6 +109,53 @@ pipeline {
     //  }
     //}
     
+    
+    stage('Coverity') {
+      when {
+        expression { params.COVERITY }
+      }
+      environment {
+        PATH='/mnt/cov-analysis/bin:${env.PATH}'
+      }
+      steps {
+        catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+          dir('coverity-build') {
+            sh 'cmake -B. -H.. -DCCACHE_SUPPORT=OFF -DUNITY_BUILD=OFF -DCMAKE_BUILD_TYPE=Debug'
+            sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir ./cov-int make -j2 -C .'
+            sh 'tar czvf ../kstars-cov-build.tgz ./cov-int'
+            deleteDir()
+          }
+          script {
+            try {
+              withCredentials([usernamePassword(credentialsId: 'coverity-kstars-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
+                httpRequest consoleLogResponseBody: true,
+                  formData: [
+                    [body: '$TOKEN', contentType: '', fileName: '', name: 'token', uploadFile: ''],
+                    [body: '$EMAIL', contentType: '', fileName: '', name: 'email', uploadFile: ''],
+                    [body: '${env.VERSION}', contentType: '', fileName: '', name: 'version', uploadFile: ''],
+                    [body: 'Jenkins CI Upload', contentType: '', fileName: '', name: 'description', uploadFile: ''],
+                    [body: '', contentType: '', fileName: '', name: 'file', uploadFile: 'kstars-cov-build.tgz']],
+                  httpMode: 'POST',
+                  url: 'https://scan.coverity.com/builds?project=TallFurryMan%2Fkstars'
+              }
+            } catch(e) {
+              withCredentials([usernamePassword(credentialsId: 'coverity-stellarsolver-token', usernameVariable: 'EMAIL', passwordVariable: 'TOKEN')]) {
+                sh '''
+                curl \
+                  --form token="$TOKEN" \
+                  --form email="$EMAIL" \
+                  --form file=@kstars-cov-build.tgz \
+                  --form version="$VERSION" \
+                  --form description="Jenkins CI Upload" \
+                  https://scan.coverity.com/builds?project=TallFurryMan%2Fkstars
+                '''
+              }
+            }
+          }
+        }
+      }
+    }
+    
     stage('Package') {
       steps {
         dir('kstars-build') {
