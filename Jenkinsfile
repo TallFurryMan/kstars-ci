@@ -110,8 +110,8 @@ pipeline {
         catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
           dir('coverity-build') {
             sh 'cmake -B. -H.. -DCCACHE_SUPPORT=OFF -DUNITY_BUILD=OFF -DCMAKE_BUILD_TYPE=Debug'
-            sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir . make -j2 -C .'
-            sh 'tar czvf ../stellarsolver-cov-build.tgz ./'
+            sh 'PATH="/mnt/cov-analysis/bin:$PATH" cov-build --dir ./cov-int make -j2 -C .'
+            sh 'tar czvf ../stellarsolver-cov-build.tgz ./cov-int'
             deleteDir()
           }
           script {
