@@ -12,7 +12,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
         zlib1g-dev libsecret-1-dev libcurl4-openssl-dev
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
-        libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
+        libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev libev-dev \
         libusb-1.0.0-dev libgsl-dev libjpeg-dev libtiff-dev libfftw3-dev libftdi1-dev
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
         libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev libswscale-dev
