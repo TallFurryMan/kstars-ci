@@ -56,7 +56,7 @@ pipeline {
       '-DWITH_SX=OFF ' +
       '-DWITH_TALON6=OFF ' +
       '-DWITH_TOUPBASE=OFF ' +
-      '-DWITH_WEBCAM=ON ' +
+      '-DWITH_WEBCAM=OFF ' +
       '-DWITH_WEEWX_JSON=OFF'
   }
   
