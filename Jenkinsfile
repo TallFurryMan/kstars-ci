@@ -135,9 +135,9 @@ pipeline {
       steps {
         dir('indi-build') {
           sh '''
-            version_major=`grep \'INDI_VERSION_MAJOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_minor=`grep \'INDI_VERSION_MINOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_major=`grep \'INDI_VERSION_MAJOR .*$\' $WORKSPACE/libs/indicore/indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_minor=`grep \'INDI_VERSION_MINOR .*$\' $WORKSPACE/libs/indicore/indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' $WORKSPACE/libs/indicore/indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
             version="$version_major.$version_minor.$version_revision-$version_patch"
             package_file_name="indi-core-$version-Linux-x86_64"
@@ -189,9 +189,9 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           sh '''
-            version_major=`grep \'INDI_VERSION_MAJOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_minor=`grep \'INDI_VERSION_MINOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_major=`grep \'INDI_VERSION_MAJOR .*$\' $WORKSPACE/libs/indicore/indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_minor=`grep \'INDI_VERSION_MINOR .*$\' $WORKSPACE/libs/indicore/indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' $WORKSPACE/libs/indicore/indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`cd ../3rdparty && git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
             version="$version_major.$version_minor.$version_revision-$version_patch"
             package_file_name="indi-3rdparty-libs-$version-Linux-x86_64"
