@@ -104,7 +104,7 @@ pipeline {
           $class: 'GitSCM',
           userRemoteConfigs: [[ url: "${params.REPO}" ]],
           branches: [[ name: "${params.BRANCH}" ]],
-          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 30 ]],
         ])
         //sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
         sh "git log --oneline --decorate -10"
@@ -168,7 +168,7 @@ pipeline {
             $class: 'GitSCM',
             userRemoteConfigs: [[ url: "${params.REPO3P}" ]],
             branches: [[ name: "${params.BRANCH3P}" ]],
-            extensions: [[ $class: 'CloneOption', shallow: true, depth: 10 ]],
+            extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 30 ]],
           ])
           //sh "if [ -n '${params.TAG3P}' ] ; then git checkout ${params.TAG3P} ; fi"
           sh "git log --oneline --decorate -10"
