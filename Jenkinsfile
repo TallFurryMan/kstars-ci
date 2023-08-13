@@ -135,7 +135,7 @@ pipeline {
       steps {
         dir('indi-build') {
           sh '''
-            indiapi="$(find "$WORKSPACE" -name indiapi.h)"
+            indiapi="$(find "/usr/include" -name indiapi.h)"
             version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_revision=`grep \'INDI_VERSION_RELEASE .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
