@@ -65,10 +65,10 @@ pipeline {
   parameters {
     string(name: 'REPO', defaultValue: 'https://github.com/indilib/indi.git', description: 'The repository to clone from.')
     string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-    //string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
+    string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
     string(name: 'REPO3P', defaultValue: 'https://github.com/indilib/indi-3rdparty.git', description: 'The 3rdparty repository to clone from.')
     string(name: 'BRANCH3P', defaultValue: 'master', description: 'The repository branch to build.')
-    //string(name: 'TAG3P', defaultValue: 'master', description: 'The repository tag to build.')
+    string(name: 'TAG3P', defaultValue: 'master', description: 'The repository tag to build.')
   }
   
   agent {
