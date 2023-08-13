@@ -135,7 +135,7 @@ pipeline {
       steps {
         dir('indi-build') {
           sh '''
-            indiapi="$(find "/usr/include" -name indiapi.h)"
+            indiapi="$(find "$WORKSPACE" -name indiapi.h)"
             version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_revision=`grep \'INDI_VERSION_RELEASE .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
@@ -168,9 +168,9 @@ pipeline {
             $class: 'GitSCM',
             userRemoteConfigs: [[ url: "${params.REPO3P}" ]],
             branches: [[ name: "${params.BRANCH3P}" ]],
-            extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 30 ]],
+            extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
           ])
-          //sh "if [ -n '${params.TAG3P}' ] ; then git checkout ${params.TAG3P} ; fi"
+          sh "if [ -n '${params.TAG3P}' -a '${params.BRANCH3P}' != '${params.TAG3P}' ] ; then git checkout '${params.TAG3P}' ; fi"
           sh "git log --oneline --decorate -10"
         }
       }
@@ -190,7 +190,7 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           sh '''
-            indiapi="$(find "$WORKSPACE" -name indiapi.h)"
+            indiapi="$(find "/usr/local/include/libindi" -name indiapi.h)"
             version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_revision=`grep \'INDI_VERSION_RELEASE .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
@@ -247,7 +247,7 @@ pipeline {
       steps {
         dir('indi3p-build') {
           sh '''
-            indiapi="$(find "$WORKSPACE" -name indiapi.h)"
+            indiapi="$(find "/usr/local/include/libindi" -name indiapi.h)"
             version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_revision=`grep \'INDI_VERSION_RELEASE .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
