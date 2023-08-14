@@ -18,6 +18,7 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
+      additionalBuildArgs '--pull always'
       args '-v stellarsolver_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache -v coverity_volume:/mnt'
     }
   }
