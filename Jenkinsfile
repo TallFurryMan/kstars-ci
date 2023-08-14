@@ -76,6 +76,7 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
+      additionalBuildArgs '--pull always'
       args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
     }
   }
