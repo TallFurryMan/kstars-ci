@@ -96,6 +96,7 @@ pipeline {
               "SET(CMAKE_C_COMPILER gcc)" \
               "SET(CMAKE_C_FLAGS -m32)" \
               "SET(CMAKE_CXX_COMPILER g++)" \
+              "SET(CMAKE_CXX_STANDARD 14)" \
               "SET(CMAKE_CXX_FLAGS -m32)" > ~/i386.cmake
         '''
       }
