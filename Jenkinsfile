@@ -1,5 +1,5 @@
-def (INDI_BUILD_AMD64, INDI_BUILD_I386, INDI_BUILD_ATOM)
-def (STSLV_BUILD_AMD64, STSLV_BUILD_I386, STSLV_BUILD_ATOM)
+def (INDI_BUILD_AMD64, INDI_BUILD_I386, INDI_BUILD_ATOM) = [null,null,null]
+def (STSLV_BUILD_AMD64, STSLV_BUILD_I386, STSLV_BUILD_ATOM) = [null,null,null]
 pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
