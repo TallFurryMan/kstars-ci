@@ -18,7 +18,7 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
-      additionalBuildArgs '--pull always'
+      additionalBuildArgs '--pull'
       args '-v stellarsolver_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache -v coverity_volume:/mnt'
     }
   }
@@ -49,8 +49,13 @@ pipeline {
     
     stage('Checkout') {
       steps {
-        git(url: "${params.REPO}", branch: "${params.BRANCH}")
-        sh "git checkout ${params.TAG}"
+        checkout([
+          $class: 'GitSCM',
+          userRemoteConfigs: [[ url: "${params.REPO}" ]],
+          branches: [[ name: "${params.BRANCH}" ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
+        ])
+        sh "if [ -n '${params.TAG}' -a '${params.BRANCH}' != '${params.TAG}' ] ; then git checkout '${params.TAG}' ; fi"
         sh "git log --oneline --decorate -10"
         script {
           VERSION = sh( script: '''
