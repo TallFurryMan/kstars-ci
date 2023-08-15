@@ -43,9 +43,14 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: "${params.REPO}",
-                    branch: "${params.BRANCH}"
-                sh "[ -z ${params.TAG} ] || git checkout ${params.TAG}"
+                checkout([
+                  $class: 'GitSCM',
+                  userRemoteConfigs: [[ url: "${params.REPO}" ]],
+                  branches: [[ name: "${params.BRANCH}" ]],
+                  extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
+                ])
+                sh "if [ -n '${params.TAG}' -a '${params.BRANCH}' != '${params.TAG}' ] ; then git checkout '${params.TAG}' ; fi"
+                sh "git log --oneline --decorate -10"
             }
         }
 
