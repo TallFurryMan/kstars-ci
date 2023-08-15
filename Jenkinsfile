@@ -97,11 +97,11 @@ pipeline {
                     'phd2': {
                         build job: 'amd64-phd2',
                               parameters: [string(name: 'TAG', value: "${params.PHD2_TAG}")]
-                    }
+                    },
                     'phd2-atom': {
                         build job: 'atom-phd2',
                               parameters: [string(name: 'TAG', value: "${params.PHD2_TAG}")]
-                    }
+                    },
                     'phd2-i386': {
                         build job: 'i386-phd2',
                               parameters: [string(name: 'TAG', value: "${params.PHD2_TAG}")]
