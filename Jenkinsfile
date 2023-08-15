@@ -103,12 +103,14 @@ pipeline {
     
     stage('Checkout Core') {
       steps {
-        git(url: "${params.REPO}", branch: "${params.BRANCH}")
-        sh "git checkout ${params.TAG}"
-        dir('3rdparty') {
-          git(url: "${params.REPO3P}", branch: "${params.BRANCH3P}")
-          sh "git checkout ${params.TAG3P}"
-        }
+        checkout([
+          $class: 'GitSCM',
+          userRemoteConfigs: [[ url: "${params.REPO}" ]],
+          branches: [[ name: "${params.BRANCH}" ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
+        ])
+        sh "if [ -n '${params.TAG}' -a '${params.BRANCH}' != '${params.TAG}' ] ; then git checkout '${params.TAG}' ; fi"
+        sh "git log --oneline --decorate -10"
       }
     }
     
@@ -136,9 +138,10 @@ pipeline {
       steps {
         dir('indi-build') {
           sh '''
-            version_major=`grep \'INDI_VERSION_MAJOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_minor=`grep \'INDI_VERSION_MINOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            indiapi="$(find "$WORKSPACE" -name indiapi.h)"
+            version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
+            version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
+            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
             version="$version_major.$version_minor.$version_revision-$version_patch"
             package_file_name="indi-core-$version-Linux-i386"
@@ -164,8 +167,14 @@ pipeline {
     stage('Checkout 3rd-party') {
       steps {
         dir('3rdparty') {
-          git(url: "${params.REPO3P}", branch: "${params.BRANCH3P}")
-          sh "git checkout ${params.TAG3P}"
+          checkout([
+            $class: 'GitSCM',
+            userRemoteConfigs: [[ url: "${params.REPO3P}" ]],
+            branches: [[ name: "${params.BRANCH3P}" ]],
+            extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
+          ])
+          sh "if [ -n '${params.TAG3P}' -a '${params.BRANCH3P}' != '${params.TAG3P}' ] ; then git checkout '${params.TAG3P}' ; fi"
+          sh "git log --oneline --decorate -10"
         }
       }
     }
@@ -184,9 +193,10 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           sh '''
-            version_major=`grep \'INDI_VERSION_MAJOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_minor=`grep \'INDI_VERSION_MINOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            indiapi="$(find "/usr/local/include/libindi" -name indiapi.h)"
+            version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
+            version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
+            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`cd ../3rdparty && git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
             version="$version_major.$version_minor.$version_revision-$version_patch"
             package_file_name="indi-3rdparty-libs-$version-Linux-i386"
@@ -240,11 +250,12 @@ pipeline {
       steps {
         dir('indi3p-build') {
           sh '''
-            version_major=`grep \'INDI_VERSION_MAJOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_minor=`grep \'INDI_VERSION_MINOR .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
-            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' ../indiapi.h | head -1 | grep -o \'[0-9\\.]*\'`
+            indiapi="$(find "/usr/local/include/libindi" -name indiapi.h)"
+            version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
+            version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
+            version_revision=`grep \'INDI_VERSION_RELEASE .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`cd ../3rdparty && git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
-            version="$version_major.$version_minor.$version_revision.$version_patch"
+            version="$version_major.$version_minor.$version_revision-$version_patch"
             package_file_name="indi-3rdparty-drivers-$version-Linux-i386"
             cpack --debug --verbose -G DEB -P indi-3rdparty-drivers -R $version \
               -D CPACK_INSTALL_CMAKE_PROJECTS=".;indi-3rdparty;ALL;/" \
