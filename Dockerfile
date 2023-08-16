@@ -6,8 +6,12 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
         gcc-multilib g++-multilib
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
         cmake extra-cmake-modules
+# First ca-certificates-java, then default-jre
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1023748
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
-        git dpkg-dev default-jre ccache gettext
+        git dpkg-dev ca-certificates-java ccache gettext
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
+        default-jre
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
         zlib1g-dev:i386 libsecret-1-dev:i386 linux-libc-dev-i386-cross libcurl4-openssl-dev:i386
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
