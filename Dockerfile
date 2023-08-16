@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM debian:bookworm
 
 RUN dpkg --add-architecture i386
 RUN apt-get -y update && apt-get -y upgrade
