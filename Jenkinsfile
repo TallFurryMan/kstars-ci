@@ -7,11 +7,14 @@ pipeline {
     CMAKE_OPTIONS = '-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON'
     INDI_WITH_FLAGS = 
       '-DWITH_AHP_XC=OFF ' +
+      '-DWITH_AHP_GT=OFF ' +
       '-DWITH_APOGEE=OFF ' +
       '-DWITH_ARMADILLO=OFF ' +
       '-DWITH_ASICAM=ON ' +
       '-DWITH_ASTROLINK4=OFF ' +
       '-DWITH_ASTROMECHFOC=OFF ' +
+      '-DWITH_ASTROASIS=OFF ' +
+      '-DWITH_ASTROLINK4=OFF ' +
       '-DWITH_ATIK=ON ' +
       '-DWITH_AVALON=OFF ' +
       '-DWITH_BEEFOCUS=OFF ' +
@@ -44,6 +47,7 @@ pipeline {
       '-DWITH_QHY=OFF ' +
       '-DWITH_QSI=OFF ' +
       '-DWITH_RADIOSIM=OFF ' +
+      '-DWITH_ROLLOFINO=ON ' +
       '-DWITH_RPICAM=OFF ' +
       '-DWITH_RTKLIB=OFF ' +
       '-DWITH_SBIG=OFF ' +
@@ -53,6 +57,7 @@ pipeline {
       '-DWITH_STARBOOK=OFF ' +
       '-DWITH_STARBOOK_TEN=OFF ' +
       '-DWITH_SV305=OFF ' +
+      '-DWITH_SVBONY=OFF ' +
       '-DWITH_SX=OFF ' +
       '-DWITH_TALON6=OFF ' +
       '-DWITH_TOUPBASE=OFF ' +
