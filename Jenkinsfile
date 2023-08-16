@@ -89,7 +89,6 @@ pipeline {
         sh '[ -f ~/.ccache/ccache.conf ] || touch ~/.ccache/ccache.conf'
         sh 'ccache --max-size 20G'
         sh 'ccache -s'
-        // C++14 hack for libev, not available on i386 18.04 with support for >C++1z
         sh '''
             printf "%s\\n" \
               "SET(CMAKE_SYSTEM_NAME Linux)" \
@@ -97,9 +96,6 @@ pipeline {
               "SET(CMAKE_C_COMPILER gcc)" \
               "SET(CMAKE_C_FLAGS -m32)" \
               "SET(CMAKE_CXX_COMPILER g++)" \
-              "SET(CMAKE_CXX_STANDARD 14)" \
-              "SET(CMAKE_CXX_STANDARD_REQUIRED ON)" \
-              "SET(CMAKE_CXX_EXTENSIONS OFF)" \
               "SET(CMAKE_CXX_FLAGS -m32)" > ~/i386.cmake
         '''
       }
@@ -120,8 +116,6 @@ pipeline {
     
     stage('Build Core') {
       steps {
-        // Hack for libev, not available on i386 18.04 with support for >C++1z
-        sh 'echo "" > cmake_modules/CMakeCommon.cmake'
         dir('indi-build') {
           deleteDir()
           sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}"
