@@ -91,6 +91,7 @@ pipeline {
               $WORKSPACE
             make -j4 clean all
           '''
+          recordIssues(tools: [gcc()]) // Requires Warnings-NG
         }
       }
     }
