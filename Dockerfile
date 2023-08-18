@@ -7,7 +7,7 @@ RUN apt-get -y --no-install-recommends install \
 RUN apt-get -y --no-install-recommends install \
         cmake extra-cmake-modules
 RUN apt update && apt-get -y --no-install-recommends install \
-        git dpkg-dev default-jre ccache qt5-default:i386 libcfitsio-dev:i386 \
+        git dpkg-dev default-jre ccache qtbase5-dev:i386 libcfitsio-dev:i386 \
         libgsl-dev:i386 pkg-config:i386 wcslib-dev:i386
 
 RUN apt-get -y --no-install-recommends install wget apt sudo
