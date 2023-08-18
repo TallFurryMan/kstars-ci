@@ -71,7 +71,7 @@ pipeline {
             steps {
                 parallel(
                     'kstars': {
-                        build job: 'amd64-kstars',
+                        build job: 'amd64',
                               parameters: [
                                   string(name: 'TAG', value: "${params.KSTARS_TAG}"),
                                   string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_AMD64}"),
@@ -79,7 +79,7 @@ pipeline {
                               ]
                     },
                     'kstars-i386': {
-                        build job: 'i386-kstars',
+                        build job: 'i386',
                               parameters: [
                                   string(name: 'TAG', value: "${params.KSTARS_TAG}"),
                                   string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_I386}"),
@@ -87,7 +87,7 @@ pipeline {
                               ]
                     },
                     'kstars-atom': {
-                        build job: 'atom-kstars',
+                        build job: 'atom',
                               parameters: [
                                   string(name: 'TAG', value: "${params.KSTARS_TAG}"),
                                   string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_ATOM}"),
