@@ -120,6 +120,7 @@ pipeline {
           deleteDir()
           sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}"
           sh "make -j4 all"
+          recordIssues(tools: [gcc()]) // Requires Warnings-NG
         }
       }
     }
