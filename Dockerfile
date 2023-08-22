@@ -5,15 +5,12 @@ RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get -y --no-install-recommends install \
         gcc-multilib g++-multilib
 RUN apt-get -y --no-install-recommends install \
-        cmake extra-cmake-modules
+        autotools-dev autoconf
 RUN apt-get -y --no-install-recommends install \
         git dpkg-dev default-jre ccache gettext breeze-icon-theme
 RUN apt-get -y --no-install-recommends install \
         zlib1g-dev:i386 libsecret-1-dev:i386 linux-libc-dev-i386-cross \
-        libcurl4-openssl-dev:i386 libwxgtk3.0-dev:i386 wx-common:i386 wx3.0-i18n:i386
-RUN apt-get -y --no-install-recommends install \
-        libeigen3-dev:i386 libcfitsio-dev:i386 libnova-dev:i386 libgsl-dev:i386 libraw-dev:i386 wcslib-dev:i386 \
-        libindi-dev:i386 xplanet xplanet-images
+        libcurl4-openssl-dev:i386
 
 RUN useradd -m jenkins
 RUN /usr/sbin/update-ccache-symlinks
