@@ -112,7 +112,7 @@ pipeline {
           checkout([
             $class: 'GitSCM',
             userRemoteConfigs: [[ url: "https://git.launchpad.net/ubuntu/+source/libev" ]],
-            branches: [[ name: "master" ]],
+            branches: [[ name: "ubuntu/devel" ]],
             extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
           ])
           sh "git checkout import/1%4.33-1"
