@@ -106,6 +106,18 @@ pipeline {
       }
     }
     
+    stage('Checkout, make and install Libev4') {
+      dir('libev') {
+        checkout([
+          $class: 'GitSCM',
+          userRemoteConfigs: [[ url: "https://git.launchpad.net/ubuntu/+source/libev" ]],
+          branches: [[ name: "master" ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
+        ])
+        sh "git checkout import/1%4.33-1"
+        sh "./configure && make all install"
+    }
+
     stage('Checkout Core') {
       steps {
         checkout([
