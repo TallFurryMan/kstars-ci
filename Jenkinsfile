@@ -116,6 +116,7 @@ pipeline {
         ])
         sh "git checkout import/1%4.33-1"
         sh "./configure && make all install"
+      }
     }
 
     stage('Checkout Core') {
