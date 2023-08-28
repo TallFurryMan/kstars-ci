@@ -116,7 +116,7 @@ pipeline {
             extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
           ])
           sh "git checkout import/1%4.33-1"
-          sh "./configure && make all install"
+          sh "./configure && make all && sudo make install"
         }
       }
     }
