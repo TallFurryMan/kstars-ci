@@ -21,7 +21,8 @@ RUN apt-get -y update && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y install \
-        qtdeclarative5-dev libqt5svg5-dev libqt5websockets5-dev && \
+        qtdeclarative5-dev libqt5svg5-dev libqt5websockets5-dev qt5keychain-dev \
+        libqt5datavisualization5-dev && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y install \
@@ -32,7 +33,7 @@ RUN apt-get -y update && \
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
-        xplanet xplanet-images && \
+        xplanet xplanet-images libxisf-dev && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install wget apt sudo && \
