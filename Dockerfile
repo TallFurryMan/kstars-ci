@@ -1,44 +1,27 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
-RUN apt-get -y update && \
-    apt-get -y upgrade && \
-    apt-get clean
-RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install \
-        gcc-multilib g++-multilib && \
-    apt-get clean
-RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install \
-        cmake extra-cmake-modules && \
-    apt-get clean
-RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install \
-        git dpkg-dev default-jre-headless ccache gettext breeze-icon-theme && \
-    apt-get clean
-RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install \
-        zlib1g-dev libsecret-1-dev && \
-    apt-get clean
-RUN apt-get -y update && \
-    apt-get -y install \
-        qtdeclarative5-dev libqt5svg5-dev libqt5websockets5-dev qt5keychain-dev \
-        libqt5datavisualization5-dev && \
-    apt-get clean
-RUN apt-get -y update && \
-    apt-get -y install \
+RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
+        gcc-multilib g++-multilib
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
+        cmake extra-cmake-modules
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
+        git dpkg-dev default-jre ccache gettext breeze-icon-theme
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
+        zlib1g-dev libsecret-1-dev
+RUN apt-get -y update && apt-get -y install \
+        qtdeclarative5-dev libqt5svg5-dev libqt5websockets5-dev
+RUN apt-get -y update && apt-get -y install \
         libkf5plotting-dev libkf5xmlgui-dev libkf5newstuff-dev \
         libkf5notifications-dev libkf5crash-dev libkf5notifyconfig-dev \
-        libkf5kio-dev kinit-dev kdoctools-dev libkf5config-bin && \
-    apt-get clean
-RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install \
+        libkf5kio-dev kinit-dev libkf5doctools-dev libkf5config-bin
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
-        xplanet xplanet-images libxisf-dev && \
-    apt-get clean
-RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install wget apt sudo && \
-    apt-get clean
+        xplanet xplanet-images
 
+RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo
 RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg|' /etc/sudoers
 RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
