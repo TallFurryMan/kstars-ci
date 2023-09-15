@@ -20,6 +20,7 @@ pipeline {
       '-DWITH_DSI=OFF ' +
       '-DWITH_DUINO=ON ' +
       '-DWITH_EQMOD=ON ' +
+      '-DWITH_SCOPE_LIMITS=OFF ' +
       '-DWITH_FFMV=OFF ' +
       '-DWITH_FISHCAMP=OFF ' +
       '-DWITH_FLI=OFF ' +
