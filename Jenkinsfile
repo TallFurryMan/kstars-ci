@@ -29,7 +29,7 @@ pipeline {
       '-DWITH_FISHCAMP=OFF ' +
       '-DWITH_FLI=OFF ' +
       '-DWITH_GIGE=OFF ' +
-      '-DWITH_GPHOTO=ON ' +
+      '-DWITH_GPHOTO=OFF ' +
       '-DWITH_GPSD=OFF ' +
       '-DWITH_GPSNMEA=OFF ' +
       '-DWITH_INOVAPLX=OFF ' +
