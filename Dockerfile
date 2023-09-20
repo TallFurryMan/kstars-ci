@@ -12,8 +12,9 @@ RUN apt-get -y update && \
         cmake extra-cmake-modules && \
     apt-get clean
 RUN apt-get -y update && \
-    apt update && apt-get -y --no-install-recommends install \
-        git dpkg-dev default-jre ccache qt5-default libcfitsio-dev \
+    apt-get -y --no-install-recommends install \
+        git dpkg-dev default-jre ccache qtbase5-dev qtchooser \
+        qt5-qmake qtbase5-dev-tools libcfitsio-dev \
         libgsl-dev pkg-config wcslib-dev && \
     apt-get clean
 RUN apt-get -y update && \
