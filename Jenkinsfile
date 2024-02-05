@@ -1,6 +1,7 @@
 pipeline {
   
   environment {
+    GIT_URL = credentials('kstars-git-url')
     CCACHE_COMPRESS = '1'
   }
   
@@ -9,7 +10,7 @@ pipeline {
   }
   
   parameters {
-    persistentString(name: 'REPO', defaultValue: 'https://invent.kde.org/education/kstars.git', description: 'The repository to clone from. E.g. https://invent.kde.org/education/kstars.git or git@invent.kde.org:education/kstars.git.')
+    persistentString(name: 'REPO', defaultValue: 'kstars.git', description: 'The repository to clone from, prefixed by cred GIT_URL. E.g. kstars.git.')
     persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build. Use tags/<a_tag> to check tag a_tag out.')
     persistentString(name: 'TAG', defaultValue: '', description: 'The repository tag to build.')
     buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last saved build.')
@@ -66,7 +67,7 @@ pipeline {
       steps {
         checkout([
           $class: 'GitSCM',
-          userRemoteConfigs: [[ url: "${params.REPO}" ]],
+          userRemoteConfigs: [[ url: "${GIT_URL}/${params.REPO}" ]],
           branches: [[ name: "${params.BRANCH}" ]],
           extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
         ])
