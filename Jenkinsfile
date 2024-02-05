@@ -20,7 +20,7 @@ pipeline {
     dockerfile {
       filename 'Dockerfile'
       additionalBuildArgs '--pull'
-      args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
+      args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache --group-add sudo'
     }
   }
   
