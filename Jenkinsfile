@@ -156,6 +156,7 @@ pipeline {
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
+          sh 'id'
           sh 'sudo make install'
           deleteDir()
         }
