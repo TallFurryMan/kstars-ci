@@ -1,6 +1,7 @@
 pipeline {
   
   environment {
+    GIT_URL = credentials('indi-git-url')
     CCACHE_COMPRESS = '1'
     CMAKE_OPTIONS = '-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON'
     INDI_WITH_FLAGS = 
@@ -63,12 +64,12 @@ pipeline {
   }
   
   parameters {
-    string(name: 'REPO', defaultValue: 'https://github.com/indilib/indi.git', description: 'The repository to clone from.')
-    string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-    string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
-    string(name: 'REPO3P', defaultValue: 'https://github.com/indilib/indi-3rdparty.git', description: 'The 3rdparty repository to clone from.')
-    string(name: 'BRANCH3P', defaultValue: 'master', description: 'The repository branch to build.')
-    string(name: 'TAG3P', defaultValue: 'master', description: 'The repository tag to build.')
+    persistentString(name: 'REPO', defaultValue: 'indi.git', description: 'The repository to clone from.')
+    persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
+    persistentString(name: 'TAG', defaultValue: '', description: 'The repository tag to build.')
+    persistentString(name: 'REPO3P', defaultValue: 'indi-3rdparty.git', description: 'The 3rdparty repository to clone from.')
+    persistentString(name: 'BRANCH3P', defaultValue: 'master', description: 'The repository branch to build.')
+    persistentString(name: 'TAG3P', defaultValue: '', description: 'The repository tag to build.')
   }
   
   agent {
@@ -103,7 +104,7 @@ pipeline {
       steps {
         checkout([
           $class: 'GitSCM',
-          userRemoteConfigs: [[ url: "${params.REPO}" ]],
+          userRemoteConfigs: [[ url: "${GIT_URL}/${params.REPO}" ]],
           branches: [[ name: "${params.BRANCH}" ]],
           extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
         ])
@@ -168,7 +169,7 @@ pipeline {
         dir('3rdparty') {
           checkout([
             $class: 'GitSCM',
-            userRemoteConfigs: [[ url: "${params.REPO3P}" ]],
+            userRemoteConfigs: [[ url: "${GIT_URL}/${params.REPO3P}" ]],
             branches: [[ name: "${params.BRANCH3P}" ]],
             extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
           ])
