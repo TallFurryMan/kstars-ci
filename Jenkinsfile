@@ -18,7 +18,7 @@ pipeline {
     dockerfile {
       filename 'Dockerfile'
       additionalBuildArgs '--pull'
-      args '-v stellarsolver_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
+      args '-v stellarsolver_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache --group-add sudo'
     }
   }
   
