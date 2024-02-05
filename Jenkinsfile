@@ -1,7 +1,6 @@
 pipeline {
   
   environment {
-    GIT_URL = credentials('indi-git-url')
     CCACHE_COMPRESS = '1'
     CMAKE_OPTIONS = '-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON'
     INDI_WITH_FLAGS = 
@@ -64,10 +63,10 @@ pipeline {
   }
   
   parameters {
-    persistentString(name: 'REPO', defaultValue: 'indi.git', description: 'The repository to clone from.')
+    persistentString(name: 'REPO', defaultValue: env.INDI_GIT ?: 'https://github.com/indilib/indi.git', description: 'The repository to clone from, global INDI_GIT, by default https://github.com/indilib/indi.git.')
     persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     persistentString(name: 'TAG', defaultValue: '', description: 'The repository tag to build.')
-    persistentString(name: 'REPO3P', defaultValue: 'indi-3rdparty.git', description: 'The 3rdparty repository to clone from.')
+    persistentString(name: 'REPO3P', defaultValue: env.INDI_3RDPART_GIT ?: 'https://github.com/indilib/indi-3rdparty.git', description: 'The 3rdparty repository to clone from, $INDI_3RDPARTY_GIT, by default https://github.com/indilib/indi-3rdparty.git.')
     persistentString(name: 'BRANCH3P', defaultValue: 'master', description: 'The repository branch to build.')
     persistentString(name: 'TAG3P', defaultValue: '', description: 'The repository tag to build.')
   }
@@ -104,8 +103,8 @@ pipeline {
       steps {
         checkout([
           $class: 'GitSCM',
-          userRemoteConfigs: [[ url: "${GIT_URL}/${params.REPO}" ]],
-          branches: [[ name: "${params.BRANCH}" ]],
+          userRemoteConfigs: [[ url: $params.REPO ]],
+          branches: [[ name: params.BRANCH ]],
           extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
         ])
         sh "if [ -n '${params.TAG}' -a '${params.BRANCH}' != '${params.TAG}' ] ; then git checkout '${params.TAG}' ; fi"
@@ -169,8 +168,8 @@ pipeline {
         dir('3rdparty') {
           checkout([
             $class: 'GitSCM',
-            userRemoteConfigs: [[ url: "${GIT_URL}/${params.REPO3P}" ]],
-            branches: [[ name: "${params.BRANCH3P}" ]],
+            userRemoteConfigs: [[ url: params.REPO3P ]],
+            branches: [[ name: params.BRANCH3P ]],
             extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
           ])
           sh "if [ -n '${params.TAG3P}' -a '${params.BRANCH3P}' != '${params.TAG3P}' ] ; then git checkout '${params.TAG3P}' ; fi"
