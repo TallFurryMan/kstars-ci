@@ -1,4 +1,8 @@
 pipeline {
+
+    environment {
+        GIT_URL = credentials('phd2-git-url')
+    }
     
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -12,9 +16,9 @@ pipeline {
     }
     
     parameters {
-        string(name: 'REPO',   defaultValue: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from.')
-        string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-        string(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
+        persistentString(name: 'REPO',   defaultValue: 'phd2.git', description: 'The repository to clone from.')
+        persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
+        persistentString(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
         buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: latestSavedBuild(), description: 'The build to use for INDI Core, empty for last saved build.')
     }
 
@@ -64,7 +68,7 @@ pipeline {
             steps {
                 checkout([
                   $class: 'GitSCM',
-                  userRemoteConfigs: [[ url: "${params.REPO}" ]],
+                  userRemoteConfigs: [[ url: "${GIT_URL}/${params.REPO}" ]],
                   branches: [[ name: "${params.BRANCH}" ]],
                   extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
                 ])
