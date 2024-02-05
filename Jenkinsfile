@@ -1,9 +1,5 @@
 pipeline {
 
-    environment {
-        GIT_URL = credentials('phd2-git-url')
-    }
-    
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
@@ -16,7 +12,7 @@ pipeline {
     }
     
     parameters {
-        persistentString(name: 'REPO',   defaultValue: 'phd2.git', description: 'The repository to clone from.')
+        persistentString(name: 'REPO',   defaultValue: env.PHD2_GIT ?: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from, by default https://github.com/OpenPHDGuiding/phd2.git.')
         persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
         persistentString(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
         buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: latestSavedBuild(), description: 'The build to use for INDI Core, empty for last saved build.')
@@ -68,8 +64,8 @@ pipeline {
             steps {
                 checkout([
                   $class: 'GitSCM',
-                  userRemoteConfigs: [[ url: "${GIT_URL}/${params.REPO}" ]],
-                  branches: [[ name: "${params.BRANCH}" ]],
+                  userRemoteConfigs: [[ url: params.REPO ]],
+                  branches: [[ name: params.BRANCH ]],
                   extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
                 ])
                 sh "if [ -n '${params.TAG}' -a '${params.BRANCH}' != '${params.TAG}' ] ; then git checkout '${params.TAG}' ; fi"
