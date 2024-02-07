@@ -30,7 +30,7 @@ RUN apt-get -y update && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
-        libgphoto2-dev && \
+        libgphoto2-dev libzmq3-dev && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install wget apt sudo && \
