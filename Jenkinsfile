@@ -12,7 +12,7 @@ pipeline {
     }
     
     parameters {
-        string(name: 'REPO',   defaultValue: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from.')
+        string(name: 'REPO',   defaultValue: env.PHD2_GIT ?: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from.')
         string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
         string(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
     }
@@ -45,8 +45,8 @@ pipeline {
             steps {
                 checkout([
                   $class: 'GitSCM',
-                  userRemoteConfigs: [[ url: "${params.REPO}" ]],
-                  branches: [[ name: "${params.BRANCH}" ]],
+                  userRemoteConfigs: [[ url: params.REPO ]],
+                  branches: [[ name: params.BRANCH ]],
                   extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
                 ])
                 sh "if [ -n '${params.TAG}' -a '${params.BRANCH}' != '${params.TAG}' ] ; then git checkout '${params.TAG}' ; fi"
