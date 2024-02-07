@@ -9,8 +9,8 @@ pipeline {
   }
   
   parameters {
-    string(name: 'REPO', defaultValue: 'https://invent.kde.org/education/kstars.git', description: 'The repository to clone from. E.g. https://invent.kde.org/education/kstars.git or git@invent.kde.org:education/kstars.git.')
-    string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build. Use tags/<a_tag> to check tag a_tag out.')
+    persistentString(name: 'REPO', defaultValue: env.KSTARS_GIT ?: 'https://invent.kde.org/education/kstars.git', description: 'The repository to clone from. E.g. https://invent.kde.org/education/kstars.git or git@invent.kde.org:education/kstars.git.')
+    persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build. Use tags/<a_tag> to check tag a_tag out.')
     //string(name: 'TAG', defaultValue: '', description: 'The repository tag to build.')
     buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last saved build.')
     buildSelector(name: 'STELLARSOLVER_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for StellarSolver, empty for last saved build.')
@@ -66,8 +66,8 @@ pipeline {
       steps {
         checkout([
           $class: 'GitSCM',
-          userRemoteConfigs: [[ url: "${params.REPO}" ]],
-          branches: [[ name: "${params.BRANCH}" ]],
+          userRemoteConfigs: [[ url: params.REPO ]],
+          branches: [[ name: params.BRANCH ]],
           extensions: [[ $class: 'CloneOption', shallow: true, depth: 1, timeout: 60 ]],
         ])
         //sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
