@@ -20,7 +20,12 @@ RUN apt-get -y update && apt-get -y install \
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
         xplanet xplanet-images
-
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
+        qtmultimedia5-dev qtpositioning5-dev \
+        libqt5sql5-sqlite libkf5guiaddons-dev libkf5i18n-dev \
+        phonon4qt5-backend-vlc qt5keychain-dev \
+        libqt5datavisualization5-dev qml-module-qtquick-controls
+        
 RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo
 RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg|' /etc/sudoers
 RUN useradd -m jenkins --groups sudo
