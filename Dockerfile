@@ -17,7 +17,7 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
         libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev libswscale-dev
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
-        libgphoto2-dev
+        libgphoto2-dev libzmq3-dev
 
 RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo
 RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/make|' /etc/sudoers
