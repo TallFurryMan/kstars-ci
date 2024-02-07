@@ -103,7 +103,7 @@ pipeline {
       steps {
         checkout([
           $class: 'GitSCM',
-          userRemoteConfigs: [[ url: $params.REPO ]],
+          userRemoteConfigs: [[ url: params.REPO ]],
           branches: [[ name: params.BRANCH ]],
           extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
         ])
