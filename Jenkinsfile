@@ -17,6 +17,7 @@ pipeline {
       '-DWITH_ASTROLINK4=OFF ' +
       '-DWITH_ATIK=ON ' +
       '-DWITH_AVALON=OFF ' +
+      '-DWITH_AVALONUD=OFF ' +
       '-DWITH_BEEFOCUS=OFF ' +
       '-DWITH_BRESSEREXOS2=OFF ' +
       '-DWITH_CAUX=OFF ' +
@@ -41,6 +42,7 @@ pipeline {
       '-DWITH_NEXDOME=OFF ' +
       '-DWITH_NIGHTSCAPE=OFF ' +
       '-DWITH_NUT=OFF ' +
+      '-DWITH_OCS=OFF ' +
       '-DWITH_ORION_SSG3=OFF ' +
       '-DWITH_PENTAX=OFF ' +
       '-DWITH_PLAYERONE=OFF ' +
