@@ -9,17 +9,17 @@ pipeline {
         label 'master'
     }
     parameters {
-        string(name: 'KSTARS_TAG', defaultValue: 'master', description: 'KStars tag to build.')
-        string(name: 'STSLV_TAG',  defaultValue: 'master', description: 'StellarSolver tag to build.')
-        string(name: 'INDI_TAG',   defaultValue: '', description: 'INDI tag to build.')
-        string(name: 'INDI3P_TAG', defaultValue: 'master', description: 'INDI 3rd Party tag to build.')
-        string(name: 'PHD2_TAG',   defaultValue: '', description: 'PHD2 tag to build.')
+        persistentString(name: 'KSTARS_TAG', defaultValue: 'master', description: 'KStars tag to build.')
+        persistentString(name: 'STSLV_TAG',  defaultValue: 'master', description: 'StellarSolver tag to build.')
+        persistentString(name: 'INDI_TAG',   defaultValue: '', description: 'INDI tag to build.')
+        persistentString(name: 'INDI3P_TAG', defaultValue: 'master', description: 'INDI 3rd Party tag to build.')
+        persistentString(name: 'PHD2_TAG',   defaultValue: '', description: 'PHD2 tag to build.')
     }
     stages {
         stage('Dependencies') {
             steps {
                 parallel(
-                    'indi': {
+                    'indi-amd64': {
                         script {
                             def build = build job: 'amd64-indi', parameters: [
                                 string(name: 'TAG', value: "${params.INDI_TAG}"),
@@ -43,7 +43,7 @@ pipeline {
                             INDI_BUILD_ATOM = build.getNumber()
                         }
                     },
-                    'stellarsolver': {
+                    'stellarsolver-amd64': {
                         script {
                             def build = build job: 'amd64-stellarsolver', parameters: [
                                 string(name: 'TAG', value: "${params.STSLV_TAG}")]
@@ -70,7 +70,7 @@ pipeline {
         stage('Build') {
             steps {
                 parallel(
-                    'kstars': {
+                    'kstars-amd64': {
                         build job: 'amd64',
                               parameters: [
                                   string(name: 'TAG', value: "${params.KSTARS_TAG}"),
@@ -94,7 +94,7 @@ pipeline {
                                   string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_ATOM}")
                               ]
                     },
-                    'phd2': {
+                    'phd2-amd64': {
                         build job: 'amd64-phd2',
                               parameters: [string(name: 'TAG', value: "${params.PHD2_TAG}")]
                     },
