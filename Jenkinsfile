@@ -9,10 +9,10 @@ pipeline {
   }
   
   parameters {
-    string(name: 'REPO', defaultValue: 'https://github.com/rlancaste/stellarsolver.git', description: 'The repository to clone from.')
-    string(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-    string(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
-    booleanParam(name: 'COVERITY', defaultValue: false, description: 'Whether to run and push a static analysis to Coverity Scan.')
+    persistentString(name: 'REPO', defaultValue: 'https://github.com/rlancaste/stellarsolver.git', description: 'The repository to clone from.')
+    persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
+    persistentTtring(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
+    persistentBoolean(name: 'COVERITY', defaultValue: false, description: 'Whether to run and push a static analysis to Coverity Scan.')
   }
   
   agent {
@@ -53,7 +53,7 @@ pipeline {
           $class: 'GitSCM',
           userRemoteConfigs: [[ url: "${params.REPO}" ]],
           branches: [[ name: "${params.BRANCH}" ]],
-          extensions: [[ $class: 'CloneOption', shallow: true, depth: 10, timeout: 60 ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 1, timeout: 60 ]],
         ])
         sh "if [ -n '${params.TAG}' -a '${params.BRANCH}' != '${params.TAG}' ] ; then git checkout '${params.TAG}' ; fi"
         sh "git log --oneline --decorate -10"
