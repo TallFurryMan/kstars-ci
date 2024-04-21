@@ -13,10 +13,6 @@ pipeline {
     persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
     persistentString(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
   }
-  
-  environment {
-    CCACHE_COMPRESS = '1'
-  }
 
   agent {
     dockerfile {
