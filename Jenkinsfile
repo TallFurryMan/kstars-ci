@@ -11,7 +11,7 @@ pipeline {
   parameters {
     persistentString(name: 'REPO', defaultValue: 'https://github.com/rlancaste/stellarsolver.git', description: 'The repository to clone from.')
     persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-    persistentTtring(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
+    persistentString(name: 'TAG', defaultValue: 'master', description: 'The repository tag to build.')
     persistentBoolean(name: 'COVERITY', defaultValue: false, description: 'Whether to run and push a static analysis to Coverity Scan.')
   }
   
