@@ -91,6 +91,7 @@ pipeline {
                                   string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_AMD64}")
                               ]
                     },
+                    /* Can't build this anymore, needs cmake 3.16 which apparently does not exist on i386
                     'kstars-i386': {
                         build job: 'i386',
                               parameters: [
@@ -99,7 +100,7 @@ pipeline {
                                   string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_I386}"),
                                   string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_I386}")
                               ]
-                    },
+                    }, */
                     'kstars-atom': {
                         build job: 'atom',
                               parameters: [
