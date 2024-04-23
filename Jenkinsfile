@@ -7,7 +7,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile'
-            args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
+            args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache --group-add sudo'
         }
     }
     
@@ -15,7 +15,7 @@ pipeline {
         persistentString(name: 'REPO',   defaultValue: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from.')
         persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
         persistentString(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
-        buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessfulBuild(), description: 'The build to use for INDI Core, empty for last successful build.')
+        buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last successful build.')
     }
 
     environment {
