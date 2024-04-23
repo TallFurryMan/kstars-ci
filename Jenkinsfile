@@ -7,7 +7,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile'
-            args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
+            args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache --group-add sudo'
         }
     }
     
@@ -15,7 +15,7 @@ pipeline {
         persistentString(name: 'REPO',   defaultValue: env.PHD2_GIT ?: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from.')
         persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
         persistentString(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
-        buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessfulBuild(), description: 'The build to use for INDI Core, empty for last successful build.')
+        buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last successful build.')
     }
 
     environment {
@@ -39,6 +39,24 @@ pipeline {
                       "SET(CMAKE_CXX_COMPILER g++)" \
                       "SET(CMAKE_CXX_FLAGS -march=x86-64)" > ~/amd64.cmake
                 '''
+            }
+        }
+
+        stage('Dependencies') {
+            steps {
+                script {
+                    dir('kstars-deps') {
+                       sh "sleep 30"
+                       sh "rm -f ./indi-*-x86_64.deb"
+                       copyArtifacts projectName: 'kstars-ci/atom-indi',
+                         filter: '*.deb',
+                         selector: params.INDI_CORE_BUILD ? buildParameter('INDI_CORE_BUILD') : lastSuccessful(),
+                         target: '.',
+                         fingerprintArtifacts: true
+                       sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb"
+                       deleteDir()
+                    }
+                }
             }
         }
 
