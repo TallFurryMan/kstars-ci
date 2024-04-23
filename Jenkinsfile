@@ -48,12 +48,12 @@ pipeline {
             sh "rm -f ./indi-*-i386.deb ./stellarsolver-*-i386.deb"
             copyArtifacts projectName: 'kstars-ci/i386-indi',
               filter: '*.deb',
-              selector: params.INDI_CORE_BUILD ? specific(params.INDI_CORE_BUILD) : lastSuccessful(),
+              selector: buildParameter('INDI_CORE_BUILD'),
               target: '.',
               fingerprintArtifacts: true
             copyArtifacts projectName: 'kstars-ci/i386-stellarsolver',
               filter: '*.deb',
-              selector: params.STELLARSOLVER_BUILD ? specific(params.STELLARSOLVER_BUILD) : lastSuccessful(),
+              selector: buildParameter('STELLARSOLVER_BUILD'),
               target: '.',
               fingerprintArtifacts: true
             sh "sudo dpkg --install --force-overwrite ./indi-*-i386.deb ./stellarsolver-*-i386.deb"
