@@ -25,8 +25,12 @@ RUN apt-get -y update && \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
         libindi-dev xplanet xplanet-images && \
     apt-get clean
+RUN apt-get -y update && \
+    apt-get -y --no-install-recommends install wget apt sudo && \
+    apt-get clean
 
-RUN useradd -m jenkins
+RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/make|' /etc/sudoers
+RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
