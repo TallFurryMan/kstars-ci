@@ -32,7 +32,10 @@ RUN apt-get remove -y --purge --auto-remove cmake && \
     wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
     apt-add-repository "deb https://apt.kitware.com/ubuntu/ $(lsb_release -cs) main" && \
     apt-get -y update && apt-get -y install kitware-archive-keyring && rm /etc/apt/trusted.gpg.d/kitware.gpg && \
-    apt-get -y update && apt-get -y --no-install-recommends install cmake
+    apt-get -y update && apt-get -y --no-install-recommends install
+
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
+        googletest
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
