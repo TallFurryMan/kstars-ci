@@ -84,46 +84,52 @@ pipeline {
                 parallel(
                     'kstars-amd64': {
                         build job: 'amd64',
-                              parameters: [
-                                  string(name: 'BRANCH', value: "${params.KSTARS_BRANCH}"),
-                                  string(name: 'TAG', value: "${params.KSTARS_TAG}"),
-                                  string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_AMD64}"),
-                                  string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_AMD64}")
-                              ]
+                        parameters: [
+                            string(name: 'BRANCH', value: "${params.KSTARS_BRANCH}"),
+                            string(name: 'TAG', value: "${params.KSTARS_TAG}"),
+                            string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_AMD64}"),
+                            string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_AMD64}")
+                        ]
                     },
                     /* Can't build this anymore, needs cmake 3.16 which apparently does not exist on i386
                     'kstars-i386': {
                         build job: 'i386',
-                              parameters: [
-                                  string(name: 'BRANCH', value: "${params.KSTARS_BRANCH}"),
-                                  string(name: 'TAG', value: "${params.KSTARS_TAG}"),
-                                  string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_I386}"),
-                                  string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_I386}")
-                              ]
+                        parameters: [
+                            string(name: 'BRANCH', value: "${params.KSTARS_BRANCH}"),
+                            string(name: 'TAG', value: "${params.KSTARS_TAG}"),
+                            string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_I386}"),
+                            string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_I386}")
+                        ]
                     }, */
                     'kstars-atom': {
                         build job: 'atom',
-                              parameters: [
-                                  string(name: 'BRANCH', value: "${params.KSTARS_BRANCH}"),
-                                  string(name: 'TAG', value: "${params.KSTARS_TAG}"),
-                                  string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_ATOM}"),
-                                  string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_ATOM}")
-                              ]
+                        parameters: [
+                            string(name: 'BRANCH', value: "${params.KSTARS_BRANCH}"),
+                            string(name: 'TAG', value: "${params.KSTARS_TAG}"),
+                            string(name: 'INDI_CORE_BUILD', value: "${INDI_BUILD_ATOM}"),
+                            string(name: 'STELLARSOLVER_BUILD', value: "${STSLV_BUILD_ATOM}")
+                        ]
                     },
                     'phd2-amd64': {
                         build job: 'amd64-phd2',
-                              parameters: [string(name: 'BRANCH', value: "${params.PHD2_BRANCH}"),
-                              parameters: [string(name: 'TAG', value: "${params.PHD2_TAG}")]
+                        parameters: [
+                            string(name: 'BRANCH', value: "${params.PHD2_BRANCH}"),
+                            string(name: 'TAG', value: "${params.PHD2_TAG}")
+                        ]
                     },
                     'phd2-atom': {
                         build job: 'atom-phd2',
-                              parameters: [string(name: 'BRANCH', value: "${params.PHD2_BRANCH}"),
-                              parameters: [string(name: 'TAG', value: "${params.PHD2_TAG}")]
+                        parameters: [
+                            string(name: 'BRANCH', value: "${params.PHD2_BRANCH}"),
+                            string(name: 'TAG', value: "${params.PHD2_TAG}")
+                        ]
                     },
                     'phd2-i386': {
                         build job: 'i386-phd2',
-                              parameters: [string(name: 'BRANCH', value: "${params.PHD2_BRANCH}"),
-                              parameters: [string(name: 'TAG', value: "${params.PHD2_TAG}")]
+                        parameters: [
+                            string(name: 'BRANCH', value: "${params.PHD2_BRANCH}"),
+                            string(name: 'TAG', value: "${params.PHD2_TAG}")
+                        ]
                     }
                 )
             }
