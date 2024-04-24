@@ -41,6 +41,7 @@ pipeline {
                       "SET(CMAKE_CXX_COMPILER g++)" \
                       "SET(CMAKE_CXX_FLAGS -m32)" > ~/i386.cmake
                 '''
+                sh 'cmake --version'
             }
         }
 
