@@ -34,6 +34,7 @@ pipeline {
             ccache --max-size 20G
             ccache -s
           '''
+          sh 'cmake --version'
         }
     }
         
