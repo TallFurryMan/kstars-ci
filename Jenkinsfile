@@ -96,6 +96,7 @@ pipeline {
               "SET(CMAKE_CXX_COMPILER g++)" \
               "SET(CMAKE_CXX_FLAGS -march=silvermont)" > ~/z8350.cmake
         '''
+        sh 'cmake --version'
       }
     }
     
