@@ -61,7 +61,7 @@ pipeline {
                                 string(name: 'TAG', value: "${params.STSLV_TAG}")]
                             STSLV_BUILD_AMD64 = build.getNumber()
                         }
-                    },
+                    },/*
                     'stellarsolver-i386': {
                         script {
                             def build = build job: 'i386-stellarsolver', parameters: [
@@ -69,7 +69,7 @@ pipeline {
                                 string(name: 'TAG', value: "${params.STSLV_TAG}")]
                             STSLV_BUILD_I386 = build.getNumber()
                         }
-                    },
+                    },*/
                     'stellarsolver-atom': {
                         script {
                             def build = build job: 'atom-stellarsolver', parameters: [
