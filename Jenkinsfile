@@ -136,20 +136,5 @@ pipeline {
                 )
             }
         }
-        stage('Install') {
-            steps {
-                parallel(
-                    'Controller': {
-                        build job: 'observatory-update'
-                    },
-                    'Guider': {
-                        build job: 'observatory-guider-update'
-                    },
-                    'Panda': {
-                        build job: 'observatory-panda-update'
-                    }
-                )
-            }
-        }
     }
 }
