@@ -161,7 +161,7 @@ pipeline {
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
-          sh 'sudo make install'
+          sh 'sudo dpkg -i $package_file_name.deb'
           deleteDir()
         }
       }
@@ -216,7 +216,7 @@ pipeline {
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
-          sh 'sudo make install'
+          sh 'sudo dpkg -i $package_file_name.deb'
           deleteDir()
         }
       }
@@ -271,6 +271,7 @@ pipeline {
             dpkg --info "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-drivers-*.deb', fingerprint: true)
+          sh 'sudo dpkg -i $package_file_name.deb'
           deleteDir()
         }
       }
