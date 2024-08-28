@@ -159,9 +159,9 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core amd64" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
+            sudo dpkg --install "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
-          sh 'sudo dpkg -i $package_file_name.deb'
           deleteDir()
         }
       }
@@ -214,9 +214,9 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries amd64" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
+            sudo dpkg --install "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
-          sh 'sudo dpkg -i $package_file_name.deb'
           deleteDir()
         }
       }
@@ -269,9 +269,9 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party amd64" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
+            sudo dpkg --install "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-drivers-*.deb', fingerprint: true)
-          sh 'sudo dpkg -i $package_file_name.deb'
           deleteDir()
         }
       }
