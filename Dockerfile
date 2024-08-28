@@ -18,7 +18,7 @@ RUN apt-get -y update && \
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
         zlib1g-dev libsecret-1-dev \
-        libcurl4-openssl-dev libwxgtk3.0-gtk3-dev wx-common wx3.0-i18n && \
+        libcurl4-openssl-dev libwxgtk3.2-dev wx-common wx3.2-i18n && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
