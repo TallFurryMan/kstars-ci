@@ -76,7 +76,7 @@ pipeline {
     dockerfile {
       filename 'Dockerfile'
       additionalBuildArgs '--pull'
-      args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
+      args '-u jenkins -v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache'
     }
   }
   
