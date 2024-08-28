@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt-get -y update && \
     apt-get -y upgrade && \
@@ -29,12 +29,13 @@ RUN apt-get -y update && \
     apt-get -y --no-install-recommends install wget apt sudo && \
     apt-get clean
 
-RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg|' /etc/sudoers
+RUN echo 'jenkins ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg' > /etc/sudoers.d/50-jenkins
 RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
+RUN sudo /usr/bin/make --version
 RUN mkdir /home/jenkins/workspace /home/jenkins/.ccache
 WORKDIR /home/jenkins
 CMD id
