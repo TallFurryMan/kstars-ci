@@ -35,7 +35,7 @@ RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
-RUN sudo /usr/bin/make --version
+RUN sudo /usr/bin/dpkg --version
 RUN mkdir /home/jenkins/workspace /home/jenkins/.ccache
 WORKDIR /home/jenkins
 CMD id
