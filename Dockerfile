@@ -36,8 +36,9 @@ RUN apt-get -y update && \
     apt-get -y --no-install-recommends install wget apt sudo && \
     apt-get clean
 
+RUN userdel --remove ubuntu
+RUN useradd --uid 1000 --gid 1000 --create-home --groups sudo jenkins
 RUN echo 'jenkins ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/make' > /etc/sudoers.d/50-jenkins
-RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
