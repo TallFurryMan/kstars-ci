@@ -27,8 +27,8 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
         libqt5datavisualization5-dev qml-module-qtquick-controls
         
 RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo
+RUN userdel --remove ubuntu && groupadd --gid 1000 jenkins && useradd --uid 1000 --gid 1000 --create-home --groups sudo jenkins
 RUN echo 'jenkins ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg' > /etc/sudoers.d/50-jenkins
-RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
