@@ -26,7 +26,7 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
         phonon4qt5-backend-vlc qt5keychain-dev \
         libqt5datavisualization5-dev qml-module-qtquick-controls
         
-RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo curl libcurl-dev
+RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo curl libcurl4-openssl-dev
 RUN userdel --remove ubuntu && groupadd --gid 1000 jenkins && useradd --uid 1000 --gid 1000 --create-home --groups sudo jenkins
 RUN echo 'jenkins ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg' > /etc/sudoers.d/50-jenkins
 RUN /usr/sbin/update-ccache-symlinks
