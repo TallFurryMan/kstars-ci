@@ -37,7 +37,7 @@ pipeline {
                             copyArtifacts projectName: 'amd64-indi',
                                 selector: specific("${INDI_BUILD_AMD64}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'indi*-deb',
+                            archiveArtifacts artifacts: 'indi*.deb',
                                 fingerprint: true
                         }
                     },
@@ -52,7 +52,7 @@ pipeline {
                             copyArtifacts projectName: 'i386-indi',
                                 selector: specific("${INDI_BUILD_I386}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'indi*-deb',
+                            archiveArtifacts artifacts: 'indi*.deb',
                                 fingerprint: true
                         }
                     },
@@ -67,7 +67,7 @@ pipeline {
                             copyArtifacts projectName: 'atom-indi',
                                 selector: specific("${INDI_BUILD_ATOM}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'indi*-deb',
+                            archiveArtifacts artifacts: 'indi*.deb',
                                 fingerprint: true
                         }
                     },
@@ -80,7 +80,7 @@ pipeline {
                             copyArtifacts projectName: 'amd64-stellarsolver',
                                 selector: specific("${STSLV_BUILD_AMD64}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'stellarsolver*-deb',
+                            archiveArtifacts artifacts: 'stellarsolver*.deb',
                                 fingerprint: true
                         }
                     },/*
@@ -101,7 +101,7 @@ pipeline {
                             copyArtifacts projectName: 'atom-stellarsolver',
                                 selector: specific("${STSLV_BUILD_ATOM}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'stellarsolver*-deb',
+                            archiveArtifacts artifacts: 'stellarsolver*.deb',
                                 fingerprint: true
                         }
                     }
@@ -124,7 +124,7 @@ pipeline {
                             copyArtifacts projectName: 'amd64',
                                 selector: specific("${KSTARS_BUILD_AMD64}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'kstars*-deb',
+                            archiveArtifacts artifacts: 'kstars*.deb',
                                 fingerprint: true
                         }
                     },
@@ -151,7 +151,7 @@ pipeline {
                             copyArtifacts projectName: 'atom',
                                 selector: specific("${KSTARS_BUILD_ATOM}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'kstars*-deb',
+                            archiveArtifacts artifacts: 'kstars*.deb',
                                 fingerprint: true
                         }
                     },
@@ -166,7 +166,7 @@ pipeline {
                             copyArtifacts projectName: 'amd64-phd2',
                                 selector: specific("${PHD2_BUILD_AMD64}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'phd2*-deb',
+                            archiveArtifacts artifacts: 'phd2*.deb',
                                 fingerprint: true
                         }
                     },
@@ -181,7 +181,7 @@ pipeline {
                             copyArtifacts projectName: 'i386-phd2',
                                 selector: specific("${PHD2_BUILD_I386}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'phd2*-deb',
+                            archiveArtifacts artifacts: 'phd2*.deb',
                                 fingerprint: true
                         }
                     },
@@ -196,7 +196,7 @@ pipeline {
                             copyArtifacts projectName: 'atom-phd2',
                                 selector: specific("${PHD2_BUILD_ATOM}"),
                                 fingerprintArtifacts: true
-                            archiveArtifacts artifacts: 'phd2*-deb',
+                            archiveArtifacts artifacts: 'phd2*.deb',
                                 fingerprint: true
                         }
                     }
