@@ -69,7 +69,7 @@ pipeline {
           $class: 'GitSCM',
           userRemoteConfigs: [[ url: params.REPO ]],
           branches: [[ name: params.BRANCH ]],
-          extensions: [[ $class: 'CloneOption', shallow: true, depth: 1, timeout: 60 ]],
+          extensions: [[ $class: 'CloneOption', shallow: true, depth: 1, timeout: 300 ]],
         ])
         //sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
         sh "git log --oneline --decorate -10"
