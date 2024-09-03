@@ -179,9 +179,9 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
             dpkg --info "$package_file_name.deb"
+            sudo dpkg -i "$packafe_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
-          sh 'sudo make install'
           deleteDir()
         }
       }
@@ -233,10 +233,10 @@ pipeline {
               -D CPACK_PACKAGE_CONTACT="https://github.com/TallFurryMan/kstars-ci" \
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
-            dpkg --info "$package_file_name.deb"
+            dpkg --info "$package_file_name.deb
+            sudo dpkg -i "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
-          sh 'sudo make install'
           deleteDir()
         }
       }
@@ -291,6 +291,7 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party i386" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
             dpkg --info "$package_file_name.deb"
+            sudo dpkg -i "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-drivers-*.deb', fingerprint: true)
           deleteDir()
