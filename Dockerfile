@@ -23,7 +23,7 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
         libgphoto2-dev:i386
 
 RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo
-RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/make|' /etc/sudoers
+RUN echo 'jenkins ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/make' > /etc/sudoers.d/50-jenkins
 RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
@@ -39,6 +39,7 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
+RUN sudo make --version
 RUN mkdir /home/jenkins/workspace /home/jenkins/.ccache
 WORKDIR /home/jenkins
 CMD id
