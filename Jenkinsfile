@@ -155,10 +155,9 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI Core Z8350" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
+            sudo dpkg -i "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-core-*.deb', fingerprint: true)
-          sh 'id'
-          sh 'sudo make install'
           deleteDir()
         }
       }
@@ -183,7 +182,7 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/z8350.cmake -DBUILD_LIBS=ON ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
         }
       }
@@ -211,9 +210,9 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Libraries Z8350" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
+            sudo dpkg -i "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-libs-*.deb', fingerprint: true)
-          sh 'sudo make install'
           deleteDir()
         }
       }
@@ -268,6 +267,7 @@ pipeline {
               -D CPACK_PACKAGE_DESCRIPTION_SUMMARY="INDI 3rd-party Z8350" \
               -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
             dpkg --info "$package_file_name.deb"
+            sudo dpkg -i "$package_file_name.deb"
           '''
           archiveArtifacts(artifacts: 'indi-3rdparty-drivers-*.deb', fingerprint: true)
           deleteDir()
