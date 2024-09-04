@@ -170,7 +170,7 @@ pipeline {
                                 fingerprint: true
                         }
                     },
-                    'phd2-i386': {
+                    /*'phd2-i386': {
                         script {
                             def build = build job: 'i386-phd2',
                                 parameters: [
@@ -184,7 +184,7 @@ pipeline {
                             archiveArtifacts artifacts: 'phd2*.deb',
                                 fingerprint: true
                         }
-                    },
+                    },*/
                     'phd2-atom': {
                         script {
                             def build = build job: 'atom-phd2',
