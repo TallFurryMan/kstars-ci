@@ -206,7 +206,7 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DBUILD_LIBS=ON ${env.CMAKE_OPTIONS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
         }
       }
@@ -251,9 +251,7 @@ pipeline {
       steps {
         dir('indi3p-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DBUILD_LIBS=ON ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
-          sh "make -j4 all"
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DBUILD_LIBS=OFF ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake ${env.CMAKE_OPTIONS} ${env.INDI_WITH_FLAGS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
         }
       }
