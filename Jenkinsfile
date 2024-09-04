@@ -65,6 +65,9 @@ pipeline {
       '-DWITH_TOUPBASE=OFF ' +
       '-DWITH_WEBCAM=OFF ' +
       '-DWITH_WEEWX_JSON=OFF'
+    INDI_LIBS_NOT_I386 =
+      '-DWITH_QHY=OFF' +
+      '-DWITH_SBIG=OFF'
   }
   
   options {
@@ -206,7 +209,7 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           deleteDir()
-          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DBUILD_LIBS=ON -DWITH_QHY=OFF ${env.CMAKE_OPTIONS} ${env.WORKSPACE}/3rdparty"
+          sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/i386.cmake -DBUILD_LIBS=ON ${env.INDI_LIBS_NOT_I386} ${env.CMAKE_OPTIONS} ${env.WORKSPACE}/3rdparty"
           sh "make -j4 all"
         }
       }
