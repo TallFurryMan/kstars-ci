@@ -66,7 +66,7 @@ pipeline {
       '-DWITH_WEBCAM=OFF ' +
       '-DWITH_WEEWX_JSON=OFF'
     INDI_LIBS_NOT_I386 =
-      '-DWITH_QHY=OFF' +
+      '-DWITH_QHY=OFF ' +
       '-DWITH_SBIG=OFF'
   }
   
