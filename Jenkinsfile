@@ -66,6 +66,7 @@ pipeline {
       '-DWITH_WEBCAM=OFF ' +
       '-DWITH_WEEWX_JSON=OFF'
     INDI_LIBS_NOT_I386 =
+      '-DWITH_ASTROASIS=OFF ' +
       '-DWITH_PLAYERONE=OFF ' +
       '-DWITH_TOUPBASE=OFF ' +
       '-DWITH_QHY=OFF ' +
