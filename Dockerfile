@@ -6,9 +6,6 @@ RUN apt-get -y update && \
         gcc-multilib g++-multilib
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
-        cmake extra-cmake-modules
-RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install \
         git dpkg-dev default-jre ccache gettext breeze-icon-theme
 ENV TZ=Europe/Paris
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
