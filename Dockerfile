@@ -20,12 +20,13 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
         libgphoto2-dev libzmq3-dev
 
 RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo
-RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/make|' /etc/sudoers
+RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg|' /etc/sudoers
 RUN useradd -m jenkins --groups sudo
 RUN /usr/sbin/update-ccache-symlinks
 
 USER jenkins
 RUN date | tee /home/jenkins/built_on
+RUN dpkg --version
 RUN mkdir /home/jenkins/workspace /home/jenkins/.ccache
 WORKDIR /home/jenkins
 CMD id
