@@ -27,9 +27,6 @@ RUN apt-get remove -y --purge --auto-remove cmake && \
     apt-get -y update && apt-get -y install kitware-archive-keyring && rm /etc/apt/trusted.gpg.d/kitware.gpg && \
     apt-get -y update && apt-get -y --no-install-recommends install cmake
 
-RUN useradd -m jenkins
-RUN /usr/sbin/update-ccache-symlinks
-
 USER jenkins
 RUN date | tee /home/jenkins/built_on
 RUN mkdir /home/jenkins/workspace /home/jenkins/.ccache
