@@ -99,6 +99,7 @@ pipeline {
                             -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"PHD2 i386\" \
                             -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
                         dpkg --info \"$package_file_name.deb\"
+                        sudo dpkg -i \"$package_file_name.deb\"
                     '''
                     archiveArtifacts artifacts: 'phd2-*.deb',
                                      fingerprint: true
