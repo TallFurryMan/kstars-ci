@@ -19,7 +19,7 @@ RUN apt-get -y update && \
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev \
-        xplanet xplanet-images
+        xplanet xplanet-images libopencv-dev
 
 RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo
 RUN sed -i 's|^%sudo.*$|%sudo ALL=(ALL:ALL) ALL, NOPASSWD: /usr/bin/dpkg|' /etc/sudoers
