@@ -16,6 +16,7 @@ pipeline {
         persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
         persistentString(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
         buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last successful build.')
+        persistentString(name: 'INDI_CORE_BUILD_NUM', defaultValue: "", description: 'The build number to use for INDI Core, INDI_CORE_BUILD used if empty.')
     }
 
     environment {
