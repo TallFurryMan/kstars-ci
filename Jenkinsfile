@@ -50,12 +50,13 @@ pipeline {
             sh "rm ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb || true"
             copyArtifacts projectName: 'kstars-ci/amd64-indi',
               filter: '*.deb',
-              selector: buildParameter('INDI_CORE_BUILD'),
+              selector: params.INDI_CORE_BUILD_NUM ? specific(buildParameter('INDI_CORE_BUILD_NUM')) : ( params.INDI_CORE_BUILD ? buildParameter('INDI_CORE_BUILD') : lastSuccessful() ),
               target: '.',
               fingerprintArtifacts: true
             copyArtifacts projectName: 'kstars-ci/amd64-stellarsolver',
               filter: '*.deb',
               selector: buildParameter('STELLARSOLVER_BUILD'),
+              selector: params.STELLARSOLVER_BUILD_NUM ? specific(buildParameter('STELLARSOLVER_BUILD_NUM')) : ( params.STELLARSOLVER_BUILD ? buildParameter('STELLARSOLVER_BUILD') : lastSuccessful() ),
               target: '.',
               fingerprintArtifacts: true
             sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb"
