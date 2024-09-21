@@ -13,7 +13,9 @@ pipeline {
     persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build. Use tags/<a_tag> to check tag a_tag out.')
     //string(name: 'TAG', defaultValue: '', description: 'The repository tag to build.')
     buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last successful build.')
+    persistentString(name: 'INDI_CORE_BUILD_NUM', defaultValue: "", description: 'The build number to use for INDI Core, INDI_CORE_BUILD used if empty.')
     buildSelector(name: 'STELLARSOLVER_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for StellarSolver, empty for last successful build.')
+    persistentString(name: 'STELLARSOLVER_BUILD_NUM', defaultValue: "", description: 'The build to use for StellarSolver, STELLARSOLVER_BUILD_NUM used if empty.')
     persistentBoolean(name: 'COVERITY', defaultValue: false, description: 'Whether to run and push a static analysis to Coverity Scan.')
   }
   
