@@ -36,9 +36,13 @@ pipeline {
             ccache --max-size 20G
             ccache -s
           '''
-          sh 'cmake --version'
           buildName "${BRANCH}"
           buildDescription "${BRANCH}"
+          sh '''
+            ls -al
+            flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir org.flatpak.Hello.yml
+            flatpak run org.flatpak.Hello
+          '''
         }
     }
         
