@@ -40,7 +40,7 @@ pipeline {
           buildDescription "${BRANCH}"
           sh '''
             flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-            flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir org.flatpak.Hello.yml --disable-rofiles-fuse
+            flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir org.flatpak.Hello.yml
             flatpak run org.flatpak.Hello
             flatpak build-bundle repo hello.flatpak org.flatpak.Hello --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
             flatpak install --user hello.flatpak
