@@ -46,7 +46,7 @@ pipeline {
       steps {
         script {
           dir('kstars-deps') {
-            sh "sleep 30"
+            sh "sleep 5"
             /*sh "rm ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb || true"
             copyArtifacts projectName: 'kstars-ci/amd64-indi',
               filter: '*.deb',
@@ -81,8 +81,9 @@ pipeline {
     
     stage('Build') {
       steps {
-        /*dir('kstars-build') {
-          deleteDir()
+        dir('kstars-build') {
+          sh "sleep 5"
+          /* deleteDir()
           sh '''
             printf "%s\\n" \
               "SET(CMAKE_SYSTEM_NAME Linux)" \
@@ -100,8 +101,8 @@ pipeline {
               $WORKSPACE
             make -j2 clean all
           '''
-          recordIssues(tools: [gcc()]) // Requires Warnings-NG
-        }*/
+          recordIssues(tools: [gcc()]) // Requires Warnings-NG*/
+        }
       }
     }
     
