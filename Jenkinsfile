@@ -12,11 +12,11 @@ pipeline {
     persistentString(name: 'REPO', defaultValue: env.KSTARS_GIT ?: 'https://invent.kde.org/education/kstars.git', description: 'The repository to clone from. E.g. https://invent.kde.org/education/kstars.git or git@invent.kde.org:education/kstars.git.')
     persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build. Use tags/<a_tag> to check tag a_tag out.')
     //string(name: 'TAG', defaultValue: '', description: 'The repository tag to build.')
-    buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last successful build.')
+    /*buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last successful build.')
     persistentString(name: 'INDI_CORE_BUILD_NUM', defaultValue: "", description: 'The build number to use for INDI Core, INDI_CORE_BUILD used if empty.')
     buildSelector(name: 'STELLARSOLVER_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for StellarSolver, empty for last successful build.')
     persistentString(name: 'STELLARSOLVER_BUILD_NUM', defaultValue: "", description: 'The build to use for StellarSolver, STELLARSOLVER_BUILD_NUM used if empty.')
-    persistentBoolean(name: 'COVERITY', defaultValue: false, description: 'Whether to run and push a static analysis to Coverity Scan.')
+    persistentBoolean(name: 'COVERITY', defaultValue: false, description: 'Whether to run and push a static analysis to Coverity Scan.')*/
   }
   
   agent {
@@ -47,7 +47,7 @@ pipeline {
         script {
           dir('kstars-deps') {
             sh "sleep 30"
-            sh "rm ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb || true"
+            /*sh "rm ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb || true"
             copyArtifacts projectName: 'kstars-ci/amd64-indi',
               filter: '*.deb',
               selector: params.INDI_CORE_BUILD_NUM ? specific(buildParameter('INDI_CORE_BUILD_NUM')) : ( params.INDI_CORE_BUILD ? buildParameter('INDI_CORE_BUILD') : lastSuccessful() ),
@@ -60,13 +60,13 @@ pipeline {
               target: '.',
               fingerprintArtifacts: true
             sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb ./stellarsolver-*-x86_64.deb"
-            deleteDir()
+            deleteDir()*/
           }
         }
       }
     }
     
-    stage('Checkout') {
+    /*stage('Checkout') {
       steps {
         checkout([
           $class: 'GitSCM',
@@ -77,11 +77,11 @@ pipeline {
         //sh "if [ -n '${params.TAG}' ] ; then git checkout ${params.TAG} ; fi"
         sh "git log --oneline --decorate -10"
       }
-    }
+    }*/
     
     stage('Build') {
       steps {
-        dir('kstars-build') {
+        /*dir('kstars-build') {
           deleteDir()
           sh '''
             printf "%s\\n" \
@@ -101,7 +101,7 @@ pipeline {
             make -j2 clean all
           '''
           recordIssues(tools: [gcc()]) // Requires Warnings-NG
-        }
+        }*/
       }
     }
     
@@ -116,7 +116,7 @@ pipeline {
     //}
     
     
-    stage('Coverity') {
+    /*stage('Coverity') {
       when {
         expression { params.COVERITY }
       }
@@ -186,6 +186,6 @@ pipeline {
           deleteDir()
         }
       }
-    }
+    }*/
   }
 }
