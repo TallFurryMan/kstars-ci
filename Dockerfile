@@ -2,7 +2,8 @@ FROM ubuntu:24.04
 
 RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get -y update && apt-get -y --no-install-recommends install \
-        flatpak flatpak-builder
+        flatpak flatpak-builder ca-certificates
+
 RUN flatpak remote-add --if-not-exists --user flathub \
         https://dl.flathub.org/repo/flathub.flatpakrepo
 
