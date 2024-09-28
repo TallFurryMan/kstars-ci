@@ -39,7 +39,7 @@ pipeline {
           buildName "${BRANCH}"
           buildDescription "${BRANCH}"
           sh '''
-            export FLATPAK_SYSTEM_HELPER_ON_SESSION=foo
+            dbus-send --system /org/freedesktop/DBus org.freedesktop.DBus || dbus-daemon --system --fork
             flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
             flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir org.flatpak.Hello.yml
             flatpak run org.flatpak.Hello
