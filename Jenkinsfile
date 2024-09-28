@@ -22,7 +22,7 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
-      args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache -v coverity_volume:/mnt'
+      args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache -v coverity_volume:/mnt --privileged'
     }
   }
   
