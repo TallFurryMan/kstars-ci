@@ -22,7 +22,7 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
-      args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache -v coverity_volume:/mnt --privileged'
+      args '-v kstars_workspace:/home/jenkins/workspace -v ccache:/home/jenkins/.ccache -v coverity_volume:/mnt -v /var/run/dbus/system_bus_socket:/run/dbus/system_bus_socket --privileged'
     }
   }
   
@@ -39,8 +39,7 @@ pipeline {
           buildName "${BRANCH}"
           buildDescription "${BRANCH}"
           sh '''
-            dbus-daemon --config-file=/usr/share/dbus-1/system.conf
-            export DBUS_SESSION_BUS_ADDRESS="unix:path=/var/run/dbus/system_bus_socket"
+            export DBUS_SESSION_BUS_ADDRESS=$(dbus-daemon --config-file=/usr/share/dbus-1/system.conf --print-address | cut -d, -f1)
             flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
             flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir org.flatpak.Hello.yml
             flatpak run org.flatpak.Hello
