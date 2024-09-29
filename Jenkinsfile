@@ -44,7 +44,8 @@ pipeline {
             flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir org.flatpak.Hello.yml
             flatpak run org.flatpak.Hello
             flatpak build-bundle repo hello.flatpak org.flatpak.Hello --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
-            flatpak install --user --assumeyes hello.flatpak
+            flatpak install --user --assumeyes --reinstall hello.flatpak
+            flatpak run org.flatpak.Hello
             flatpak remove org.flatpak.Hello
           '''
         }
