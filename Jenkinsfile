@@ -46,7 +46,7 @@ pipeline {
             flatpak build-bundle repo hello.flatpak org.flatpak.Hello --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
             flatpak install --user --assumeyes --reinstall --or-update --verbose hello.flatpak || true
             flatpak run org.flatpak.Hello
-            flatpak remove org.flatpak.Hello
+            flatpak remove --assumeyes org.flatpak.Hello
           '''
         }
     }
