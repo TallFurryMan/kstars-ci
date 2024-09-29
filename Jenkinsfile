@@ -39,12 +39,12 @@ pipeline {
           buildName "${BRANCH}"
           buildDescription "${BRANCH}"
           sh '''
-            export DBUS_SESSION_BUS_ADDRESS=$(dbus-daemon --config-file=/usr/share/dbus-1/system.conf --print-address | cut -d, -f1)
+            export DBUS_SESSION_BUS_ADDRESS=/run/dbus/system_bus_socket
             flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
             flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir org.flatpak.Hello.yml
             flatpak run org.flatpak.Hello
             flatpak build-bundle repo hello.flatpak org.flatpak.Hello --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
-            flatpak install --user hello.flatpak
+            flatpak install --user --assumeyes hello.flatpak
             flatpak remove org.flatpak.Hello
           '''
         }
