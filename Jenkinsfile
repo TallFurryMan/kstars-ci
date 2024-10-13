@@ -55,7 +55,6 @@ pipeline {
               fingerprintArtifacts: true
             copyArtifacts projectName: 'kstars-ci/amd64-stellarsolver',
               filter: '*.deb',
-              selector: buildParameter('STELLARSOLVER_BUILD'),
               selector: params.STELLARSOLVER_BUILD_NUM ? specific(buildParameter('STELLARSOLVER_BUILD_NUM')) : ( params.STELLARSOLVER_BUILD ? buildParameter('STELLARSOLVER_BUILD') : lastSuccessful() ),
               target: '.',
               fingerprintArtifacts: true
