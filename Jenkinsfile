@@ -50,7 +50,7 @@ pipeline {
                     dir('kstars-deps') {
                        sh "sleep 30"
                        sh "rm -f ./indi-*-x86_64.deb"
-                       copyArtifacts projectName: 'kstars-ci/atom-indi',
+                       copyArtifacts projectName: 'kstars-ci/amd64-indi',
                          filter: '*.deb',
                          selector: params.INDI_CORE_BUILD_NUM ? specific(params.INDI_CORE_BUILD_NUM) : ( params.INDI_CORE_BUILD ? params.INDI_CORE_BUILD : lastSuccessful() ),
                          target: '.',
