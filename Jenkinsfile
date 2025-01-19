@@ -79,7 +79,7 @@ pipeline {
             steps {
                 dir('phd2-build') {
                     deleteDir()
-                    sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON ${env.WORKSPACE}"
+                    sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON -DOPENSOURCE_ONLY=ON ${env.WORKSPACE}"
                     sh "make -j4 clean all"
                 }
             }
