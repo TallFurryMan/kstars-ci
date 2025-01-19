@@ -34,6 +34,7 @@ pipeline {
                                 string(name: 'BRANCH3P', value: "${params.INDI3P_BRANCH}"),
                                 string(name: 'TAG3P', value: "${params.INDI3P_TAG}")]
                             INDI_BUILD_AMD64 = build.getNumber()
+                            sh 'rm -f indi*.deb'
                             copyArtifacts projectName: 'amd64-indi',
                                 selector: specific("${INDI_BUILD_AMD64}"),
                                 fingerprintArtifacts: true
@@ -49,6 +50,7 @@ pipeline {
                                 string(name: 'BRANCH', value: "${params.STSLV_BRANCH}"),
                                 string(name: 'TAG', value: "${params.STSLV_TAG}")]
                             STSLV_BUILD_AMD64 = build.getNumber()
+                            sh 'rm -f stellarsolver*.deb'
                             copyArtifacts projectName: 'amd64-stellarsolver',
                                 selector: specific("${STSLV_BUILD_AMD64}"),
                                 fingerprintArtifacts: true
@@ -72,6 +74,7 @@ pipeline {
                                     string(name: 'STELLARSOLVER_BUILD_NUM', value: "${STSLV_BUILD_AMD64}")
                                 ]
                             KSTARS_BUILD_AMD64 = build.getNumber()
+                            sh 'rm -f kstars*.deb'
                             copyArtifacts projectName: 'amd64',
                                 selector: specific("${KSTARS_BUILD_AMD64}"),
                                 fingerprintArtifacts: true
@@ -90,6 +93,7 @@ pipeline {
                                     string(name: 'INDI_CORE_BUILD_NUM', value: "${INDI_BUILD_AMD64}"),
                                 ]
                             PHD2_BUILD_AMD64 = build.getNumber()
+                            sh 'rm -f phd2*.deb'
                             copyArtifacts projectName: 'amd64-phd2',
                                 selector: specific("${PHD2_BUILD_AMD64}"),
                                 fingerprintArtifacts: true
