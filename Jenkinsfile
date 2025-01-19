@@ -141,6 +141,7 @@ pipeline {
       steps {
         dir('indi-build') {
           sh '''
+            rm -f indi-core*.deb
             indiapi="$(find "$WORKSPACE" -name indiapi.h)"
             version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
@@ -196,6 +197,7 @@ pipeline {
       steps {
         dir('indi3p-libs-build') {
           sh '''
+            rm -f indi-3rdparty-libs*.deb
             indiapi="$(find "/usr/local/include/libindi" -name indiapi.h)"
             version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
@@ -251,6 +253,7 @@ pipeline {
       steps {
         dir('indi3p-build') {
           sh '''
+            rm -f indi-3rdparty-drivers*.deb
             indiapi="$(find "/usr/local/include/libindi" -name indiapi.h)"
             version_major=`grep \'INDI_VERSION_MAJOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
             version_minor=`grep \'INDI_VERSION_MINOR .*$\' "$indiapi" | head -1 | grep -o \'[0-9\\.]*\'`
