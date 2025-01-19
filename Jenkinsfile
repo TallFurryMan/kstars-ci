@@ -68,8 +68,8 @@ pipeline {
                                 parameters: [
                                     string(name: 'BRANCH', value: "${params.KSTARS_BRANCH}"),
                                     string(name: 'TAG', value: "${params.KSTARS_TAG}"),
-                                    buildSelector(name: 'INDI_CORE_BUILD', selector: specific("${INDI_BUILD_AMD64}")),
-                                    buildSelector(name: 'STELLARSOLVER_BUILD', selector: specific("${STSLV_BUILD_AMD64}"))
+                                    string(name: 'INDI_CORE_BUILD_NUM', value: "${INDI_BUILD_AMD64}"),
+                                    string(name: 'STELLARSOLVER_BUILD_NUM', value: "${STSLV_BUILD_AMD64}")
                                 ]
                             KSTARS_BUILD_AMD64 = build.getNumber()
                             copyArtifacts projectName: 'amd64',
@@ -87,7 +87,7 @@ pipeline {
                                 parameters: [
                                     string(name: 'BRANCH', value: "${params.PHD2_BRANCH}"),
                                     string(name: 'TAG', value: "${params.PHD2_TAG}"),
-                                    buildSelector(name: 'INDI_CORE_BUILD', selector: specific("${INDI_BUILD_AMD64}")),
+                                    string(name: 'INDI_CORE_BUILD_NUM', value: "${INDI_BUILD_AMD64}"),
                                 ]
                             PHD2_BUILD_AMD64 = build.getNumber()
                             copyArtifacts projectName: 'amd64-phd2',
