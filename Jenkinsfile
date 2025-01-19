@@ -52,7 +52,7 @@ pipeline {
                        sh "rm -f ./indi-*-x86_64.deb"
                        copyArtifacts projectName: 'kstars-ci/atom-indi',
                          filter: '*.deb',
-                         selector: params.INDI_CORE_BUILD_NUM ? specific(buildParameter('INDI_CORE_BUILD_NUM')) : ( params.INDI_CORE_BUILD ? buildParameter('INDI_CORE_BUILD') : lastSuccessful() ),
+                         selector: params.INDI_CORE_BUILD_NUM ? specific(params.INDI_CORE_BUILD_NUM) : ( params.INDI_CORE_BUILD ? params.INDI_CORE_BUILD : lastSuccessful() ),
                          target: '.',
                          fingerprintArtifacts: true
                        sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb"
