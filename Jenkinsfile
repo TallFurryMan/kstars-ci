@@ -157,6 +157,7 @@ pipeline {
       steps {
         dir('stellarsolver-build') {
           sh '''
+            rm -f stellarsolver*.deb
             version=`grep \'(StellarSolver_VERSION_MAJOR .*)$\' ../CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
             version="$version."`grep \'(StellarSolver_VERSION_MINOR .*)$\' ../CMakeLists.txt | head -1 | grep -o \'[0-9\\.]*\'`
             version_patch=`git show HEAD | head -1 | cut -d\' \' -f2 | cut -b-8`
