@@ -106,7 +106,7 @@ pipeline {
                         package_file_name=\"phd2-$version.$version_patch-Linux-x86_64\"
                         cpack --debug --verbose \
                             -G DEB \
-                            -P kstars \
+                            -P phd2 \
                             -R $version \
                             -D CPACK_INSTALL_CMAKE_PROJECTS=\".;phd2;ALL;/\" \
                             -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
