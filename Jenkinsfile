@@ -85,7 +85,7 @@ pipeline {
                         package_file_name=\"phdlogview-$version.$version_patch-Linux-x86_64\"
                         cpack --debug --verbose \
                             -G DEB \
-                            -P kstars \
+                            -P phdlogview \
                             -R $version \
                             -D CPACK_INSTALL_CMAKE_PROJECTS=\".;phdlogview;ALL;/\" \
                             -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
