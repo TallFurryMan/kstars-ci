@@ -12,11 +12,9 @@ pipeline {
     }
     
     parameters {
-        persistentString(name: 'REPO',   defaultValue: env.PHD2_GIT ?: 'https://github.com/OpenPHDGuiding/phd2.git', description: 'The repository to clone from.')
+        persistentString(name: 'REPO',   defaultValue: env.PHD2_GIT ?: 'https://github.com/agalasso/phdlogview.git', description: 'The repository to clone from.')
         persistentString(name: 'BRANCH', defaultValue: 'master', description: 'The repository branch to build.')
-        persistentString(name: 'TAG',    defaultValue: 'v2.6.9', description: 'The repository tag to build.')
-        buildSelector(name: 'INDI_CORE_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for INDI Core, empty for last successful build.')
-        persistentString(name: 'INDI_CORE_BUILD_NUM', defaultValue: "", description: 'The build number to use for INDI Core, INDI_CORE_BUILD used if empty.')
+        persistentString(name: 'TAG',    defaultValue: 'v0.6.3', description: 'The repository tag to build.')
     }
 
     environment {
@@ -44,24 +42,6 @@ pipeline {
             }
         }
 
-        stage('Dependencies') {
-            steps {
-                script {
-                    dir('kstars-deps') {
-                       sh "sleep 30"
-                       sh "rm -f ./indi-*-x86_64.deb"
-                       copyArtifacts projectName: 'kstars-ci/amd64-indi',
-                         filter: '*.deb',
-                         selector: params.INDI_CORE_BUILD_NUM ? specific(params.INDI_CORE_BUILD_NUM) : ( params.INDI_CORE_BUILD ? params.INDI_CORE_BUILD : lastSuccessful() ),
-                         target: '.',
-                         fingerprintArtifacts: true
-                       sh "sudo dpkg --install --force-overwrite ./indi-*-x86_64.deb"
-                       deleteDir()
-                    }
-                }
-            }
-        }
-
         stage('Checkout') {
             steps {
                 checkout([
@@ -77,9 +57,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('phd2-build') {
+                dir('phdlogview-build') {
                     deleteDir()
-                    sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON -DOPENSOURCE_ONLY=ON ${env.WORKSPACE}"
+                    sh "cmake -DCMAKE_TOOLCHAIN_FILE=~/amd64.cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCCACHE_SUPPORT=ON -DHAVE_WXFB=FALSE ${env.WORKSPACE}"
                     sh "make -j4 clean all"
                 }
             }
@@ -88,7 +68,7 @@ pipeline {
         stage('Test') {
             steps {
                 catchError (message:'Test Failure', buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    dir('phd2-build') {
+                    dir('phdlogview-build') {
                         sh 'make test'
                     }
                 }
@@ -97,29 +77,28 @@ pipeline {
         
         stage('Package') {
             steps {
-                dir('phd2-build') {
+                dir('phdlogview-build') {
                     sh '''
                         rm -f phd2*.deb
-                        if [ -f ../src/phd.h ] ; then phd=../src/phd.h ; else phd=../phd.h ; fi
-                        version=`grep PHDVERSION "$phd" | grep -o \"[0-9\\.]*\"`
+                        version="$(grep -m 1 Version Changelog.txt | grep -o '[0-9.]*')"
                         version_patch=`git show HEAD | head -1 | cut -d' ' -f2 | cut -b-8`
-                        package_file_name=\"phd2-$version.$version_patch-Linux-x86_64\"
+                        package_file_name=\"phdlogview-$version.$version_patch-Linux-x86_64\"
                         cpack --debug --verbose \
                             -G DEB \
                             -P kstars \
                             -R $version \
-                            -D CPACK_INSTALL_CMAKE_PROJECTS=\".;phd2;ALL;/\" \
+                            -D CPACK_INSTALL_CMAKE_PROJECTS=\".;phdlogview;ALL;/\" \
                             -D CPACK_PACKAGING_INSTALL_PREFIX=/usr/local \
                             -D CPACK_PACKAGE_FILE_NAME=\"$package_file_name\" \
                             -D CPACK_PACKAGE_DESCRIPTION_FILE=../.git/HEAD \
                             -D CPACK_CMAKE_GENERATOR=\"Unix Makefiles\" \
                             -D CPACK_INSTALL_COMMANDS=\"make install\" \
                             -D CPACK_PACKAGE_CONTACT=\"https://github.com/TallFurryMan/kstars-ci\" \
-                            -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"PHD2 amd64\" \
+                            -D CPACK_PACKAGE_DESCRIPTION_SUMMARY=\"PHD Log View amd64\" \
                             -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
                         dpkg --info \"$package_file_name.deb\"
                     '''
-                    archiveArtifacts artifacts: 'phd2-*.deb',
+                    archiveArtifacts artifacts: 'phdlogview*.deb',
                                      fingerprint: true
                     deleteDir()
                 }
