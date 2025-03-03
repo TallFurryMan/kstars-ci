@@ -80,7 +80,7 @@ pipeline {
                 dir('phdlogview-build') {
                     sh '''
                         rm -f phdlogview*.deb
-                        version="$(grep -m 1 Version ../ChangeLog.txt | grep -o '[0-9.]*')"
+                        version="$(grep -m 1 Version ../ChangeLog.txt | grep -o '[0-9\.]*')"
                         version_patch=`git show HEAD | head -1 | cut -d' ' -f2 | cut -b-8`
                         package_file_name=\"phdlogview-$version.$version_patch-Linux-x86_64\"
                         cpack --debug --verbose \
