@@ -25,6 +25,8 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install \
         libqt5sql5-sqlite libkf5guiaddons-dev libkf5i18n-dev \
         phonon4qt5-backend-vlc qt5keychain-dev \
         libqt5datavisualization5-dev qml-module-qtquick-controls
+RUN apt-get -y update && apt-get -y --no-install-recommends install \
+        libopencv-dev
         
 RUN apt-get -y update && apt-get -y --no-install-recommends install wget apt sudo curl libcurl4-openssl-dev
 RUN userdel --remove ubuntu && groupadd --gid 1000 jenkins && useradd --uid 1000 --gid 1000 --create-home --groups sudo jenkins
