@@ -54,7 +54,7 @@ pipeline {
       '-DWITH_SV305=OFF ' +
       '-DWITH_SX=OFF ' +
       '-DWITH_TALON6=OFF ' +
-      '-DWITH_TOUPBASE=OFF ' +
+      '-DWITH_TOUPBASE=ON ' +
       '-DWITH_WEBCAM=ON ' +
       '-DWITH_WEEWX_JSON=OFF'
   }
