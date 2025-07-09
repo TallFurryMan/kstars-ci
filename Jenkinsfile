@@ -2,6 +2,7 @@ pipeline {
   
   environment {
     CCACHE_COMPRESS = '1'
+    QT_BUILD = params.BUILD_QT5 ? '-DBUILD_QT5=ON' : ''
   }
   
   options {
@@ -17,6 +18,7 @@ pipeline {
     buildSelector(name: 'STELLARSOLVER_BUILD', defaultSelector: lastSuccessful(), description: 'The build to use for StellarSolver, empty for last successful build.')
     persistentString(name: 'STELLARSOLVER_BUILD_NUM', defaultValue: "", description: 'The build to use for StellarSolver, STELLARSOLVER_BUILD_NUM used if empty.')
     persistentBoolean(name: 'COVERITY', defaultValue: false, description: 'Whether to run and push a static analysis to Coverity Scan.')
+    persistentBoolean(name: 'BUILD_QT5', defautValue: true, description: 'Whether to build for Qt5, else Qt6.')
   }
   
   agent {
@@ -96,7 +98,7 @@ pipeline {
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DCCACHE_SUPPORT=ON \
               -DBUILD_TESTING=OFF \
-              $WORKSPACE
+              ${QT_BUILD} $WORKSPACE
             make -j2 clean all
           '''
           recordIssues(tools: [gcc()]) // Requires Warnings-NG
