@@ -22,7 +22,7 @@ RUN apt-get -y update && \
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
         libeigen3-dev libcfitsio-dev libnova-dev libgsl-dev libraw-dev wcslib-dev libev-dev \
-        libusb-1.0.0-dev libgsl-dev libjpeg-dev libtiff-dev libfftw3-dev libftdi1-dev && \
+        libusb-1.0.0-dev libgsl-dev libjpeg-dev libtiff-dev libfftw3-dev libftdi1-dev libudev-dev && \
     apt-get clean
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install \
