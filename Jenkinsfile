@@ -43,7 +43,6 @@ pipeline {
       '-DWITH_QHY=OFF ' +
       '-DWITH_QSI=OFF ' +
       '-DWITH_RADIOSIM=OFF ' +
-      '-DWITH_RPICAM=OFF ' +
       '-DWITH_RTKLIB=OFF ' +
       '-DWITH_SBIG=OFF ' +
       '-DWITH_SHELYAK=OFF ' +
@@ -51,10 +50,10 @@ pipeline {
       '-DWITH_SPECTRACYBER=OFF ' +
       '-DWITH_STARBOOK=OFF ' +
       '-DWITH_STARBOOK_TEN=OFF ' +
-      '-DWITH_SV305=OFF ' +
       '-DWITH_SX=OFF ' +
       '-DWITH_TALON6=OFF ' +
-      '-DWITH_TOUPBASE=ON ' +
+      '-DWITH_TICFOCUSER-NG=OFF' +
+      '-DWITH_TOUPCAM=ON ' +
       '-DWITH_WEBCAM=ON ' +
       '-DWITH_WEEWX_JSON=OFF'
   }
